@@ -1,3 +1,4 @@
+require('dotenv').config();
 const { Pool } = require('pg');
 
 const pool = new Pool({
@@ -19,4 +20,4 @@ process.on('SIGINT', () => {
     process.exit();
 });
 
-module.exports = pool;
+module.exports = { db: pool };

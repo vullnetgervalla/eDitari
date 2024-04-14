@@ -100,7 +100,8 @@ CREATE TABLE public."User" (
     password character varying(255) NOT NULL,
     firstname character varying(255) NOT NULL,
     lastname character varying(255) NOT NULL,
-    type public.usertype NOT NULL
+    type public.usertype NOT NULL,
+    schoolid integer NOT NULL
 );
 
 
@@ -192,7 +193,8 @@ CREATE TABLE public.class (
     classname character varying(255),
     classroom integer,
     classlevel integer NOT NULL,
-    yearid integer NOT NULL
+    yearid integer NOT NULL,
+    schoolid integer NOT NULL
 );
 
 
@@ -229,7 +231,8 @@ CREATE TABLE public.enrollment (
     classid integer NOT NULL,
     enrollmentdate date NOT NULL,
     isactive boolean,
-    studentid integer
+    studentid integer,
+    schoolid integer NOT NULL
 );
 
 
@@ -479,6 +482,41 @@ ALTER SEQUENCE public.schedule_id_seq OWNED BY public.schedule.id;
 
 
 --
+-- Name: school; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.school (
+    id integer NOT NULL,
+    name character varying(255),
+    address character varying(255)
+);
+
+
+ALTER TABLE public.school OWNER TO postgres;
+
+--
+-- Name: school_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.school_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.school_id_seq OWNER TO postgres;
+
+--
+-- Name: school_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.school_id_seq OWNED BY public.school.id;
+
+
+--
 -- Name: student; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -536,7 +574,8 @@ ALTER SEQUENCE public.studentwork_id_seq OWNED BY public.studentwork.id;
 
 CREATE TABLE public.subject (
     id integer NOT NULL,
-    name character varying(255) NOT NULL
+    name character varying(255) NOT NULL,
+    schoolid integer
 );
 
 
@@ -753,6 +792,13 @@ ALTER TABLE ONLY public.schedule ALTER COLUMN id SET DEFAULT nextval('public.sch
 
 
 --
+-- Name: school id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.school ALTER COLUMN id SET DEFAULT nextval('public.school_id_seq'::regclass);
+
+
+--
 -- Name: studentwork id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -861,6 +907,14 @@ ALTER TABLE ONLY public.schedule
 
 
 --
+-- Name: school school_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.school
+    ADD CONSTRAINT school_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: student student_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -949,6 +1003,14 @@ ALTER TABLE ONLY public.attendance
 
 
 --
+-- Name: class class; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.class
+    ADD CONSTRAINT class FOREIGN KEY (schoolid) REFERENCES public.school(id);
+
+
+--
 -- Name: class class_yearid_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -962,6 +1024,14 @@ ALTER TABLE ONLY public.class
 
 ALTER TABLE ONLY public.enrollment
     ADD CONSTRAINT enrollment_classid_fkey FOREIGN KEY (classid) REFERENCES public.class(id);
+
+
+--
+-- Name: enrollment enrollment_schoolid_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.enrollment
+    ADD CONSTRAINT enrollment_schoolid_fkey FOREIGN KEY (schoolid) REFERENCES public.school(id);
 
 
 --
@@ -1101,6 +1171,14 @@ ALTER TABLE ONLY public.studentwork
 
 
 --
+-- Name: subject subject_schoolid_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.subject
+    ADD CONSTRAINT subject_schoolid_fkey FOREIGN KEY (schoolid) REFERENCES public.school(id);
+
+
+--
 -- Name: teacher teacher_userid_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1130,6 +1208,14 @@ ALTER TABLE ONLY public.teachersubject
 
 ALTER TABLE ONLY public.teachersubject
     ADD CONSTRAINT teachersubject_yearid_fkey FOREIGN KEY (yearid) REFERENCES public.year(id);
+
+
+--
+-- Name: User user_schoolid_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."User"
+    ADD CONSTRAINT user_schoolid_fkey FOREIGN KEY (schoolid) REFERENCES public.school(id);
 
 
 --

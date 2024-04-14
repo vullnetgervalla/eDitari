@@ -6,6 +6,7 @@
   "scripts": {
     "inst": "cd server && npm install && cd ../database && npm install",
     "create-db": "cd database && npm run create-db",
+    "generate-procedures": "cd database && npm run generate-procedures",
     "server-start": "cd server && npm start"
   },
   "author": "",

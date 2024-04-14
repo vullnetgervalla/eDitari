@@ -1,15 +1,18 @@
 require('dotenv').config();
 const express = require('express');
-const db = require('./db');
+const { db } = require('./db');
+const { apiRouter } = require('./api');
 
 const app = express();
-const port = 3000;
 
+app.use(express.json());
 
+app.use('/api', apiRouter);
+
+//Temporary test endpoints
 app.get('/', (req, res) => {
   res.send('Hello World!');
 });
-
 app.get('/test', (req, res) => {
   db.query('SELECT * FROM "User"', (err, queryRes) => {
     if (err) {
@@ -22,6 +25,7 @@ app.get('/test', (req, res) => {
   });
 });
 
+const port = process.env.PORT || 3000;
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });

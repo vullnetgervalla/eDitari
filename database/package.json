@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "create-db": "node src/scripts/createDb.js"
+    "create-db": "node src/scripts/createDb.js",
+    "generate-procedures": "node src/scripts/createProcedures.js"
   },
   "author": "",
   "license": "ISC",
