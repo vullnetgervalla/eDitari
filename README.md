@@ -14,3 +14,8 @@ DB_USER=postgres
 DB_PASSWORD=password
 DB_NAME=SchoolDB
 ```
+For the `.env` file in the server add the below lines with a random string of characters, for example
+```
+ACCESS_SECRET=TQagS8lreF2vbyqUvnJIqGqFgJs9e1XYiJvsS8mYrOKHF4IBDVoXEQRNb0uLuTLc5x5itjDW8qKaA0AsgKg
+REFRESH_SECRET=HBBPh8BluBvBaLQjxz1IsiQVCFEs0OHimKf9rhzrATm69sXVIqmKarlkfrCPZUmi4nmiCCQt41N1q03buSw
+```
