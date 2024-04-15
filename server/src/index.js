@@ -1,13 +1,14 @@
 require('dotenv').config();
 const express = require('express');
 const { db } = require('./db');
-const { apiRouter } = require('./api');
+const { apiRouter } = require('./routes');
 
 const app = express();
 
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
-app.use('/api', apiRouter);
+app.use('/', apiRouter);
 
 //Temporary test endpoints
 app.get('/', (req, res) => {
