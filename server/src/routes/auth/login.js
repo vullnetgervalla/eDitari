@@ -10,17 +10,17 @@ loginRouter.post('/', (req, res) => {
     db.query('SELECT * FROM "User" WHERE email = $1', [email], async (err, queryRes) => {
         if (err) {
             console.error('Error executing query', err);
-            res.status(500).send('Error executing query');
+            res.sendStatus(500);
             return;
         }
         if (queryRes.rows.length === 0) {
-            res.status(401).send('Invalid email or password');
+            res.sendStatus(401);
             return;
         }
         const user = queryRes.rows[0];
         const valid = await bcrypt.compare(password, user.password);
         if (!valid) {
-            res.status(401).send('Invalid email or password');
+            res.sendStatus(401);
             return;
         }
 
@@ -31,8 +31,11 @@ loginRouter.post('/', (req, res) => {
         };
         const accessToken = generateAccessToken(payload);
         const refreshToken = generateRefreshToken(payload);
-
-        res.json({ accessToken, refreshToken });
+        res.cookie('refreshToken', refreshToken, {
+            httpOnly: true,
+            maxAge: 91 * 24 * 60 * 60 * 1000,
+        });
+        res.json({ accessToken });
     });
 });
 
