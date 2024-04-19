@@ -1,6 +1,6 @@
 const { Router } = require('express');
 const jwt = require('jsonwebtoken');
-const { generateAccessToken, generateRefreshToken } = require('./utils');
+const { generateAccessToken } = require('./utils');
 
 const refreshRouter = Router();
 
