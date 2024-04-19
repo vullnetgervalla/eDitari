@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "inst": "cd server && npm install && cd ../database && npm install",
+    "inst": "cd server && npm install && cd ../database && npm install && cd ../client && npm install",
     "create-db": "cd database && npm run create-db",
     "generate-procedures": "cd database && npm run generate-procedures",
     "server": "cd server && npm start",
