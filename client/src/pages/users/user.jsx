@@ -4,6 +4,6 @@ export default function Users(){
     const { id } = useParams()
     
     return <>
-        <h1 className="text-3xl font-bold">User {id}</h1>
+        <h1>User {id}</h1>
     </>
 }
