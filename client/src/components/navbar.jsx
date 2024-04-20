@@ -28,23 +28,25 @@ const items = (t) => [
 	getItem(t('material'), '13', <FileOutlined />, [getItem(t('seeMaterial'), '14'), getItem(t('addMaterial'), '15')]),
 ];
 
-export default function Navbar() {
+export default function Navbar({ content }) {
 	const { t } = useTranslation();
 	const [collapsed, setCollapsed] = useState(false);
 	const {
 		token: { colorBgContainer, borderRadiusLG },
 	} = theme.useToken();
 	return (
-		<Layout style={{
-      minHeight: '100vh',
-    }}>
+		<Layout
+			style={{
+				minHeight: '100vh',
+			}}
+		>
 			<Sider
 				trigger={null}
 				collapsible
-        collapsed={collapsed}
-        style={{
-          paddingTop: '10px',
-        }}
+				collapsed={collapsed}
+				style={{
+					paddingTop: '10px',
+				}}
 			>
 				<div className='demo-logo-vertical' />
 				<Menu
@@ -80,9 +82,7 @@ export default function Navbar() {
 						background: colorBgContainer,
 						borderRadius: borderRadiusLG,
 					}}
-				>
-					Content
-				</Content>
+				>{content}</Content>
 			</Layout>
 		</Layout>
 	);
