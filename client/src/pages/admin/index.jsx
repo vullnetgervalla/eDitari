@@ -4,13 +4,14 @@
 // import Users from './pages/users';
 // import User from './pages/users/user';
 import Navbar from '../../components/navbar';
-import ButtonTest from '../../components/button';
+import CreateUser from '../../components/createUser';
 
 export default function AdminPage(){
 
 	return (
 		<>
-			<Navbar content={} />
+			<Navbar content={<><CreateUser parent/> </>
+			} />
 		</>
 	);
 }

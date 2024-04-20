@@ -15,5 +15,13 @@
     "material":"Materijali",
     "addMaterial":"Dodaj materijal",
     "seeMaterial":"Pogledaj sve materijale",
-    "copyright":"Sva prava zadržana za eDitari 2024."
-    }
+    "copyright":"Sva prava zadržana za eDitari 2024.",
+    "nrPersonal":"Lični broj",
+    "gjinia":"Pol",
+    "birthday":"Datum rođenja",
+    "mail":"Email",
+    "pass":"Šifra",
+    "birthplace":"Mesto rođenja",
+    "city":"Opština",
+    "submit":"pošalji"
+}

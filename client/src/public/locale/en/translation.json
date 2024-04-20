@@ -15,5 +15,13 @@
 "material":"Materials",
 "addMaterial":"Add material",
 "seeMaterial":"See all materials",
-"copyright":"All rights reserved for eDitari 2024."
+"copyright":"All rights reserved for eDitari 2024.",
+"nrPersonal":"Personal number",
+"gjinia":"Gendre",
+"birthday":"Birthday",
+"mail":"Email",
+"pass":"Password",
+"birthplace":"Birthplace",
+"city":"Muncipality",
+"submit":"Submit"
 }

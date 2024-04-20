@@ -10,6 +10,8 @@ import {
 } from '@ant-design/icons';
 import { Button, Layout, Menu, theme } from 'antd';
 import { useTranslation } from 'react-i18next';
+import { Flex }from"antd";
+
 
 const { Header, Content, Sider } = Layout;
 function getItem(label, key, icon, children) {
@@ -76,13 +78,18 @@ export default function Navbar({ content }) {
 				</Header>
 				<Content
 					style={{
+						// display:flex,
 						margin: '24px 16px',
 						padding: 24,
 						minHeight: 280,
 						background: colorBgContainer,
 						borderRadius: borderRadiusLG,
 					}}
-				>{content}</Content>
+				>
+					<Flex gap={100} justify='center'>
+						{content}
+					</Flex>
+				</Content>
 			</Layout>
 		</Layout>
 	);
