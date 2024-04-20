@@ -16,6 +16,14 @@
 "addMaterial":"Add material",
 "seeMaterial":"See all materials",
 "copyright":"All rights reserved for eDitari 2024.",
+"ssn":"Personal number",
+"gender":"Gender",
+"birthday":"Birthday",
+"mail":"Email",
+"pass":"Password",
+"birthplace":"Birthplace",
+"city":"Municipality",
+"submit":"Submit",
 "name": "Name",
 "age": "Age",
 "address": "Address",
@@ -23,5 +31,6 @@
 "account": "Account",
 "absences": "Absences",
 "attestation": "Attestation",
-"grades": "Grades"
+"grades": "Grades",
+"home": "Home"
 }

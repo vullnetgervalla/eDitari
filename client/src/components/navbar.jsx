@@ -7,6 +7,7 @@ import {
 	NotificationOutlined,
 	MenuFoldOutlined,
 	MenuUnfoldOutlined,
+	HomeFilled
 } from '@ant-design/icons';
 import { Button, Layout, Menu, theme, Typography } from 'antd';
 import { useTranslation } from 'react-i18next';
@@ -24,7 +25,7 @@ function getItem(label, key, icon, children) {
 }
 const keyToPath = {
 	'0': '/',
-	'2': '/admin',
+	'2': '/admin/list',
 	'3': '/admin/create',
 	'5': '/teacher',
 	'6': '/teacher/create',
@@ -36,6 +37,7 @@ const keyToPath = {
 	'15': '/material/add',
 };
 const items = (t) => [
+	getItem(t('home'), '0', <HomeFilled />),
 	getItem(t('admin'), '1', <PieChartOutlined />, [getItem(t('seeAdmin'), '2'), getItem(t('createAdmin'), '3')]),
 	getItem(t('teacher'), '4', <DesktopOutlined />, [getItem(t('seeTeacher'), '5'), getItem(t('createTeacher'), '6')]),
 	getItem(t('student'), '7', <UserOutlined />, [getItem(t('studentList'), '8'), getItem(t('createStudent'), '9')]),
@@ -106,6 +108,7 @@ export default function Navbar({ content }) {
 				</Header>
 				<Content
 					style={{
+						// display:flex,
 						margin: '24px 16px',
 						padding: 24,
 						minHeight: 280,

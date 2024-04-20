@@ -15,6 +15,14 @@
 "addMaterial":"Shto material",
 "seeMaterial":"Shiko materialet",
 "copyright":"Të gjitha të drejtat të rezervuara për eDitari 2024",
+"ssn":"Numri personal",
+"gender":"Gjinia",
+"birthday":"Datëlindja",
+"mail":"Email",
+"pass":"Fjalëkalimi",
+"birthplace":"Vendi i lindjes",
+"city":"Komuna",
+"submit":"Dërgo",
 "name":"Emri",
 "age":"Mosha",
 "address":"Adresa",
@@ -22,6 +30,7 @@
 "account":"Profili",
 "absences": "Mungesat",
 "attestation": "Vërtetimi",
-"grades": "Notat"
+"grades": "Notat",
+"home": "Kreu"
 }
 

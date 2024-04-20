@@ -1,8 +1,7 @@
 import { Link, Route, Routes } from 'react-router-dom';
 import Home from './pages';
-import AdminPage from './pages/admin';
+import ListAdmins from './pages/admin/listAdmins';
 import CreateAdmin from './pages/admin/createAdmin';
-import './App.css';
 import Navbar from './components/navbar';
 
 function App() {
@@ -27,8 +26,8 @@ function App() {
 							element={<Home />}
 						/>
 						<Route
-							path='/admin'
-							element={<AdminPage />}
+							path='/admin/list'
+							element={<ListAdmins />}
 						/>
 						<Route
 							path='/admin/create'
