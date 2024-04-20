@@ -1,0 +1,19 @@
+{
+    "admin":"Administratori",
+    "seeAdmins":"Pogledaj sve administratore",
+    "createAdmin":"Registruj administratora",
+    "teacher":"Profesor",
+    "seeTeacher":"Pogledaj sve profesore",
+    "createTeacher":"Registruj profesora",
+    "student":"Učenici",
+    "createStudent":"Registruj učenika",
+    "studentList":"Lista učenika",
+    "parent":"Roditelji",
+    "notification":"Obaveštenja",
+    "seeNotifications":"Pogledaj sva obaveštenja",
+    "createNotification":"Kreiraj obaveštenje",
+    "materials":"Materijali",
+    "addMaterial":"Dodaj materijal",
+    "seeMaterials":"Pogledaj sve materijale",
+    "copyright":"Sva prava zadržana za eDitari 2024."
+    }

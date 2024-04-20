@@ -35,7 +35,10 @@ const items = [
     getItem('Krijo njoftim', '12'),
   
   ]),
-  getItem('Materialet', '13', <FileOutlined />),
+  getItem('Materialet', '13', <FileOutlined />,[
+    getItem('Shiko materialet','14'),
+    getItem('Shto material','15'),
+  ])
 ];
 
 export default function Navbar () {

@@ -1,0 +1,19 @@
+{
+"admin":"Administrators",
+"seeAdmins":"See all admins",
+"createAdmin":"Register an admin",
+"teacher":"Teacher",
+"seeTeacher":"See all teachers", 
+"createTeacher":"Register a teacher",
+"student":"Students",
+"createStudent":"Register a student",
+"studentList":"List of students",
+"parent":"Parents",
+"notification":"Notifications",
+"seeNotifications":"See all notifications",
+"createNotification":"Create a notification",
+"materials":"Materials",
+"addMaterial":"Add material",
+"seeMaterials":"See all materials",
+"copyright":"All rights reserved for eDitari 2024."
+}
