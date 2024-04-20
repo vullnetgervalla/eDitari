@@ -3,8 +3,11 @@ import Home from './pages';
 import ListAdmins from './pages/admin/listAdmins';
 import CreateAdmin from './pages/admin/createAdmin';
 import Navbar from './components/navbar';
+import AdminPage from './pages/admin';
+import CreateTeacher from './pages/admin/createTeacher';
 
 function App() {
+
 	// useEffect(() => {
 	// deppendecy query lang from user
 	// i18n.changeLanguage('al');
@@ -12,27 +15,24 @@ function App() {
 
 	return (
 		<>
-			{/* <nav style={{ display: 'flex', gap: '20px', fontSize: '1.5rem' }}>
-				<Link to={'/'}>Home</Link>
-				<Link to={'/login'}>Login</Link>
-				<Link to={'/users'}>Users</Link>
-			</nav> */}
-
 			<Navbar
 				content={
 					<Routes>
 						<Route
-							path='/'
-							element={<Home />}
+							path='/admin'
+							element={<AdminPage />}
 						/>
 						<Route
-							path='/admin/list'
+							path='/admin/list-admin'
 							element={<ListAdmins />}
 						/>
 						<Route
-							path='/admin/create'
+							path='/admin/create-admin'
 							element={<CreateAdmin />}
 						/>
+						<Route
+							path='/admin/create-teacher'
+							element={<CreateTeacher />}/>
 					</Routes>
 				}
 			/>

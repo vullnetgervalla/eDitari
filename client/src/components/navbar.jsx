@@ -7,7 +7,7 @@ import {
 	NotificationOutlined,
 	MenuFoldOutlined,
 	MenuUnfoldOutlined,
-	HomeFilled
+	HomeFilled,
 } from '@ant-design/icons';
 import { Button, Layout, Menu, theme, Typography } from 'antd';
 import { useTranslation } from 'react-i18next';
@@ -24,25 +24,25 @@ function getItem(label, key, icon, children) {
 	};
 }
 const keyToPath = {
-	'0': '/',
-	'2': '/admin/list',
-	'3': '/admin/create',
-	'5': '/teacher',
-	'6': '/teacher/create',
-	'8': '/student',
-	'9': '/student/create',
-	'11': '/notification',
-	'12': '/notification/create',
-	'14': '/material',
-	'15': '/material/add',
+	0: ['/admin', 'home'],
+	2: ['/admin/list-admin', 'adminList'],
+	3: ['/admin/create-admin', 'createAdmin'],
+	5: ['/admin/list-teacher', 'teacherList'],
+	6: ['/admin/create-teacher', 'createTeacher'],
+	8: ['/admin/list-student', 'studentList'],
+	9: ['/admin/create-student', 'createStudent'],
+	11: ['/admin/notification', 'notificationList'],
+	12: ['/admin/create-notification', 'createNotification'],
+	14: ['/admin/list-material', 'materialList'],
+	15: ['/admin/add-material', 'addMaterial'],
 };
 const items = (t) => [
 	getItem(t('home'), '0', <HomeFilled />),
-	getItem(t('admin'), '1', <PieChartOutlined />, [getItem(t('seeAdmin'), '2'), getItem(t('createAdmin'), '3')]),
-	getItem(t('teacher'), '4', <DesktopOutlined />, [getItem(t('seeTeacher'), '5'), getItem(t('createTeacher'), '6')]),
+	getItem(t('admin'), '1', <PieChartOutlined />, [getItem(t('adminList'), '2'), getItem(t('createAdmin'), '3')]),
+	getItem(t('teacher'), '4', <DesktopOutlined />, [getItem(t('teacherList'), '5'), getItem(t('createTeacher'), '6')]),
 	getItem(t('student'), '7', <UserOutlined />, [getItem(t('studentList'), '8'), getItem(t('createStudent'), '9')]),
-	getItem(t('notification'), '10', <NotificationOutlined />, [getItem(t('seeNotification'), '11'), getItem(t('createNotification'), '12')]),
-	getItem(t('material'), '13', <FileOutlined />, [getItem(t('seeMaterial'), '14'), getItem(t('addMaterial'), '15')]),
+	getItem(t('notification'), '10', <NotificationOutlined />, [getItem(t('notificationList'), '11'), getItem(t('createNotification'), '12')]),
+	getItem(t('material'), '13', <FileOutlined />, [getItem(t('materialList'), '14'), getItem(t('addMaterial'), '15')]),
 ];
 
 export default function Navbar({ content }) {
@@ -52,6 +52,7 @@ export default function Navbar({ content }) {
 		token: { colorBgContainer, borderRadiusLG },
 	} = theme.useToken();
 	const navigate = useNavigate();
+	const [title, setTitle] = useState('home');
 	return (
 		<Layout
 			style={{
@@ -73,7 +74,8 @@ export default function Navbar({ content }) {
 					mode='inline'
 					items={items(t)}
 					onClick={({ key }) => {
-						const path = keyToPath[key];
+						setTitle(t(keyToPath[key][1]));
+						const path = keyToPath[key][0];
 						if (path) {
 							navigate(path);
 						}
@@ -103,7 +105,7 @@ export default function Navbar({ content }) {
 						style={{ margin: 0, paddingLeft: 10 }}
 						level={3}
 					>
-						{t('studentList')}
+						{t(title)}
 					</Title>
 				</Header>
 				<Content
