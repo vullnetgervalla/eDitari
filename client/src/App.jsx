@@ -8,6 +8,11 @@ import './App.css';
 
 function App() {
 
+	// useEffect(() => {
+	// deppendecy query lang from user
+	// i18n.changeLanguage('al');
+	// }, [query]);
+
 	return (
 		<>
 			{/* <nav style={{ display: 'flex', gap: '20px', fontSize: '1.5rem' }}>

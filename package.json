@@ -11,5 +11,9 @@
     "client": "cd client && npm run dev"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "i18next": "^23.11.2",
+    "react-i18next": "^14.1.0"
+  }
 }

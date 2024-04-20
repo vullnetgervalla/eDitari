@@ -1,6 +1,6 @@
 {
     "admin":"Administratori",
-    "seeAdmins":"Pogledaj sve administratore",
+    "seeAdmin":"Pogledaj sve administratore",
     "createAdmin":"Registruj administratora",
     "teacher":"Profesor",
     "seeTeacher":"Pogledaj sve profesore",
@@ -10,10 +10,10 @@
     "studentList":"Lista učenika",
     "parent":"Roditelji",
     "notification":"Obaveštenja",
-    "seeNotifications":"Pogledaj sva obaveštenja",
+    "seeNotification":"Pogledaj sva obaveštenja",
     "createNotification":"Kreiraj obaveštenje",
-    "materials":"Materijali",
+    "material":"Materijali",
     "addMaterial":"Dodaj materijal",
-    "seeMaterials":"Pogledaj sve materijale",
+    "seeMaterial":"Pogledaj sve materijale",
     "copyright":"Sva prava zadržana za eDitari 2024."
     }

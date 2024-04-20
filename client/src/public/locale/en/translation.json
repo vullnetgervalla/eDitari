@@ -1,6 +1,6 @@
 {
 "admin":"Administrators",
-"seeAdmins":"See all admins",
+"seeAdmin":"See all admins",
 "createAdmin":"Register an admin",
 "teacher":"Teacher",
 "seeTeacher":"See all teachers", 
@@ -10,10 +10,10 @@
 "studentList":"List of students",
 "parent":"Parents",
 "notification":"Notifications",
-"seeNotifications":"See all notifications",
+"seeNotification":"See all notifications",
 "createNotification":"Create a notification",
-"materials":"Materials",
+"material":"Materials",
 "addMaterial":"Add material",
-"seeMaterials":"See all materials",
+"seeMaterial":"See all materials",
 "copyright":"All rights reserved for eDitari 2024."
 }
