@@ -1,13 +1,11 @@
 import { Link, Route, Routes } from 'react-router-dom';
 import Home from './pages';
-// import Login from './pages/login';
-import Users from './pages/users';
-import User from './pages/users/user';
 import AdminPage from './pages/admin';
+import CreateAdmin from './pages/admin/createAdmin';
 import './App.css';
+import Navbar from './components/navbar';
 
 function App() {
-
 	// useEffect(() => {
 	// deppendecy query lang from user
 	// i18n.changeLanguage('al');
@@ -21,27 +19,24 @@ function App() {
 				<Link to={'/users'}>Users</Link>
 			</nav> */}
 
-			<Routes>
-				<Route
-					path='/'
-					element={<Home />}
-				/>
-				<Route
-					path='/admin'
-					element={<AdminPage />} />
-				{/* <Route
-					path='/login'
-					element={<Login />}
-				/> */}
-				<Route
-					path='/users'
-					element={<Users />}
-				/>
-				<Route
-					path='/users/:id'
-					element={<User />}
-				/>
-			</Routes>
+			<Navbar
+				content={
+					<Routes>
+						<Route
+							path='/'
+							element={<Home />}
+						/>
+						<Route
+							path='/admin'
+							element={<AdminPage />}
+						/>
+						<Route
+							path='/admin/create'
+							element={<CreateAdmin />}
+						/>
+					</Routes>
+				}
+			/>
 		</>
 	);
 }

@@ -8,10 +8,12 @@ import {
 	MenuFoldOutlined,
 	MenuUnfoldOutlined,
 } from '@ant-design/icons';
-import { Button, Layout, Menu, theme } from 'antd';
+import { Button, Layout, Menu, theme, Typography } from 'antd';
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
 
 const { Header, Content, Sider } = Layout;
+const { Title } = Typography;
 function getItem(label, key, icon, children) {
 	return {
 		key,
@@ -20,6 +22,19 @@ function getItem(label, key, icon, children) {
 		label,
 	};
 }
+const keyToPath = {
+	'0': '/',
+	'2': '/admin',
+	'3': '/admin/create',
+	'5': '/teacher',
+	'6': '/teacher/create',
+	'8': '/student',
+	'9': '/student/create',
+	'11': '/notification',
+	'12': '/notification/create',
+	'14': '/material',
+	'15': '/material/add',
+};
 const items = (t) => [
 	getItem(t('admin'), '1', <PieChartOutlined />, [getItem(t('seeAdmin'), '2'), getItem(t('createAdmin'), '3')]),
 	getItem(t('teacher'), '4', <DesktopOutlined />, [getItem(t('seeTeacher'), '5'), getItem(t('createTeacher'), '6')]),
@@ -34,6 +49,7 @@ export default function Navbar({ content }) {
 	const {
 		token: { colorBgContainer, borderRadiusLG },
 	} = theme.useToken();
+	const navigate = useNavigate();
 	return (
 		<Layout
 			style={{
@@ -54,11 +70,19 @@ export default function Navbar({ content }) {
 					defaultSelectedKeys={['1']}
 					mode='inline'
 					items={items(t)}
+					onClick={({ key }) => {
+						const path = keyToPath[key];
+						if (path) {
+							navigate(path);
+						}
+					}}
 				/>
 			</Sider>
 			<Layout>
 				<Header
 					style={{
+						display: 'flex',
+						alignItems: 'center',
 						padding: 0,
 						background: colorBgContainer,
 					}}
@@ -73,6 +97,12 @@ export default function Navbar({ content }) {
 							height: 64,
 						}}
 					/>
+					<Title
+						style={{ margin: 0, paddingLeft: 10 }}
+						level={3}
+					>
+						{t('studentList')}
+					</Title>
 				</Header>
 				<Content
 					style={{
@@ -82,7 +112,9 @@ export default function Navbar({ content }) {
 						background: colorBgContainer,
 						borderRadius: borderRadiusLG,
 					}}
-				>{content}</Content>
+				>
+					{content}
+				</Content>
 			</Layout>
 		</Layout>
 	);
