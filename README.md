@@ -5,6 +5,11 @@
 2. Get the `.env` file template below and place it in the `server` and `database` folders with the relevant values.
 3. Run `npm run inst` in the terminal to download the necessary dependencies.
 4. Run `npm run create-db` in the terminal to create the database.
+5. Run `npm run generate-procedures` in the terminal to create the sql procedures.
+6. Run `npm run inst` in the terminal to install the dependencies.
+
+## Start the app
+Run `npm start` to start the server and front-end.
 
 ### Env file template
 ```
