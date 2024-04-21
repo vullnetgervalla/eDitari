@@ -1,13 +1,22 @@
 import { useNavigate } from "react-router-dom"
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
+
 
 export const NotFound = () => {
     const navigate = useNavigate()
-
+    // This is to prevent useEffect from running twice on initial render,
+    // this is done only on development mode because of strict mode
+    const oneRef = useRef(true);
     useEffect(() => {
-        setTimeout(() => {
-            navigate(-1)
-        }, 1000)
+        if (oneRef.current) {
+            setTimeout(() => {
+                navigate(-1)
+            }, 1000)
+        }
+
+        return () => {
+            oneRef.current = false;
+        }
     });
 
     return (

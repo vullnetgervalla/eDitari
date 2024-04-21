@@ -15,6 +15,7 @@ import './App.css'
 function App() {
     const { auth } = useAuth();
     const { user, userType } = auth;
+
     return (
         <>
             <Routes>

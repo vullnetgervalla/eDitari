@@ -6,6 +6,7 @@ export const useLogout = () => {
 
     const logout = async () => {
         setAuth({});
+        localStorage.removeItem('loggedIn');
         try{
             const response = await axios.get("/auth/logout", {
                 withCredentials: true,
