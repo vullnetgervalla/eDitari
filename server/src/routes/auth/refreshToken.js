@@ -4,7 +4,7 @@ const { generateAccessToken } = require('./utils');
 
 const refreshRouter = Router();
 
-refreshRouter.post('/', (req, res) => {
+refreshRouter.get('/', (req, res) => {
     if(!req?.cookies?.refreshToken) {
         return res.sendStatus(401);
     }
@@ -12,13 +12,13 @@ refreshRouter.post('/', (req, res) => {
     
     jwt.verify(refreshToken, process.env.REFRESH_SECRET, (err, user) => {
         if (err) {
-            return res.sendStatus(403);
+            return res.sendStatus(401);
         }
 
         const { exp, iat, ...payload } = user;
         const newAccessToken = generateAccessToken(payload);
 
-        res.json({ newAccessToken });
+        res.json({ accessToken: newAccessToken });
     });
 });
 

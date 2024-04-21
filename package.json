@@ -8,8 +8,12 @@
     "create-db": "cd database && npm run create-db",
     "generate-procedures": "cd database && npm run generate-procedures",
     "server": "cd server && npm start",
-    "client": "cd client && npm run dev"
+    "client": "cd client && npm run dev",
+    "start": "concurrently \"npm run server\" \"npm run client\""
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
 }

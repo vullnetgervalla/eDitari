@@ -4,6 +4,6 @@ export default function Users(){
     const { id } = useParams()
     
     return <>
-        <h1>User {id}</h1>
+        <h1>Profile for user {id}</h1>
     </>
 }
