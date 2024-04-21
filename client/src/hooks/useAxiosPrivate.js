@@ -28,6 +28,9 @@ export const useAxiosPrivate = () => {
                     originalRequest.headers['Authorization'] = `Bearer ${newAccessToken}`;
                     return axiosPrivate(originalRequest);
                 }
+                if(originalRequest?.sent) {
+                    localStorage.removeItem('loggedIn');
+                }
                 return Promise.reject(error);
             }
         );

@@ -20,6 +20,13 @@ function Login() {
     const [errMsg, setErrMsg] = useState('');
 
     useEffect(() => {
+        const loggedIn = localStorage.getItem('loggedIn');
+        if (loggedIn) {
+            navigate(from, { replace: true });
+        }
+    }, [])
+
+    useEffect(() => {
         setErrMsg('');
     }, [email, password])
 
@@ -53,7 +60,10 @@ function Login() {
             );
             const { user, userType, accessToken } = response?.data;
             setAuth({ email, user, userType, accessToken });
-            setEmail('');
+            if(persist) {
+                localStorage.setItem('loggedIn', true);
+            }
+                setEmail('');
             setPassword('');
             navigate(from, { replace: true });
         } catch (err) {
