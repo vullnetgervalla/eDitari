@@ -18,7 +18,7 @@ refreshRouter.get('/', (req, res) => {
         const { exp, iat, ...payload } = user;
         const newAccessToken = generateAccessToken(payload);
 
-        res.json({ accessToken: newAccessToken });
+        res.json({ accessToken: newAccessToken, ...payload });
     });
 });
 
