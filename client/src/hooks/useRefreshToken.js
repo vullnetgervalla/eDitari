@@ -12,6 +12,9 @@ export const useRefreshToken = () => {
         setAuth(prev => ({
             ...prev,
             accessToken: response.data.accessToken,
+            user: response.data.user,
+            userType: response.data.userType,
+            schoolid: response.data.schoolid
         }));
 
         return response.data.accessToken;
