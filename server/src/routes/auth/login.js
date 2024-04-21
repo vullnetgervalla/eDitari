@@ -7,6 +7,10 @@ const loginRouter = Router();
 
 loginRouter.post('/', (req, res) => {
     const { email, password } = req.body;
+    if(!email || !password) {
+        res.sendStatus(400);
+        return;
+    }
     db.query('SELECT * FROM "User" WHERE email = $1', [email], async (err, queryRes) => {
         if (err) {
             console.error('Error executing query', err);
@@ -25,17 +29,19 @@ loginRouter.post('/', (req, res) => {
         }
 
         const payload = {
-            id: user.id,
+            user: user.id,
             schoolid: user.schoolid,
-            type: user.type
+            userType: user.type
         };
         const accessToken = generateAccessToken(payload);
         const refreshToken = generateRefreshToken(payload);
         res.cookie('refreshToken', refreshToken, {
             httpOnly: true,
+            sameSite: 'none',
+            secure: true,
             maxAge: 91 * 24 * 60 * 60 * 1000,
         });
-        res.json({ accessToken });
+        res.json({ accessToken, ...payload});
     });
 });
 

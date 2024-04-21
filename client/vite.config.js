@@ -6,5 +6,13 @@ export default defineConfig({
   plugins: [react()],
   server: {
     port: 3000
+  },
+  resolve: {
+    alias: {
+      'components': '/src/components',
+      'api': '/src/api',
+      'hooks': '/src/hooks',
+      'pages': '/src/pages',
+    }
   }
 })

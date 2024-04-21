@@ -5,14 +5,14 @@ const { isAdminToken } = require('../../middleware/isAdminToken');
 const getUserRouter = Router();
 
 getUserRouter.get('/', isAdminToken, (req, res) => {
-    const {id, schoolid, type} = req.user;
+    const {user, schoolid, userType} = req.user;
     db.query('SELECT * from getAllSchoolUsers($1)', [schoolid], (err, queryRes) => {
         if (err) {
           console.error('Error executing query', err);
-          res.status(500).send('Error executing query');
+          res.sendStatus(500);
           return;
         }
-        console.log('Query result:', queryRes.rows);
+
         res.send(queryRes.rows);
       });
 });
