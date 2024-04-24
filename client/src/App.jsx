@@ -21,7 +21,7 @@ function App() {
             <Routes>
                 <Route path='/login' element={<Login />} />
                 <Route element={<PersistLogin />} >
-                    <Route element={<NavBar />}>
+                    <Route element={<Navbar />}>
                         <Route element={<RequireAuth />} >
                             <Route path='/' element={<Home />} />
                             <Route path='/users/:id' element={<User />} />
