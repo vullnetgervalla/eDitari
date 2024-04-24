@@ -1,7 +1,7 @@
 const { Router } = require('express');
 const { db } = require('../../db');
 const bcrypt = require('bcrypt');
-
+ 
 const createUserRouter = Router();
 
 createUserRouter.post('/', async (req, res) => {
