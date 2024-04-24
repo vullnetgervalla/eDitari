@@ -17,6 +17,20 @@ getUserRouter.get('/', isAdminToken, (req, res) => {
       });
 });
 
+getUserRouter.get('/admin', isAdminToken, (req, res) => {
+    const {user, schoolid} = req.user;
+    db.query('SELECT * from getAllAdminUsers($1)', [schoolid], (err, queryRes) => {
+      if (err) {
+        console.log("test");
+        console.error('Error executing query', err);
+        res.sendStatus(500);
+        return;
+      }
+  
+      res.send(queryRes.rows);
+  });
+})
+
 getUserRouter.get('/:id', (req, res) => {
     const id = req.params.id;
     db.query('SELECT * FROM "User" WHERE id = $1', [id], (err, queryRes) => {
