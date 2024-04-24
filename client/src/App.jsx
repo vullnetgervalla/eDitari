@@ -7,7 +7,7 @@ import User from 'pages/users/user'
 import RequireAuth from 'components/auth/RequireAuth'
 import PersistLogin from 'components/auth/PersistLogin'
 import { Unauthorized } from 'components/auth/Unauthorized'
-import { NavBar } from 'components/NavBar'
+import Navbar from 'components/navbar'
 import { useAuth } from 'hooks/useAuth'
 import { NotFound } from 'components/NotFound'
 import './App.css'
@@ -23,7 +23,7 @@ function App() {
                 <Route element={<PersistLogin />} >
                     <Route element={<NavBar />}>
                         <Route element={<RequireAuth />} >
-                            <Route path='/' element={<Home user={user} userType={userType}/>} />
+                            <Route path='/' element={<Home />} />
                             <Route path='/users/:id' element={<User />} />
                         </Route>
                         <Route element={<RequireAuth allowedUserTypes={['ADMIN']}/>} >
