@@ -54,13 +54,13 @@ function CreateUser({ parent }) {
 				</Form.Item>
 
 				<Form.Item
-					label='Emri'
+					label={t('name')}
 					labelAlign='left'
 					name='name'
 					rules={[
 						{
 							required: true,
-							message: 'Please input!',
+							message: t('enterName'),
 						},
 					]}
 				>
@@ -68,13 +68,13 @@ function CreateUser({ parent }) {
 				</Form.Item>
 
 				<Form.Item
-					label='Mbiemri'
+					label={t('lastName')}
 					labelAlign='left'
 					name='surname'
 					rules={[
 						{
 							required: true,
-							message: 'Please input!',
+							message: t('enterLastName'),
 						},
 					]}
 				>
@@ -82,58 +82,79 @@ function CreateUser({ parent }) {
 				</Form.Item>
 
 				<Form.Item
-					label='Gjinia'
+					label={t('gender')}
 					labelAlign='left'
 					name='gender'
 					rules={[
 						{
 							required: true,
-							message: 'Please input!',
+							message: t('chooseGender'),
 						},
 					]}
 				>
 					<Select>
-						<Select.Option value='male'>Male</Select.Option>
-						<Select.Option value='female'>Female</Select.Option>
+						<Select.Option value='male'>{t('male')}</Select.Option>
+						<Select.Option value='female'>{t('female')}</Select.Option>
 					</Select>
 				</Form.Item>
 
 				<Form.Item
-					label='Datelindja'
+					label={t('birthday')}
 					labelAlign='left'
 					name='birthday'
 				>
 					<DatePicker style={{ float: 'left' }} />
-				</Form.Item>
 
-				<Form.Item
-					label='Email'
+					rules={[
+						{
+							required: true,
+							message: t('enterBirthday'),
+						},
+					]}
+				</Form.Item>
+{				 
+				/*<Form.Item
+					label={t('mail')}
 					labelAlign='left'
 					name='mail'
 				>
 					<Input />
-				</Form.Item>
+				</Form.Item> */}
 
-				<Form.Item
-					label='Fjalekalimi  '
+				{/* <Form.Item
+					label={t('pass')}
 					labelAlign='left'
 					name='Password'
 				>
 					<Password />
-				</Form.Item>
+				</Form.Item> */}
 
 				<Form.Item
-					label='Vendi i lindjes'
+					label={t('birthplace')}
 					labelAlign='left'
 					name='Birthplace'
+
+					rules={[
+						{
+							required: true,
+							message: t('enterBirthplace'),
+						},
+					]}
 				>
 					<Input />
 				</Form.Item>
 
 				<Form.Item
-					label='Komuna'
+					label={t('city')}
 					labelAlign='left'
 					name='Municipality'
+
+					rules={[
+						{
+							required: true,
+							message: t('enterCity'),
+						},
+					]}
 				>
 					<Input />
 				</Form.Item>
@@ -144,7 +165,7 @@ function CreateUser({ parent }) {
 						span: 24,
 					}}
 				>
-					{parent ? <Button type='primary'>Ruaj</Button> : null}
+					{parent ? <Button type='primary'>{t('save')}</Button> : null}
 				</Form.Item>
 			</Form>
 		</div>
