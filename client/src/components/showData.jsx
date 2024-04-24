@@ -1,35 +1,11 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { SearchOutlined, UserOutlined, CloseCircleOutlined, PrinterFilled, BookOutlined } from '@ant-design/icons';
 import { Button, Input, Space, Table } from 'antd';
 import Highlighter from 'react-highlight-words';
 import { useTranslation } from 'react-i18next';
-const data = [
-	{
-		key: '1',
-		name: 'John Brown',
-		age: 32,
-		address: 'New York No. 1 Lake Park',
-	},
-	{
-		key: '2',
-		name: 'Joe Black',
-		age: 42,
-		address: 'London No. 1 Lake Park',
-	},
-	{
-		key: '3',
-		name: 'Jim Green',
-		age: 32,
-		address: 'Sydney No. 1 Lake Park',
-	},
-	{
-		key: '4',
-		name: 'Jim Red',
-		age: 32,
-		address: 'London No. 2 Lake Park',
-	},
-];
-const ShowData = ({ userType }) => {
+
+const ShowData = ({ userType, data }) => {
 	const { t } = useTranslation();
 	const [searchText, setSearchText] = useState('');
 	const [searchedColumn, setSearchedColumn] = useState('');
@@ -43,6 +19,18 @@ const ShowData = ({ userType }) => {
 		clearFilters();
 		setSearchText('');
 	};
+	const [transformedArray, setTransformedArray] = useState([]);
+	useEffect(() => {
+		setTransformedArray(
+			Array.isArray(data)
+				? data.map((item) => ({
+						key: item.id,
+						name: `${item.firstname}`,
+						lastName: `${item.lastname}`
+				  }))
+				: []
+		);
+	}, [data]);
 	const getColumnSearchProps = (dataIndex) => ({
 		filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters, close }) => (
 			<div
@@ -146,7 +134,7 @@ const ShowData = ({ userType }) => {
 		},
 		{
 			title: t('lastName'),
-			dataIndex: 'name',
+			dataIndex: 'lastName',
 			key: 'lastName',
 			width: '15%',
 			...getColumnSearchProps('name'),
@@ -156,10 +144,10 @@ const ShowData = ({ userType }) => {
 			dataIndex: 'account',
 			key: 'account',
 			width: '5%',
-			render: () => (
-				<div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
+			render: (_, record) => (
+				<Link to={`/users/${record.key}`} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%', color: 'black' }}>
 					<UserOutlined style={{ fontSize: '18px' }} />
-				</div>
+				</Link>
 			),
 		},
 		{
@@ -168,9 +156,9 @@ const ShowData = ({ userType }) => {
 			key: 'absences',
 			width: '5%',
 			render: () => (
-				<div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
+				<Link to={'/'} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%', color: 'black' }}>
 					<CloseCircleOutlined style={{ fontSize: '18px' }} />
-				</div>
+				</Link>
 			),
 		},
 		{
@@ -179,9 +167,9 @@ const ShowData = ({ userType }) => {
 			key: 'attestation',
 			width: '5%',
 			render: () => (
-				<div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
+				<Link to={'/'} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%', color: 'black' }}>
 					<PrinterFilled style={{ fontSize: '18px' }} />
-				</div>
+				</Link>
 			),
 		},
 		...(userType === 'STUDENT'
@@ -203,8 +191,9 @@ const ShowData = ({ userType }) => {
 	return (
 		<Table
 			columns={columns(t)}
-			dataSource={data}
+			dataSource={transformedArray}
 		/>
 	);
 };
+
 export default ShowData;
