@@ -32,5 +32,14 @@
 	"absences": "Mungesat",
 	"attestation": "Vërtetimi",
 	"grades": "Notat",
-	"home": "Kreu"
+	"home": "Kreu",
+	"male":"Mashkull",
+	"female":"Femër",
+	"enterName":"Ju lutem shtypni emrin",
+	"enterLastName":"Ju lutem shtypni mbiemrin",
+	"enterAge":"Ju lutem shtypni moshen",
+	"chooseGender":"Ju lutem zgjedhni gjininë tuaj",
+	"enterBirthday":"Ju lutem shtypni ditëlindjen tuaj",
+	"enterBirthplace":"Ju lutem shtypni vendin e lindjen",
+	"enterCity":"Ju lutem shtypni vendbanimin tuaj"
 }

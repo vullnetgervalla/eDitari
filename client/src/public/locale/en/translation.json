@@ -32,5 +32,14 @@
 	"absences": "Absences",
 	"attestation": "Attestation",
 	"grades": "Grades",
-	"home": "Home"
+	"home": "Home",
+	"male":"Male",
+	"female":"Female",
+	"enterName":"Please enter your name",
+	"enterLastName":"Please enter your last name",
+	"enterAge":"Please enter your age",
+	"chooseGender":"Please choose your gender",
+	"enterBirthday": "Please enter your birthday",
+	"enterBirthplace": "Please enter your place of birth",
+	"enterCity": "Please enter your city of residence"
 }
