@@ -13,3 +13,5 @@ export const axiosPrivate = axios.create({
         withCredentials: true,
     }
 });
+
+axiosPrivate.CancelToken = axios.CancelToken;
