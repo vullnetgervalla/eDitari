@@ -10,7 +10,7 @@ import NavBar from 'components/navbar';
 import { useAuth } from 'hooks/useAuth';
 import { NotFound } from 'components/NotFound';
 import './App.css';
-import UsersPage from 'pages/users/user';
+import UsersPage from 'pages/users/index';
 import { AdminRoutes } from './routes/adminRoutes';
 
 function App() {
