@@ -6,7 +6,7 @@ import CreateTeacher from 'pages/admin/createTeacher';
 import ListStudents from 'pages/users/listStudents';
 import ListTeachers from 'pages/users/listTeachers';
 import ListAdmins from 'pages/users/listAdmins';
-import Users from 'pages/users/user';
+import Users from 'pages/users';
 
 export const AdminRoutes = [
   {
