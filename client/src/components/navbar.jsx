@@ -18,35 +18,32 @@ import { useLogout } from 'hooks/useLogout';
 const { Header, Content, Sider } = Layout;
 const { Title } = Typography;
 
-const keyToPath = React.useMemo(
-	() => ({
-		0: ['/', 'home'],
-		11: ['/list-admin', 'adminList'],
-		12: ['/create-admin', 'createAdmin'],
-		21: ['/list-teacher', 'teacherList'],
-		22: ['/create-teacher', 'createTeacher'],
-		31: ['/list-student', 'studentList'],
-		32: ['/create-student', 'createStudent'],
-		41: ['/notification', 'notificationList'],
-		42: ['/create-notification', 'createNotification'],
-		51: ['/list-material', 'materialList'],
-		52: ['/add-material', 'addMaterial'],
-	}),
-	[]
-);
-const ACCESS_CONFIG = {
-	ADMIN: ['0', '11', '12', '21', '22', '31', '32', '41', '42', '51', '52'],
-	TEACHER: ['0', '31', '32', '41', '42', '51', '52'],
-	STUDENT: ['0', '41', '42', '51', '52'],
-};
-function getItem({ label, key, icon, children }) {
+function getItem(label, key, icon, children ) {
 	return {
 		key,
 		icon,
 		children,
 		label,
 	};
-}
+}	
+const keyToPath = {
+	0: ['/', 'home'],
+	11: ['/list-admin', 'adminList'],
+	12: ['/create-admin', 'createAdmin'],
+	21: ['/list-teacher', 'teacherList'],
+	22: ['/create-teacher', 'createTeacher'],
+	31: ['/list-student', 'studentList'],
+	32: ['/create-student', 'createStudent'],
+	41: ['/notification', 'notificationList'],
+	42: ['/create-notification', 'createNotification'],
+	51: ['/list-material', 'materialList'],
+	52: ['/add-material', 'addMaterial'],
+};
+const ACCESS_CONFIG = {
+	ADMIN: ['0', '11', '12', '21', '22', '31', '32', '41', '42', '51', '52'],
+	TEACHER: ['0', '31', '32', '41', '42', '51', '52'],
+	STUDENT: ['0', '41', '42', '51', '52'],
+};
 
 export default function NavBar({ content, userType }) {
 	const logout = useLogout();

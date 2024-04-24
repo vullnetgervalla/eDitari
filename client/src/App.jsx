@@ -1,9 +1,7 @@
 import React from 'react';
-import { Link, Route, Routes } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import Home from 'pages/home';
 import Login from 'pages/login';
-import Users from 'pages/users';
-import User from 'pages/users/user';
 import RequireAuth from 'components/auth/RequireAuth';
 import PersistLogin from 'components/auth/PersistLogin';
 import { Unauthorized } from 'components/auth/Unauthorized';
@@ -11,6 +9,8 @@ import NavBar from 'components/navbar';
 import { useAuth } from 'hooks/useAuth';
 import { NotFound } from 'components/NotFound';
 import './App.css';
+import UsersPage from 'pages/users/user';
+import { AdminRoutes } from './routes/adminRoutes';
 
 function App() {
 	const { auth } = useAuth();
