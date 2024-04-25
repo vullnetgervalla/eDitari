@@ -24,7 +24,6 @@ const formItemLayout = {
 };
 const { Title } = Typography;
 function CreateUser({ parent }) {
-	const onclickBothParents = () => {};
 	const { t } = useTranslation();
 	return (
 		<div style={{ textAlign: 'center' }}>
@@ -40,7 +39,7 @@ function CreateUser({ parent }) {
 				}}
 			>
 				<Form.Item
-          label={t('ssn')}
+					label={t('ssn')}
 					labelAlign='left'
 					name='personalID'
 					rules={[
@@ -102,17 +101,17 @@ function CreateUser({ parent }) {
 					label={t('birthday')}
 					labelAlign='left'
 					name='birthday'
-				>
-					<DatePicker style={{ float: 'left' }} />
-
 					rules={[
 						{
 							required: true,
 							message: t('enterBirthday'),
 						},
 					]}
+				>
+					<DatePicker style={{ float: 'left' }} />
+
 				</Form.Item>
-{				 
+				{
 				/*<Form.Item
 					label={t('mail')}
 					labelAlign='left'

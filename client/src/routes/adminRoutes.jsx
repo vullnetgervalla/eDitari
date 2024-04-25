@@ -13,7 +13,7 @@ export const AdminRoutes = [
     path: '/',
     element: <HomePage />
   }, {
-    path: '/list-admin',
+    path: 'list-admin',
     element: <ListAdmins />
   },
   {
@@ -37,7 +37,7 @@ export const AdminRoutes = [
     element: <ListStudents />
   },
   {
-    path: '/create-student',
+    path: 'create-student',
     element: <CreateStudent />
   }
 ];

@@ -41,5 +41,9 @@
 	"chooseGender":"Ju lutem zgjedhni gjininë tuaj",
 	"enterBirthday":"Ju lutem shtypni ditëlindjen tuaj",
 	"enterBirthplace":"Ju lutem shtypni vendin e lindjen",
-	"enterCity":"Ju lutem shtypni vendbanimin tuaj"
+	"enterCity":"Ju lutem shtypni vendbanimin tuaj",
+	"enterAddress":"Ju lutem shtypni adresën tuaj",
+	"enterMail":"Ju lutem shtypni emailin tuaj",
+	"enterPass":"Ju lutem shtypni fjalëkalimin tuaj",
+	"invalidEmail":"Emaili nuk është valid"
 }

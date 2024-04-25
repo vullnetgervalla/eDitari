@@ -41,5 +41,9 @@
 	"chooseGender": "Molimo izaberite vaš pol",
 	"enterBirthday": "Molimo unesite vaš datum rođenja",
 	"enterBirthplace": "Molimo unesite vaše mesto rođenja",
-	"enterCity": "Molimo unesite vaš grad prebivališta"	
+	"enterCity": "Molimo unesite vaš grad prebivališta",
+	"enterAddress": "Molimo unesite vašu adresu",
+	"enterMail": "Molimo unesite vašu email adresu",
+	"enterPass": "Molimo unesite vašu šifru",
+	"invalidEmail": "Unesite validnu email adresu"
 }

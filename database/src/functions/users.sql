@@ -10,7 +10,7 @@ $$;
 
 
 --Procedure for retreiving user name and lastname for email generating
-CREATE OR REPLACE FUNCTION getStudentName(input_school_id integer)
+CREATE OR REPLACE FUNCTION getUserName(input_school_id integer)
 RETURNS TABLE(firstname text, lastname text) LANGUAGE sql
 AS
 $$

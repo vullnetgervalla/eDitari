@@ -1,8 +1,11 @@
 import ListAdmins from './listAdmins';
 import ListTeachers from './listTeachers';
 import ListStudents from './listStudents';
+import { useNavigate } from 'react-router-dom';
 
 export default function UsersPage(request) {
+    const navigate = useNavigate();
+
 	const UsersPage = () => {
 		switch (userType) {
 			case 'ADMIN':
@@ -19,7 +22,7 @@ export default function UsersPage(request) {
 			case 'TEACHER':
 				return <ListStudents />;
 			default:
-				return null;
+				navigate('/unauthorized', { replace: true });
 		}
 	};
 
