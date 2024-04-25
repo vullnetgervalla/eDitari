@@ -45,5 +45,8 @@
 	"enterAddress": "Molimo unesite vašu adresu",
 	"enterMail": "Molimo unesite vašu email adresu",
 	"enterPass": "Molimo unesite vašu šifru",
-	"invalidEmail": "Unesite validnu email adresu"
+	"invalidEmail": "Unesite validnu email adresu",
+	"number.students": "Broj učenika",
+	"number.teachers": "Broj nastavnika",
+	"number.parents": "Broj roditelja"
 }

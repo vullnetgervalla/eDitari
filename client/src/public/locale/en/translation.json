@@ -45,5 +45,8 @@
 	"enterAddress": "Please enter your address",
 	"enterMail": "Please enter your email",
 	"enterPass": "Please enter your password",
-	"invalidEmail": "Invalid email"
+	"invalidEmail": "Invalid email",
+	"number.students": "Number of students",
+	"number.teachers": "Number of teachers",
+	"number.parents": "Number of parents"
 }

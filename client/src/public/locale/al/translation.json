@@ -45,5 +45,8 @@
 	"enterAddress":"Ju lutem shtypni adresën tuaj",
 	"enterMail":"Ju lutem shtypni emailin tuaj",
 	"enterPass":"Ju lutem shtypni fjalëkalimin tuaj",
-	"invalidEmail":"Emaili nuk është valid"
+	"invalidEmail":"Emaili nuk është valid",
+	"number.students": "Numri i studenteve",
+	"number.teachers": "Numri i mësuesve",
+	"number.parents": "Numri i prindërve"
 }
