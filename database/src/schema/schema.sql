@@ -17,6 +17,20 @@ SET client_min_messages = warning;
 SET row_security = off;
 
 --
+-- Name: pgcrypto; Type: EXTENSION; Schema: -; Owner: -
+--
+
+CREATE EXTENSION IF NOT EXISTS pgcrypto WITH SCHEMA public;
+
+
+--
+-- Name: EXTENSION pgcrypto; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION pgcrypto IS 'cryptographic functions';
+
+
+--
 -- Name: attendancestatus; Type: TYPE; Schema: public; Owner: postgres
 --
 
@@ -39,6 +53,21 @@ CREATE TYPE public.gender AS ENUM (
 
 
 ALTER TYPE public.gender OWNER TO postgres;
+
+--
+-- Name: gradetype; Type: TYPE; Schema: public; Owner: postgres
+--
+
+CREATE TYPE public.gradetype AS ENUM (
+    '1',
+    '2',
+    '3',
+    '4',
+    '5'
+);
+
+
+ALTER TYPE public.gradetype OWNER TO postgres;
 
 --
 -- Name: notificationreach; Type: TYPE; Schema: public; Owner: postgres
@@ -268,8 +297,8 @@ CREATE TABLE public.grade (
     id integer NOT NULL,
     studentid integer NOT NULL,
     teachersubjectid integer NOT NULL,
-    grade integer,
-    date date
+    date date,
+    grade public.gradetype
 );
 
 
@@ -488,7 +517,8 @@ ALTER SEQUENCE public.schedule_id_seq OWNED BY public.schedule.id;
 CREATE TABLE public.school (
     id integer NOT NULL,
     name character varying(255),
-    address character varying(255)
+    address character varying(255),
+    schooldomain character varying(20)
 );
 
 
@@ -525,7 +555,8 @@ CREATE TABLE public.student (
     classid integer NOT NULL,
     birthday date,
     gender public.gender,
-    parentid integer
+    parentid integer,
+    personalnumber character varying(20) NOT NULL
 );
 
 
@@ -612,7 +643,8 @@ CREATE TABLE public.teacher (
     phonenumber character varying(20),
     educationlevel character varying(255),
     experienceyears integer,
-    teachingspecialization character varying(255)
+    teachingspecialization character varying(255),
+    personalnumber character varying(20)
 );
 
 
@@ -827,6 +859,14 @@ ALTER TABLE ONLY public.year ALTER COLUMN id SET DEFAULT nextval('public.year_id
 
 
 --
+-- Name: User User_email_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."User"
+    ADD CONSTRAINT "User_email_key" UNIQUE (email);
+
+
+--
 -- Name: assignment assignment_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -915,6 +955,14 @@ ALTER TABLE ONLY public.school
 
 
 --
+-- Name: student student_personalnumber_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.student
+    ADD CONSTRAINT student_personalnumber_key UNIQUE (personalnumber);
+
+
+--
 -- Name: student student_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -936,6 +984,14 @@ ALTER TABLE ONLY public.studentwork
 
 ALTER TABLE ONLY public.subject
     ADD CONSTRAINT subject_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: teacher teacher_personalnumber_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.teacher
+    ADD CONSTRAINT teacher_personalnumber_key UNIQUE (personalnumber);
 
 
 --
