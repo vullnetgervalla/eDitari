@@ -45,5 +45,10 @@
 	"enterAddress":"Ju lutem shtypni adresën tuaj",
 	"enterMail":"Ju lutem shtypni emailin tuaj",
 	"enterPass":"Ju lutem shtypni fjalëkalimin tuaj",
-	"invalidEmail":"Emaili nuk është valid"
+	"invalidEmail":"Emaili nuk është valid",
+	"enterPersonalNumber": "Ju lutem shtypni numrin personal",
+	"selectClass": "Zgjidhni klasën",
+	"selectParent": "Zgjidhni prindin",
+	"personalNumber": "Numri personal",
+	"class": "Klasa"
 }
