@@ -45,5 +45,10 @@
 	"enterAddress": "Molimo unesite vašu adresu",
 	"enterMail": "Molimo unesite vašu email adresu",
 	"enterPass": "Molimo unesite vašu šifru",
-	"invalidEmail": "Unesite validnu email adresu"
+	"invalidEmail": "Unesite validnu email adresu",
+	"enterPersonalNumber": "Molimo unesite vaš lični broj",
+	"selectClass": "Izaberite odeljenje",
+	"selectParent": "Izaberite roditelja",
+	"personalNumber": "Lični broj",
+	"class": "Odeljenje"
 }
