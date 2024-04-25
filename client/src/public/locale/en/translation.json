@@ -50,5 +50,8 @@
 	"selectClass": "Select class",
 	"selectParent": "Select parent",
 	"personalNumber": "Personal number",
-	"class": "Class"
+	"class": "Class",
+	"number.students": "Number of students",
+	"number.teachers": "Number of teachers",
+	"number.parents": "Number of parents"
 }

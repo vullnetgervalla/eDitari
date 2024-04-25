@@ -50,5 +50,8 @@
 	"selectClass": "Zgjidhni klasën",
 	"selectParent": "Zgjidhni prindin",
 	"personalNumber": "Numri personal",
-	"class": "Klasa"
+	"class": "Klasa",
+	"number.students": "Numri i studenteve",
+	"number.teachers": "Numri i mësuesve",
+	"number.parents": "Numri i prindërve"
 }

@@ -50,5 +50,8 @@
 	"selectClass": "Izaberite odeljenje",
 	"selectParent": "Izaberite roditelja",
 	"personalNumber": "Lični broj",
-	"class": "Odeljenje"
+	"class": "Odeljenje",
+	"number.students": "Broj učenika",
+	"number.teachers": "Broj nastavnika",
+	"number.parents": "Broj roditelja"
 }
