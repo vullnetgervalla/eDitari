@@ -10,12 +10,13 @@ $$;
 
 
 --Procedure for retreiving user name and lastname for email generating
-CREATE OR REPLACE FUNCTION getUserName(input_school_id integer)
+CREATE OR REPLACE FUNCTION getUserName(first_name text, last_name text)
 RETURNS TABLE(firstname text, lastname text) LANGUAGE sql
 AS
 $$
     SELECT firstname, lastname FROM "User"
-    WHERE schoolid = input_school_id;
+    WHERE firstname = first_name
+    AND lastname = last_name;
 $$;
 
 --fix the social_security_number into database and ececute
@@ -40,3 +41,12 @@ $$
     WHERE schoolid = input_school_id AND type = 'ADMIN';
 $$;
 
+
+DROP FUNCTION IF EXISTS getAllParentUsers(integer);
+CREATE OR REPLACE FUNCTION getAllParentUsers(input_school_id integer)
+RETURNS TABLE(id integer, firstname text, lastname text) LANGUAGE sql
+AS
+$$
+    SELECT id, firstname, lastname FROM "User"
+    WHERE schoolid = input_school_id AND type = 'PARENT';
+$$;

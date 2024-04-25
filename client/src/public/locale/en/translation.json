@@ -46,6 +46,11 @@
 	"enterMail": "Please enter your email",
 	"enterPass": "Please enter your password",
 	"invalidEmail": "Invalid email",
+	"enterPersonalNumber": "Please enter your personal number",
+	"selectClass": "Select class",
+	"selectParent": "Select parent",
+	"personalNumber": "Personal number",
+	"class": "Class",
 	"number.students": "Number of students",
 	"number.teachers": "Number of teachers",
 	"number.parents": "Number of parents"

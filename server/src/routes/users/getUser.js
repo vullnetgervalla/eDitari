@@ -1,6 +1,7 @@
 const { Router } = require('express');
 const { db } = require('../../db');
 const { isAdminToken } = require('../../middleware/isAdminToken');
+const { isAdminTeacherToken } = require('../../middleware/isAdminTeacherToken');
 
 const getUserRouter = Router();
 
@@ -29,7 +30,21 @@ getUserRouter.get('/admin', isAdminToken, (req, res) => {
   
       res.send(queryRes.rows);
   });
-})
+});
+
+getUserRouter.get('/parents', isAdminTeacherToken, (req, res) => {
+    const {user, schoolid} = req.user;
+    db.query('SELECT * from getAllParentUsers($1)', [schoolid], (err, queryRes) => {
+      if (err) {
+        console.log("test");
+        console.error('Error executing query', err);
+        res.sendStatus(500);
+        return;
+      }
+  
+      res.send(queryRes.rows);
+  });
+});
 
 getUserRouter.get('/:id', (req, res) => {
     const id = req.params.id;

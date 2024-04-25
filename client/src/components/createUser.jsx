@@ -1,6 +1,5 @@
 import React from 'react';
 import { Button, Cascader, DatePicker, Form, Input, InputNumber, Mentions, Select, TreeSelect } from 'antd';
-import Password from 'antd/es/input/Password';
 import { Typography } from 'antd';
 import { useTranslation } from 'react-i18next';
 const { RangePicker } = DatePicker;

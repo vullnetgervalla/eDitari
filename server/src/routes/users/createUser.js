@@ -2,16 +2,10 @@ const { Router } = require('express');
 const { db } = require('../../db');
 const bcrypt = require('bcrypt');
 const { isAdminToken } = require('../../middleware/isAdminToken');
- 
+const { isAdminTeacherToken} = require('../../middleware/isAdminTeacherToken');
+
 const createUserRouter = Router();
 
-function isAdminOrTeacherToken(req, res, next) {
-    if (isAdminToken(req) || isTeacherToken(req)) {
-        next();
-    } else {
-        res.status(403).send('Unauthorized');
-    }
-}
 
 // createUserRouter.post('/', async (req, res) => {
 //     console.log(req.body);
@@ -51,7 +45,6 @@ createUserRouter.post('/admin', isAdminToken, async (req, res) => {
     const {schoolid} = req.user;
     const userType = "ADMIN";
     const username = `${firstname}${lastname}`.toLowerCase();
-    
     if( !email || !password || !firstname || !lastname || !userType || !schoolid) {
         return res.status(400).send('Missing required fields');
     }
@@ -83,7 +76,7 @@ createUserRouter.post('/admin', isAdminToken, async (req, res) => {
     });
 });
 
-createUserRouter.post('/student', isAdminOrTeacherToken, async (req, res) => {
+createUserRouter.post('/student', isAdminTeacherToken, async (req, res) => {
     const { firstname, lastname, personalnumber, classid, birthday, gender, parentid } = req.body;
     const {schoolid} = req.user;
 
@@ -96,6 +89,7 @@ createUserRouter.post('/student', isAdminOrTeacherToken, async (req, res) => {
     const password = personalnumber;
     const hashedPassword = await bcrypt.hash(password, 10);
     const username = `${firstname}${lastname}`.toLowerCase();
+    const schoolDomain = "main";
     try{
         db.query('SELECT * from getUserName($1, $2)', [firstname, lastname], (err, queryRes) => {
             if (err) {
@@ -134,7 +128,7 @@ createUserRouter.post('/student', isAdminOrTeacherToken, async (req, res) => {
 createUserRouter.post('/teacher', isAdminToken, async (req, res) => {
     const { firstname, lastname, personalnumber, classid, birthday, gender, parentid } = req.body;
     const {schoolid} = req.user;
-    
+
     if (!firstname || !lastname || !personalnumber || !classid || !personalnumber) {
         res.status(400).send('Missing required fields');
         return;

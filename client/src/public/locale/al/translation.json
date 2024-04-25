@@ -46,6 +46,11 @@
 	"enterMail":"Ju lutem shtypni emailin tuaj",
 	"enterPass":"Ju lutem shtypni fjalëkalimin tuaj",
 	"invalidEmail":"Emaili nuk është valid",
+	"enterPersonalNumber": "Ju lutem shtypni numrin personal",
+	"selectClass": "Zgjidhni klasën",
+	"selectParent": "Zgjidhni prindin",
+	"personalNumber": "Numri personal",
+	"class": "Klasa",
 	"number.students": "Numri i studenteve",
 	"number.teachers": "Numri i mësuesve",
 	"number.parents": "Numri i prindërve"
