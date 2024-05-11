@@ -84,18 +84,40 @@ CREATE TYPE public.notificationreach AS ENUM (
 ALTER TYPE public.notificationreach OWNER TO postgres;
 
 --
--- Name: usertype; Type: TYPE; Schema: public; Owner: postgres
+-- Name: role; Type: TYPE; Schema: public; Owner: postgres
 --
 
-CREATE TYPE public.usertype AS ENUM (
-    'ADMIN',
-    'TEACHER',
-    'PARENT',
-    'STUDENT'
+CREATE TABLE public.role (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(255) NOT NULL
 );
 
 
-ALTER TYPE public.usertype OWNER TO postgres;
+ALTER TABLE public.role OWNER TO postgres;
+
+-- 
+-- Name: capabilities; Type: TABLE; Schema: public; Owner: postgres
+-- 
+
+CREATE TABLE public.capabilities (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    category_name VARCHAR(50) NOT NULL
+);
+
+ALTER TABLE public.capabilities OWNER TO postgres;
+
+-- 
+-- Name: role_capabilities; Type: TABLE; Schema: public; Owner: postgres
+-- 
+
+CREATE TABLE public.role_capabilities (
+    role_id INT REFERENCES public.role(id),
+    capability_id INT REFERENCES public.capabilities(id),
+    PRIMARY KEY (role_id, capability_id)
+);
+
+ALTER TABLE public.role_capabilities OWNER TO postgres;
 
 --
 -- Name: weekday; Type: TYPE; Schema: public; Owner: postgres
@@ -129,7 +151,7 @@ CREATE TABLE public."User" (
     password character varying(255) NOT NULL,
     firstname character varying(255) NOT NULL,
     lastname character varying(255) NOT NULL,
-    type public.usertype NOT NULL,
+    roleid integer NOT NULL REFERENCES public.role(id),
     schoolid integer NOT NULL
 );
 
@@ -1064,6 +1086,7 @@ ALTER TABLE ONLY public.attendance
 
 ALTER TABLE ONLY public.class
     ADD CONSTRAINT class FOREIGN KEY (schoolid) REFERENCES public.school(id);
+
 
 
 --

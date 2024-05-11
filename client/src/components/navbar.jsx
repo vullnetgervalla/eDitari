@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
 	DesktopOutlined,
 	FileOutlined,
@@ -9,49 +9,63 @@ import {
 	MenuUnfoldOutlined,
 	HomeFilled,
 	LogoutOutlined,
+	PlusCircleOutlined,
 } from '@ant-design/icons';
 import { Button, Layout, Menu, theme, Typography, Tooltip } from 'antd';
 import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useLogout } from 'hooks/useLogout';
+import axios from 'axios';
+import { useAxiosPrivate } from 'hooks/useAxiosPrivate';
+import { Spin } from 'antd';
 
 const { Header, Content, Sider } = Layout;
 const { Title } = Typography;
 
-function getItem(label, key, icon, children ) {
+function getItem(label, key, icon, children) {
 	return {
 		key,
 		icon,
 		children,
 		label,
 	};
-}	
-const keyToPath = {
-	0: ['/', 'home'],
-	11: ['/list-admin', 'adminList'],
-	12: ['/create-admin', 'createAdmin'],
-	21: ['/list-teacher', 'teacherList'],
-	22: ['/create-teacher', 'createTeacher'],
-	31: ['/list-student', 'studentList'],
-	32: ['/create-student', 'createStudent'],
-	41: ['/notification', 'notificationList'],
-	42: ['/create-notification', 'createNotification'],
-	51: ['/list-material', 'materialList'],
-	52: ['/add-material', 'addMaterial'],
+}
+let keyToPath = {
+	0: 'home',
 };
-const ACCESS_CONFIG = {
-	ADMIN: ['0', '11', '12', '21', '22', '31', '32', '41', '42', '51', '52'],
-	TEACHER: ['0', '31', '32', '41', '42', '51', '52'],
-	STUDENT: ['0', '41', '42', '51', '52'],
+const iconMapping = {
+	home: <HomeFilled />,
+	admin: <PieChartOutlined />,
+	teacher: <DesktopOutlined />,
+	student: <UserOutlined />,
+	notification: <NotificationOutlined />,
+	material: <FileOutlined />,
+	roles: <PlusCircleOutlined />,
 };
-
-export default function NavBar({ content, userType }) {
+export default function NavBar({ content }) {
+	const [capabilities, setCapabilities] = useState();
+	const [loading, setLoading] = useState(true);
+	const axiosPrivate = useAxiosPrivate();
 	const logout = useLogout();
+	const location = useLocation();
 	const { t } = useTranslation();
 	const [collapsed, setCollapsed] = useState(false);
 	const {
 		token: { colorBgContainer, borderRadiusLG },
 	} = theme.useToken();
+	const contentStyle = {
+		margin: '24px 16px',
+		padding: 24,
+		minHeight: 280,
+		background: colorBgContainer,
+		borderRadius: borderRadiusLG,
+	};
+	const getPermissions = () => {
+		if (location.pathname == '/') return true;
+		const permissions = capabilities.findIndex((item) => location.pathname.includes(item.capability_name));
+		if (permissions === -1) return false;
+		return true;
+	};
 	const navigate = useNavigate();
 	const [title, setTitle] = useState('home');
 	const [openKeys, setOpenKeys] = useState([]);
@@ -63,29 +77,61 @@ export default function NavBar({ content, userType }) {
 			setOpenKeys(keys.filter((key) => key !== latestOpenKey));
 		}
 	};
-	const accessibleRoutes = Object.fromEntries(
-		Object.entries(keyToPath)
-			.filter(([key]) => (ACCESS_CONFIG[userType] || []).includes(key))
-			.map(([key, value]) => [key, { path: value[0], name: value[1] }])
-	);
 	const items = (t) => {
-		const allItems = [
-			getItem(t('home'), '0', <HomeFilled />),
-			getItem(t('admin'), '1', <PieChartOutlined />, [getItem(t('adminList'), '11'), getItem(t('createAdmin'), '12')]),
-			getItem(t('teacher'), '2', <DesktopOutlined />, [getItem(t('teacherList'), '21'), getItem(t('createTeacher'), '22')]),
-			getItem(t('student'), '3', <UserOutlined />, [getItem(t('studentList'), '31'), getItem(t('createStudent'), '32')]),
-			getItem(t('notification'), '4', <NotificationOutlined />, [getItem(t('notificationList'), '41'), getItem(t('createNotification'), '42')]),
-			getItem(t('material'), '5', <FileOutlined />, [getItem(t('materialList'), '51'), getItem(t('addMaterial'), '52')]),
-		];
-		if (userType === 'ADMIN') {
-			return allItems;
-		} else if (userType === 'TEACHER') {
-			return allItems.filter((item) => !['1', '2'].includes(item.key));
-		} else {
-			return allItems.filter((item) => ['0', '4', '5'].includes(item.key));
-		}
+		let key = 10;
+		let currentCategory = capabilities[0].category_name;
+		let categoryCounter = 0;
+		capabilities.forEach((item) => {
+			if (item.category_name !== currentCategory) {
+				key += 10;
+				currentCategory = item.category_name;
+				categoryCounter = 0;
+			}
+			categoryCounter++;
+			keyToPath[key + categoryCounter] = item.capability_name;
+		});
+		const groupedCapabilities = capabilities.reduce((groups, item) => {
+			const group = groups[item.category_name] || [];
+			group.push(item.capability_name);
+			groups[item.category_name] = group;
+			return groups;
+		}, {});
+		const allItems = Object.entries(groupedCapabilities).map(([category, items], index) => {
+			const subItems = items.map((capability_name, subIndex) => getItem(t(capability_name), `${index + 1}${subIndex + 1}`));
+			return getItem(t(category), `${index + 1}`, iconMapping[category], subItems);
+		});
+		allItems.unshift(getItem(t('home'), '0', iconMapping['home']));
+		return allItems;
 	};
-
+	useEffect(() => {
+		let isMounted = true;
+		const source = axiosPrivate.CancelToken.source();
+		const getCapabilities = async () => {
+			try {
+				const response = await axiosPrivate.get('/users/capabilities', {
+					cancelToken: source.token,
+				});
+				isMounted && setCapabilities(response.data);
+				setLoading(false);
+			} catch (error) {
+				if (axios.isCancel(error)) {
+					console.log('Request:', error.message);
+				} else {
+					console.error(error);
+				}
+			}
+		};
+		getCapabilities();
+	}, []);
+	if (loading) {
+		return (
+			<Spin
+				className='fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2'
+				size='large'
+			/>
+		);
+	}
+	if (!getPermissions()) return <div>Not allowed</div>;
 	const handleLogout = async () => {
 		await logout();
 		navigate('/login');
@@ -113,15 +159,13 @@ export default function NavBar({ content, userType }) {
 					onOpenChange={onOpenChange}
 					items={items(t)}
 					onClick={({ key }) => {
-						const route = accessibleRoutes[key];
+						const route = keyToPath[`${key}`];
 						if (route) {
-							setTitle(t(route.name));
-							const path = route.path;
-							if (path) {
-								navigate(path);
+							setTitle(t(route));
+							if (route === 'home') navigate('/');
+							else {
+								navigate('/' + route);
 							}
-						} else {
-							console.error(`No route at key ${key}`);
 						}
 					}}
 				/>
@@ -175,14 +219,7 @@ export default function NavBar({ content, userType }) {
 					</Title>
 				</Header>
 				<Content
-					style={{
-						// display:flex,
-						margin: '24px 16px',
-						padding: 24,
-						minHeight: 280,
-						background: colorBgContainer,
-						borderRadius: borderRadiusLG,
-					}}
+					style={contentStyle}
 				>
 					{content}
 				</Content>

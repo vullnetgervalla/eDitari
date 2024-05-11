@@ -1,20 +1,19 @@
 DROP FUNCTION IF EXISTS getAllSchoolUsers(integer);
 CREATE OR REPLACE FUNCTION getAllSchoolUsers(input_school_id integer)
-RETURNS SETOF "User" LANGUAGE sql
+RETURNS SETOF public."User" LANGUAGE sql
 AS
 $$
-    SELECT * FROM "User"
+    SELECT * FROM public."User"
     WHERE schoolid = input_school_id;
 $$;
 
-
-
---Procedure for retreiving user name and lastname for email generating
+--Procedure for retrieving user name and lastname for email generating
+DROP FUNCTION IF EXISTS getUserName(text, text);
 CREATE OR REPLACE FUNCTION getUserName(first_name text, last_name text)
 RETURNS TABLE(firstname text, lastname text) LANGUAGE sql
 AS
 $$
-    SELECT firstname, lastname FROM "User"
+    SELECT firstname, lastname FROM public."User"
     WHERE firstname = first_name
     AND lastname = last_name;
 $$;
@@ -37,16 +36,32 @@ CREATE OR REPLACE FUNCTION getAllAdminUsers(input_school_id integer)
 RETURNS TABLE(id integer, firstname text, lastname text) LANGUAGE sql
 AS
 $$
-    SELECT id, firstname, lastname FROM "User"
-    WHERE schoolid = input_school_id AND type = 'ADMIN';
+    SELECT public."User".id, public."User".firstname, public."User".lastname 
+    FROM public."User"
+    INNER JOIN role ON public."User".roleid = role.id
+    WHERE public."User".schoolid = input_school_id AND role.name = 'ADMIN';
 $$;
-
 
 DROP FUNCTION IF EXISTS getAllParentUsers(integer);
 CREATE OR REPLACE FUNCTION getAllParentUsers(input_school_id integer)
 RETURNS TABLE(id integer, firstname text, lastname text) LANGUAGE sql
 AS
 $$
-    SELECT id, firstname, lastname FROM "User"
-    WHERE schoolid = input_school_id AND type = 'PARENT';
+    SELECT public."User".id, public."User".firstname, public."User".lastname 
+    FROM public."User"
+    INNER JOIN role ON public."User".roleid = role.id
+    WHERE public."User".schoolid = input_school_id AND role.name = 'PARENT';
 $$;
+
+
+DROP FUNCTION IF EXISTS getUsersCapabilities(text);
+CREATE OR REPLACE FUNCTION getUsersCapabilities(name_of_role text)
+RETURNS TABLE(capability_name text, category_name text) LANGUAGE sql AS
+$$
+    SELECT capabilities.name, capabilities.category_name
+    FROM role
+    INNER JOIN role_capabilities ON role.id = role_capabilities.role_id
+    INNER JOIN capabilities ON capabilities.id = role_capabilities.capability_id
+    WHERE role.name = name_of_role;
+$$
+;

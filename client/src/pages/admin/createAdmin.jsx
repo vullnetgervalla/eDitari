@@ -30,12 +30,11 @@ function CreateAdmin() {
 	const handleSubmit = async (values) => {
 		try {
 			const res = await axios.post('/users/admin', values);
-			message.success('Admin created successfully')
-		}
-		catch(e) {
+			message.success('Admin created successfully');
+		} catch (e) {
 			message.error('Error creating admin');
 		}
-	}
+	};
 	return (
 		<div style={{ textAlign: 'center', display: 'flex', alignItems: 'center', flexDirection: 'column' }}>
 			<Form
@@ -50,7 +49,6 @@ function CreateAdmin() {
 				}}
 				onFinish={handleSubmit}
 			>
-
 				<Form.Item
 					label={t('name')}
 					labelAlign='left'
@@ -86,16 +84,16 @@ function CreateAdmin() {
 					rules={[
 						{
 							required: true,
-							message: t('enterMail')
+							message: t('enterMail'),
 						},
 						{
 							type: 'email',
-							message: t('invalidEmail')
-						}
+							message: t('invalidEmail'),
+						},
 					]}
 				>
 					<Input />
-				</Form.Item> 
+				</Form.Item>
 
 				<Form.Item
 					label={t('pass')}
@@ -117,13 +115,16 @@ function CreateAdmin() {
 						span: 24,
 					}}
 				>
-
-				<Button type='primary' htmlType='submit' style={{marginTop: '1.5em', height: '3em'}}>
-					{t('createAdmin')}
-				</Button>
+					<Button
+						type='primary'
+						htmlType='submit'
+						style={{ marginTop: '1.5em', height: '3em' }}
+					>
+						{t('create-admin')}
+					</Button>
 				</Form.Item>
 			</Form>
 		</div>
 	);
 }
-export default CreateAdmin
+export default CreateAdmin;

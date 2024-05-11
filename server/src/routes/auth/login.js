@@ -11,7 +11,7 @@ loginRouter.post('/', (req, res) => {
         res.sendStatus(400);
         return;
     }
-    db.query('SELECT * FROM "User" WHERE email = $1', [email], async (err, queryRes) => {
+    db.query('SELECT public."User".*, role.name AS role FROM public."User" INNER JOIN public.role ON public."User".roleid = public.role.id WHERE public."User".email = $1', [email], async (err, queryRes) => {
         if (err) {
             console.error('Error executing query', err);
             res.sendStatus(500);
@@ -27,11 +27,10 @@ loginRouter.post('/', (req, res) => {
             res.sendStatus(401);
             return;
         }
-
         const payload = {
             user: user.id,
             schoolid: user.schoolid,
-            userType: user.type
+            userType: user.role
         };
         const accessToken = generateAccessToken(payload);
         const refreshToken = generateRefreshToken(payload);

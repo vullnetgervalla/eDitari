@@ -15,7 +15,7 @@ import { AdminRoutes } from './routes/adminRoutes';
 
 function App() {
 	const { auth } = useAuth();
-	const { user, userType } = auth;
+    const { user, userType } = auth;
 	return (
 		<>
 			<Routes>
