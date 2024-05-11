@@ -56,5 +56,11 @@
 	"number.parents": "Number of parents",
 	"roles": "User Management",
 	"list-role": "List of users",
-	"create-role": "Create user"
+	"create-role": "Create user",
+	"role-name": "Role name",
+	"check-all": "Check all",
+	"create": "Create",
+	"check-all-functionalities": "Check all functionalities",
+	"reset": "Reset",
+	"user-created-successfully": "User created successfully"
 }

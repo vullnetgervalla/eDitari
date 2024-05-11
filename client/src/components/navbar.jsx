@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import {
 	DesktopOutlined,
 	FileOutlined,
@@ -11,12 +11,12 @@ import {
 	LogoutOutlined,
 	PlusCircleOutlined,
 } from '@ant-design/icons';
-import { Button, Layout, Menu, theme, Typography, Tooltip } from 'antd';
+import {  Button, Layout, Menu,  theme, Typography, Tooltip } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useLogout } from 'hooks/useLogout';
-import axios from 'axios';
 import { useAxiosPrivate } from 'hooks/useAxiosPrivate';
+import { useCapabilities } from 'hooks/useCapabilities';
 import { Spin } from 'antd';
 
 const { Header, Content, Sider } = Layout;
@@ -43,9 +43,8 @@ const iconMapping = {
 	roles: <PlusCircleOutlined />,
 };
 export default function NavBar({ content }) {
-	const [capabilities, setCapabilities] = useState();
-	const [loading, setLoading] = useState(true);
 	const axiosPrivate = useAxiosPrivate();
+	const { capabilities, loading } = useCapabilities(axiosPrivate);
 	const logout = useLogout();
 	const location = useLocation();
 	const { t } = useTranslation();
@@ -55,10 +54,11 @@ export default function NavBar({ content }) {
 	} = theme.useToken();
 	const contentStyle = {
 		margin: '24px 16px',
-		padding: 24,
+		padding: 60,
 		minHeight: 280,
 		background: colorBgContainer,
 		borderRadius: borderRadiusLG,
+		position: 'relative'
 	};
 	const getPermissions = () => {
 		if (location.pathname == '/') return true;
@@ -103,26 +103,6 @@ export default function NavBar({ content }) {
 		allItems.unshift(getItem(t('home'), '0', iconMapping['home']));
 		return allItems;
 	};
-	useEffect(() => {
-		let isMounted = true;
-		const source = axiosPrivate.CancelToken.source();
-		const getCapabilities = async () => {
-			try {
-				const response = await axiosPrivate.get('/users/capabilities', {
-					cancelToken: source.token,
-				});
-				isMounted && setCapabilities(response.data);
-				setLoading(false);
-			} catch (error) {
-				if (axios.isCancel(error)) {
-					console.log('Request:', error.message);
-				} else {
-					console.error(error);
-				}
-			}
-		};
-		getCapabilities();
-	}, []);
 	if (loading) {
 		return (
 			<Spin

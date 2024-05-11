@@ -56,5 +56,11 @@
 	"number.parents": "Broj roditelja",
 	"roles": "Uloge",
 	"list-role": "Spisak uloga",
-	"create-role": "Kreiraj ulogu"
+	"create-role": "Kreiraj ulogu",
+	"role-name": "Naziv uloge",
+	"check-all": "Označi sve",
+	"create": "Kreiraj",
+	"check-all-functionalities": "Označi sve funkcionalnosti",
+	"reset": "Cisti",
+	"user-created-successfully": "Korisnik uspešno kreiran"
 }

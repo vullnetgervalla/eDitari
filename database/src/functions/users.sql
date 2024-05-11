@@ -1,19 +1,18 @@
 DROP FUNCTION IF EXISTS getAllSchoolUsers(integer);
 CREATE OR REPLACE FUNCTION getAllSchoolUsers(input_school_id integer)
-RETURNS SETOF public."User" LANGUAGE sql
+RETURNS SETOF "User" LANGUAGE sql
 AS
 $$
-    SELECT * FROM public."User"
+    SELECT * FROM "User"
     WHERE schoolid = input_school_id;
 $$;
 
---Procedure for retrieving user name and lastname for email generating
 DROP FUNCTION IF EXISTS getUserName(text, text);
 CREATE OR REPLACE FUNCTION getUserName(first_name text, last_name text)
 RETURNS TABLE(firstname text, lastname text) LANGUAGE sql
 AS
 $$
-    SELECT firstname, lastname FROM public."User"
+    SELECT firstname, lastname FROM "User"
     WHERE firstname = first_name
     AND lastname = last_name;
 $$;
@@ -36,10 +35,9 @@ CREATE OR REPLACE FUNCTION getAllAdminUsers(input_school_id integer)
 RETURNS TABLE(id integer, firstname text, lastname text) LANGUAGE sql
 AS
 $$
-    SELECT public."User".id, public."User".firstname, public."User".lastname 
-    FROM public."User"
-    INNER JOIN role ON public."User".roleid = role.id
-    WHERE public."User".schoolid = input_school_id AND role.name = 'ADMIN';
+    SELECT "User".id, firstname, lastname FROM "User"
+    INNER JOIN role ON "User".roleid = role.id
+    WHERE "User".schoolid = input_school_id AND role.name = 'ADMIN';
 $$;
 
 DROP FUNCTION IF EXISTS getAllParentUsers(integer);
@@ -47,10 +45,9 @@ CREATE OR REPLACE FUNCTION getAllParentUsers(input_school_id integer)
 RETURNS TABLE(id integer, firstname text, lastname text) LANGUAGE sql
 AS
 $$
-    SELECT public."User".id, public."User".firstname, public."User".lastname 
-    FROM public."User"
-    INNER JOIN role ON public."User".roleid = role.id
-    WHERE public."User".schoolid = input_school_id AND role.name = 'PARENT';
+    SELECT "User".id, firstname, lastname FROM "User"
+    INNER JOIN role ON "User".roleid = role.id
+    WHERE "User".schoolid = input_school_id AND role.name = 'PARENT';
 $$;
 
 
@@ -65,3 +62,22 @@ $$
     WHERE role.name = name_of_role;
 $$
 ;
+
+DROP FUNCTION IF EXISTS insertRoleAndCapabilities(text, text[]);
+CREATE OR REPLACE FUNCTION insertRoleAndCapabilities(role_name text, capabilities_array text[])
+RETURNS void LANGUAGE plpgsql AS
+$$
+DECLARE
+    role_id INT;
+    capability_id INT;
+    capability_name text;
+BEGIN
+    INSERT INTO role (name) VALUES (role_name) RETURNING id INTO role_id;
+
+    FOREACH capability_name IN ARRAY capabilities_array
+    LOOP
+        SELECT id INTO capability_id FROM capabilities WHERE name = capability_name;
+        INSERT INTO role_capabilities (role_id, capability_id) VALUES (role_id, capability_id);
+    END LOOP;
+END;
+$$;

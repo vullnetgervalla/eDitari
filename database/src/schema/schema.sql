@@ -84,42 +84,6 @@ CREATE TYPE public.notificationreach AS ENUM (
 ALTER TYPE public.notificationreach OWNER TO postgres;
 
 --
--- Name: role; Type: TYPE; Schema: public; Owner: postgres
---
-
-CREATE TABLE public.role (
-    id SERIAL PRIMARY KEY,
-    name VARCHAR(255) NOT NULL
-);
-
-
-ALTER TABLE public.role OWNER TO postgres;
-
--- 
--- Name: capabilities; Type: TABLE; Schema: public; Owner: postgres
--- 
-
-CREATE TABLE public.capabilities (
-    id SERIAL PRIMARY KEY,
-    name VARCHAR(255) NOT NULL,
-    category_name VARCHAR(50) NOT NULL
-);
-
-ALTER TABLE public.capabilities OWNER TO postgres;
-
--- 
--- Name: role_capabilities; Type: TABLE; Schema: public; Owner: postgres
--- 
-
-CREATE TABLE public.role_capabilities (
-    role_id INT REFERENCES public.role(id),
-    capability_id INT REFERENCES public.capabilities(id),
-    PRIMARY KEY (role_id, capability_id)
-);
-
-ALTER TABLE public.role_capabilities OWNER TO postgres;
-
---
 -- Name: weekday; Type: TYPE; Schema: public; Owner: postgres
 --
 
@@ -136,9 +100,70 @@ CREATE TYPE public.weekday AS ENUM (
 
 ALTER TYPE public.weekday OWNER TO postgres;
 
+--
+-- Name: getalladminusers(integer); Type: FUNCTION; Schema: public; Owner: postgres
+--
+
+CREATE FUNCTION public.getalladminusers(input_school_id integer) RETURNS TABLE(id integer, firstname text, lastname text)
+    LANGUAGE sql
+    AS $$
+    SELECT "User".id, firstname, lastname FROM "User"
+    INNER JOIN role ON "User".roleid = role.id
+    WHERE "User".schoolid = input_school_id AND role.name = 'ADMIN';
+$$;
+
+
+ALTER FUNCTION public.getalladminusers(input_school_id integer) OWNER TO postgres;
+
+--
+-- Name: getallparentusers(integer); Type: FUNCTION; Schema: public; Owner: postgres
+--
+
+CREATE FUNCTION public.getallparentusers(input_school_id integer) RETURNS TABLE(id integer, firstname text, lastname text)
+    LANGUAGE sql
+    AS $$
+    SELECT "User".id, firstname, lastname FROM "User"
+    INNER JOIN role ON "User".roleid = role.id
+    WHERE "User".schoolid = input_school_id AND role.name = 'PARENT';
+$$;
+
+
+ALTER FUNCTION public.getallparentusers(input_school_id integer) OWNER TO postgres;
+
 SET default_tablespace = '';
 
 SET default_table_access_method = heap;
+
+--
+-- Name: class; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.class (
+    id integer NOT NULL,
+    teacherid integer,
+    classname character varying(255),
+    classroom integer,
+    classlevel integer NOT NULL,
+    yearid integer NOT NULL,
+    schoolid integer NOT NULL
+);
+
+
+ALTER TABLE public.class OWNER TO postgres;
+
+--
+-- Name: getallschoolclasses(integer); Type: FUNCTION; Schema: public; Owner: postgres
+--
+
+CREATE FUNCTION public.getallschoolclasses(school_id integer) RETURNS SETOF public.class
+    LANGUAGE sql
+    AS $$
+    SELECT * FROM Class
+    WHERE schoolid = school_id;
+$$;
+
+
+ALTER FUNCTION public.getallschoolclasses(school_id integer) OWNER TO postgres;
 
 --
 -- Name: User; Type: TABLE; Schema: public; Owner: postgres
@@ -151,12 +176,121 @@ CREATE TABLE public."User" (
     password character varying(255) NOT NULL,
     firstname character varying(255) NOT NULL,
     lastname character varying(255) NOT NULL,
-    roleid integer NOT NULL REFERENCES public.role(id),
+    roleid integer NOT NULL,
     schoolid integer NOT NULL
 );
 
 
 ALTER TABLE public."User" OWNER TO postgres;
+
+--
+-- Name: getallschoolusers(integer); Type: FUNCTION; Schema: public; Owner: postgres
+--
+
+CREATE FUNCTION public.getallschoolusers(input_school_id integer) RETURNS SETOF public."User"
+    LANGUAGE sql
+    AS $$
+    SELECT * FROM "User"
+    WHERE schoolid = input_school_id;
+$$;
+
+
+ALTER FUNCTION public.getallschoolusers(input_school_id integer) OWNER TO postgres;
+
+--
+-- Name: getusername(text, text); Type: FUNCTION; Schema: public; Owner: postgres
+--
+
+CREATE FUNCTION public.getusername(first_name text, last_name text) RETURNS TABLE(firstname text, lastname text)
+    LANGUAGE sql
+    AS $$
+    SELECT firstname, lastname FROM "User"
+    WHERE firstname = first_name
+    AND lastname = last_name;
+$$;
+
+
+ALTER FUNCTION public.getusername(first_name text, last_name text) OWNER TO postgres;
+
+--
+-- Name: getuserscapabilities(text); Type: FUNCTION; Schema: public; Owner: postgres
+--
+
+CREATE FUNCTION public.getuserscapabilities(name_of_role text) RETURNS TABLE(capability_name text, category_name text)
+    LANGUAGE sql
+    AS $$
+    SELECT capabilities.name, capabilities.category_name
+    FROM role
+    INNER JOIN role_capabilities ON role.id = role_capabilities.role_id
+    INNER JOIN capabilities ON capabilities.id = role_capabilities.capability_id
+    WHERE role.name = name_of_role;
+$$;
+
+
+ALTER FUNCTION public.getuserscapabilities(name_of_role text) OWNER TO postgres;
+
+--
+-- Name: insertrole(text); Type: FUNCTION; Schema: public; Owner: postgres
+--
+
+CREATE FUNCTION public.insertrole(role_name text) RETURNS void
+    LANGUAGE sql
+    AS $$
+    INSERT INTO role (name)
+    VALUES (role_name);
+$$;
+
+
+ALTER FUNCTION public.insertrole(role_name text) OWNER TO postgres;
+
+--
+-- Name: insertroleandcapabilities(text, text[]); Type: FUNCTION; Schema: public; Owner: postgres
+--
+
+CREATE FUNCTION public.insertroleandcapabilities(role_name text, capabilities_array text[]) RETURNS void
+    LANGUAGE plpgsql
+    AS $$
+DECLARE
+    role_id INT;
+    capability_id INT;
+    capability_name text;
+BEGIN
+    INSERT INTO role (name) VALUES (role_name) RETURNING id INTO role_id;
+
+    FOREACH capability_name IN ARRAY capabilities_array
+    LOOP
+        SELECT id INTO capability_id FROM capabilities WHERE name = capability_name;
+        INSERT INTO role_capabilities (role_id, capability_id) VALUES (role_id, capability_id);
+    END LOOP;
+END;
+$$;
+
+
+ALTER FUNCTION public.insertroleandcapabilities(role_name text, capabilities_array text[]) OWNER TO postgres;
+
+--
+-- Name: insertrolecapabilities(text[], text); Type: FUNCTION; Schema: public; Owner: postgres
+--
+
+CREATE FUNCTION public.insertrolecapabilities(capabilities_array text[], role_name text) RETURNS void
+    LANGUAGE plpgsql
+    AS $$
+DECLARE
+    role_id INT;
+    capability_id INT;
+    capability_name text;
+BEGIN
+    SELECT id INTO role_id FROM role WHERE name = role_name;
+    FOREACH capability_name IN ARRAY capabilities_array
+    LOOP
+        SELECT id INTO capability_id FROM capabilities WHERE name = capability_name;
+        INSERT INTO role_capabilities (role_id, capability_id) VALUES (role_id, capability_id);
+    END LOOP;
+END;
+$$;
+
+
+ALTER FUNCTION public.insertrolecapabilities(capabilities_array text[], role_name text) OWNER TO postgres;
 
 --
 -- Name: assignment; Type: TABLE; Schema: public; Owner: postgres
@@ -235,21 +369,39 @@ ALTER SEQUENCE public.attendance_id_seq OWNED BY public.attendance.id;
 
 
 --
--- Name: class; Type: TABLE; Schema: public; Owner: postgres
+-- Name: capabilities; Type: TABLE; Schema: public; Owner: postgres
 --
 
-CREATE TABLE public.class (
+CREATE TABLE public.capabilities (
     id integer NOT NULL,
-    teacherid integer,
-    classname character varying(255),
-    classroom integer,
-    classlevel integer NOT NULL,
-    yearid integer NOT NULL,
-    schoolid integer NOT NULL
+    name character varying(255) NOT NULL,
+    category_name character varying(50) NOT NULL
 );
 
 
-ALTER TABLE public.class OWNER TO postgres;
+ALTER TABLE public.capabilities OWNER TO postgres;
+
+--
+-- Name: capabilities_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.capabilities_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.capabilities_id_seq OWNER TO postgres;
+
+--
+-- Name: capabilities_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.capabilities_id_seq OWNED BY public.capabilities.id;
+
 
 --
 -- Name: class_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
@@ -493,6 +645,52 @@ ALTER SEQUENCE public.parent_id_seq OWNER TO postgres;
 --
 
 ALTER SEQUENCE public.parent_id_seq OWNED BY public.parent.id;
+
+
+--
+-- Name: role; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.role (
+    id integer NOT NULL,
+    name character varying(255) NOT NULL
+);
+
+
+ALTER TABLE public.role OWNER TO postgres;
+
+--
+-- Name: role_capabilities; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.role_capabilities (
+    role_id integer NOT NULL,
+    capability_id integer NOT NULL
+);
+
+
+ALTER TABLE public.role_capabilities OWNER TO postgres;
+
+--
+-- Name: role_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.role_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.role_id_seq OWNER TO postgres;
+
+--
+-- Name: role_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.role_id_seq OWNED BY public.role.id;
 
 
 --
@@ -790,6 +988,13 @@ ALTER TABLE ONLY public.attendance ALTER COLUMN id SET DEFAULT nextval('public.a
 
 
 --
+-- Name: capabilities id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.capabilities ALTER COLUMN id SET DEFAULT nextval('public.capabilities_id_seq'::regclass);
+
+
+--
 -- Name: class id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -836,6 +1041,13 @@ ALTER TABLE ONLY public.notification ALTER COLUMN id SET DEFAULT nextval('public
 --
 
 ALTER TABLE ONLY public.parent ALTER COLUMN id SET DEFAULT nextval('public.parent_id_seq'::regclass);
+
+
+--
+-- Name: role id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.role ALTER COLUMN id SET DEFAULT nextval('public.role_id_seq'::regclass);
 
 
 --
@@ -905,6 +1117,14 @@ ALTER TABLE ONLY public.attendance
 
 
 --
+-- Name: capabilities capabilities_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.capabilities
+    ADD CONSTRAINT capabilities_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: class class_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -958,6 +1178,22 @@ ALTER TABLE ONLY public.notification
 
 ALTER TABLE ONLY public.parent
     ADD CONSTRAINT parent_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: role_capabilities role_capabilities_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.role_capabilities
+    ADD CONSTRAINT role_capabilities_pkey PRIMARY KEY (role_id, capability_id);
+
+
+--
+-- Name: role role_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.role
+    ADD CONSTRAINT role_pkey PRIMARY KEY (id);
 
 
 --
@@ -1049,6 +1285,14 @@ ALTER TABLE ONLY public.year
 
 
 --
+-- Name: User User_roleid_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."User"
+    ADD CONSTRAINT "User_roleid_fkey" FOREIGN KEY (roleid) REFERENCES public.role(id);
+
+
+--
 -- Name: assignment assignment_classid_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1086,7 +1330,6 @@ ALTER TABLE ONLY public.attendance
 
 ALTER TABLE ONLY public.class
     ADD CONSTRAINT class FOREIGN KEY (schoolid) REFERENCES public.school(id);
-
 
 
 --
@@ -1199,6 +1442,22 @@ ALTER TABLE ONLY public.notification
 
 ALTER TABLE ONLY public.parent
     ADD CONSTRAINT parent_id_fkey FOREIGN KEY (id) REFERENCES public."User"(id);
+
+
+--
+-- Name: role_capabilities role_capabilities_capability_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.role_capabilities
+    ADD CONSTRAINT role_capabilities_capability_id_fkey FOREIGN KEY (capability_id) REFERENCES public.capabilities(id);
+
+
+--
+-- Name: role_capabilities role_capabilities_role_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.role_capabilities
+    ADD CONSTRAINT role_capabilities_role_id_fkey FOREIGN KEY (role_id) REFERENCES public.role(id);
 
 
 --

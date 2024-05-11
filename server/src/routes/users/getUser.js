@@ -7,7 +7,7 @@ const { authenticateToken } = require('../../middleware/authenticateToken');
 const getUserRouter = Router();
 
 getUserRouter.get('/', isAdminToken, (req, res) => {
-	const { user, schoolid, userType } = req.user;
+	const { schoolid} = req.user;
 	db.query('SELECT * from getAllSchoolUsers($1)', [schoolid], (err, queryRes) => {
 		if (err) {
 			console.error('Error executing query', err);
@@ -20,7 +20,7 @@ getUserRouter.get('/', isAdminToken, (req, res) => {
 });
 
 getUserRouter.get('/admin', isAdminToken, (req, res) => {
-	const { user, schoolid } = req.user;
+	const { schoolid } = req.user;
 	db.query('SELECT * from getAllAdminUsers($1)', [schoolid], (err, queryRes) => {
 		if (err) {
 			console.error('Error executing query', err);
@@ -33,7 +33,7 @@ getUserRouter.get('/admin', isAdminToken, (req, res) => {
 });
 
 getUserRouter.get('/parents', isAdminTeacherToken, (req, res) => {
-	const { user, schoolid } = req.user;
+	const { schoolid } = req.user;
 	db.query('SELECT * from getAllParentUsers($1)', [schoolid], (err, queryRes) => {
 		if (err) {
 			console.error('Error executing query', err);

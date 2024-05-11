@@ -56,5 +56,11 @@
 	"number.parents": "Numri i prindërve",
 	"roles": "Menaxhimi",
 	"list-role": "Lista e përdoruesve",
-	"create-role": "Krijo përdorues"
+	"create-role": "Krijo përdorues",
+	"role-name": "Emri i përdoruesit",
+	"check-all": "Zgjidh të gjitha",
+	"create": "Krijo",
+	"check-all-functionalities": "Zgjidh të gjitha funksionalitetet",
+	"reset": "Pastro",
+	"user-created-successfully": "Përdoruesi u krijua me sukses"
 }
