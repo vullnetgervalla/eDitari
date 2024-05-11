@@ -11,7 +11,7 @@ import {
 	LogoutOutlined,
 	PlusCircleOutlined,
 } from '@ant-design/icons';
-import {  Button, Layout, Menu,  theme, Typography, Tooltip } from 'antd';
+import { Button, Layout, Menu, theme, Typography, Tooltip } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useLogout } from 'hooks/useLogout';
@@ -58,7 +58,7 @@ export default function NavBar({ content }) {
 		minHeight: 280,
 		background: colorBgContainer,
 		borderRadius: borderRadiusLG,
-		position: 'relative'
+		position: 'relative',
 	};
 	const getPermissions = () => {
 		if (location.pathname == '/') return true;
@@ -198,11 +198,7 @@ export default function NavBar({ content }) {
 						{t(title)}
 					</Title>
 				</Header>
-				<Content
-					style={contentStyle}
-				>
-					{content}
-				</Content>
+				<Content style={contentStyle}>{content}</Content>
 			</Layout>
 		</Layout>
 	);

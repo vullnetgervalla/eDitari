@@ -7,7 +7,7 @@ const { authenticateToken } = require('../../middleware/authenticateToken');
 const getUserRouter = Router();
 
 getUserRouter.get('/', isAdminToken, (req, res) => {
-	const { schoolid} = req.user;
+	const { schoolid } = req.user;
 	db.query('SELECT * from getAllSchoolUsers($1)', [schoolid], (err, queryRes) => {
 		if (err) {
 			console.error('Error executing query', err);
