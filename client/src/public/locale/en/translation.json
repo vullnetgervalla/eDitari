@@ -62,5 +62,6 @@
 	"create": "Create",
 	"check-all-functionalities": "Check all functionalities",
 	"reset": "Reset",
-	"user-created-successfully": "User created successfully"
+	"role-created-successfully": "Role created successfully",
+	"role-cannot-contain-numbers": "Role name cannot contain numbers"
 }

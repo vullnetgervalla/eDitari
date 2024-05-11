@@ -62,5 +62,6 @@
 	"create": "Krijo",
 	"check-all-functionalities": "Zgjidh të gjitha funksionalitetet",
 	"reset": "Pastro",
-	"user-created-successfully": "Përdoruesi u krijua me sukses"
+	"role-created-successfully": "Lloji i përdoruesit u krijua me sukses",
+	"role-cannot-contain-numbers": "Roli nuk mund të përmbajë numra"
 }

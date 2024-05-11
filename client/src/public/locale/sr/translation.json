@@ -62,5 +62,6 @@
 	"create": "Kreiraj",
 	"check-all-functionalities": "Označi sve funkcionalnosti",
 	"reset": "Cisti",
-	"user-created-successfully": "Korisnik uspešno kreiran"
+	"role-created-successfully": "Korisnik uspešno kreiran",
+	"role-cannot-contain-numbers": "Naziv uloge ne može sadržati brojeve"
 }

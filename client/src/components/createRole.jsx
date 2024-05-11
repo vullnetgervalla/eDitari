@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { UserOutlined } from '@ant-design/icons';
-import { Checkbox, Divider, Flex, Input, Spin, Button, Alert } from 'antd';
+import { Checkbox, Divider, Flex, Input, Spin, Button, Alert, message } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { useAxiosPrivate } from 'hooks/useAxiosPrivate';
 import { useCapabilities } from 'hooks/useCapabilities';
@@ -9,13 +9,14 @@ const CheckboxGroup = Checkbox.Group;
 let plainOptions = [];
 
 export default function CreateRole() {
+	const [messageApi, contextHolder] = message.useMessage();
 	const { t } = useTranslation();
 	const axiosPrivate = useAxiosPrivate();
 	const { capabilities, loading } = useCapabilities(axiosPrivate);
 	const [checkedList, setCheckedList] = useState([]);
 	const [requestList, setRequestList] = useState([]);
 	const [roleName, setRoleName] = useState('');
-	const [showAlert, setShowAlert] = useState(false);
+	const [wrongNameInput, setWrongNameInput] = useState(false);
 	if (loading) {
 		return (
 			<Spin
@@ -44,6 +45,19 @@ export default function CreateRole() {
 		setCheckedList([]);
 		setRoleName('');
 	};
+	const checkName = (e) => {
+		const value = e.target.value;
+		if (/\d/.test(value)) {
+			setWrongNameInput(true);
+			messageApi.open({
+				type: 'error',
+				content: t('role-cannot-contain-numbers'),
+			});
+		} else {
+			wrongNameInput ? setWrongNameInput(false) : null;
+			setRoleName(value);
+		}
+	};
 	const addRole = async (roleName, capabilities) => {
 		try {
 			await axiosPrivate.post('/users/create-role', {
@@ -51,8 +65,10 @@ export default function CreateRole() {
 				capabilities,
 			});
 			resetData();
-      setShowAlert(true);
-      setTimeout(() => setShowAlert(false), 10000);
+			messageApi.open({
+				type: 'success',
+				content: t('role-created-successfully'),
+			});
 		} catch (error) {
 			console.error(error);
 		}
@@ -61,29 +77,21 @@ export default function CreateRole() {
 		<Flex
 			vertical
 			gap='large'
-		>
+    >
+      {contextHolder}
 			<Flex>
 				<Input
 					size='large'
 					placeholder={t('role-name')}
 					prefix={<UserOutlined />}
 					value={roleName}
-					onChange={(e) => setRoleName(e.target.value)}
+					onChange={checkName}
 					style={{
 						width: '25%',
 						marginBottom: '30px',
 					}}
+					status={wrongNameInput ? 'error' : undefined}
 				/>
-				{showAlert && (
-					<Alert
-						message={t('user-created-successfully')}
-						type='success'
-						showIcon
-						style={{ marginLeft: 'auto', fontSize: '16px', width: '35%' }}
-						closable
-            onClose={() => setShowAlert(false)}
-					/>
-				)}
 			</Flex>
 			<div style={{ margin: '0 0 0 20px' }}>
 				<Checkbox
