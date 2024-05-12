@@ -64,6 +64,20 @@ export default function NavBar({ content }) {
     borderRadius: borderRadiusLG,
     position: 'relative',
   };
+  const getPermissions = () => {
+    if (location.pathname == '/') return true;
+    const permissions = capabilities.findIndex((item) => location.pathname.includes(item.capability_name));
+    if (permissions === -1) return false;
+    return true;
+  };
+  const onOpenChange = (keys) => {
+    const latestOpenKey = keys.find((key) => openKeys.indexOf(key) === -1);
+    if (openKeys.indexOf(latestOpenKey) === -1) {
+      setOpenKeys([latestOpenKey]);
+    } else {
+      setOpenKeys(keys.filter((key) => key !== latestOpenKey));
+    }
+  };
   const items = (t) => {
     let key = 10;
     let currentCategory = capabilities[0].category_name;
@@ -90,19 +104,6 @@ export default function NavBar({ content }) {
     allItems.unshift(getItem(t('home'), '0', iconMapping['home']));
     return allItems;
   };
-  const permission = () => {
-    if(location.pathname.replace(/^\//, '') === '') return false
-    return !Object.values(keyToPath).includes(location.pathname.replace(/^\//, ''))
-  }
-  if (permission()) return <Unauthorized />;
-  const onOpenChange = (keys) => {
-    const latestOpenKey = keys.find((key) => openKeys.indexOf(key) === -1);
-    if (openKeys.indexOf(latestOpenKey) === -1) {
-      setOpenKeys([latestOpenKey]);
-    } else {
-      setOpenKeys(keys.filter((key) => key !== latestOpenKey));
-    }
-  };
   if (loading) {
     return (
       <Spin
@@ -111,6 +112,7 @@ export default function NavBar({ content }) {
       />
     );
   }
+  if (!getPermissions()) return <Unauthorized />;
   const handleLogout = async () => {
     await logout();
     navigate('/login');
