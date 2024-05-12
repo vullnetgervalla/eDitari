@@ -22,25 +22,17 @@ export default function ListAdmins() {
         setLoading(false);
       } catch (error) {
         if (axios.isCancel(error)) {
-          console.log('Request canceled', error.message);
+          console.log('Request:', error.message);
         } else {
           console.error(error);
         }
 			}
 		};
-    
 		getUsers();
-    
-		return () => {
-			isMounted = false;
-			source.cancel();
-		};
   }, []);
-
   if (loading) {
     return <Spin className='fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2' size='large' />;
-  }
-
+	}
 	return (
       <ShowData userType={"ADMIN"} data={users} />
 	);

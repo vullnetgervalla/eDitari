@@ -50,7 +50,6 @@ function Login() {
         }
 
         try {
-
             const response = await axios.post(LOGIN_URL,
                 JSON.stringify({ email, password }),
                 {
@@ -63,7 +62,7 @@ function Login() {
             if(persist) {
                 localStorage.setItem('loggedIn', true);
             }
-                setEmail('');
+            setEmail('');
             setPassword('');
             navigate(from, { replace: true });
         } catch (err) {

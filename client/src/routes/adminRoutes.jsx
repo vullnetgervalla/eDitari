@@ -7,6 +7,7 @@ import ListStudents from 'pages/users/listStudents';
 import ListTeachers from 'pages/users/listTeachers';
 import ListAdmins from 'pages/users/listAdmins';
 import Users from 'pages/users';
+import CreateRole from 'components/createRole';
 
 export const AdminRoutes = [
   {
@@ -39,5 +40,9 @@ export const AdminRoutes = [
   {
     path: 'create-student',
     element: <CreateStudent />
+  },
+  {
+    path: 'create-role',
+    element: <CreateRole />
   }
 ];
