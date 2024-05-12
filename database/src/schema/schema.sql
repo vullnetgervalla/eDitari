@@ -100,36 +100,6 @@ CREATE TYPE public.weekday AS ENUM (
 
 ALTER TYPE public.weekday OWNER TO postgres;
 
---
--- Name: getalladminusers(integer); Type: FUNCTION; Schema: public; Owner: postgres
---
-
-CREATE FUNCTION public.getalladminusers(input_school_id integer) RETURNS TABLE(id integer, firstname text, lastname text)
-    LANGUAGE sql
-    AS $$
-    SELECT "User".id, firstname, lastname FROM "User"
-    INNER JOIN role ON "User".roleid = role.id
-    WHERE "User".schoolid = input_school_id AND role.name = 'ADMIN';
-$$;
-
-
-ALTER FUNCTION public.getalladminusers(input_school_id integer) OWNER TO postgres;
-
---
--- Name: getallparentusers(integer); Type: FUNCTION; Schema: public; Owner: postgres
---
-
-CREATE FUNCTION public.getallparentusers(input_school_id integer) RETURNS TABLE(id integer, firstname text, lastname text)
-    LANGUAGE sql
-    AS $$
-    SELECT "User".id, firstname, lastname FROM "User"
-    INNER JOIN role ON "User".roleid = role.id
-    WHERE "User".schoolid = input_school_id AND role.name = 'PARENT';
-$$;
-
-
-ALTER FUNCTION public.getallparentusers(input_school_id integer) OWNER TO postgres;
-
 SET default_tablespace = '';
 
 SET default_table_access_method = heap;
@@ -151,19 +121,6 @@ CREATE TABLE public.class (
 
 ALTER TABLE public.class OWNER TO postgres;
 
---
--- Name: getallschoolclasses(integer); Type: FUNCTION; Schema: public; Owner: postgres
---
-
-CREATE FUNCTION public.getallschoolclasses(school_id integer) RETURNS SETOF public.class
-    LANGUAGE sql
-    AS $$
-    SELECT * FROM Class
-    WHERE schoolid = school_id;
-$$;
-
-
-ALTER FUNCTION public.getallschoolclasses(school_id integer) OWNER TO postgres;
 
 --
 -- Name: User; Type: TABLE; Schema: public; Owner: postgres
@@ -181,120 +138,7 @@ CREATE TABLE public."User" (
 );
 
 
-ALTER TABLE public."User" OWNER TO postgres;
 
---
--- Name: getallschoolusers(integer); Type: FUNCTION; Schema: public; Owner: postgres
---
-
-CREATE FUNCTION public.getallschoolusers(input_school_id integer) RETURNS SETOF public."User"
-    LANGUAGE sql
-    AS $$
-    SELECT * FROM "User"
-    WHERE schoolid = input_school_id;
-$$;
-
-
-ALTER FUNCTION public.getallschoolusers(input_school_id integer) OWNER TO postgres;
-
---
--- Name: getusername(text, text); Type: FUNCTION; Schema: public; Owner: postgres
---
-
-CREATE FUNCTION public.getusername(first_name text, last_name text) RETURNS TABLE(firstname text, lastname text)
-    LANGUAGE sql
-    AS $$
-    SELECT firstname, lastname FROM "User"
-    WHERE firstname = first_name
-    AND lastname = last_name;
-$$;
-
-
-ALTER FUNCTION public.getusername(first_name text, last_name text) OWNER TO postgres;
-
---
--- Name: getuserscapabilities(text); Type: FUNCTION; Schema: public; Owner: postgres
---
-
-CREATE FUNCTION public.getuserscapabilities(name_of_role text) RETURNS TABLE(capability_name text, category_name text)
-    LANGUAGE sql
-    AS $$
-    SELECT capabilities.name, capabilities.category_name
-    FROM role
-    INNER JOIN role_capabilities ON role.id = role_capabilities.role_id
-    INNER JOIN capabilities ON capabilities.id = role_capabilities.capability_id
-    WHERE role.name = name_of_role;
-$$;
-
-
-ALTER FUNCTION public.getuserscapabilities(name_of_role text) OWNER TO postgres;
-
---
--- Name: insertrole(text); Type: FUNCTION; Schema: public; Owner: postgres
---
-
-CREATE FUNCTION public.insertrole(role_name text) RETURNS void
-    LANGUAGE sql
-    AS $$
-    INSERT INTO role (name)
-    VALUES (role_name);
-$$;
-
-
-ALTER FUNCTION public.insertrole(role_name text) OWNER TO postgres;
-
---
--- Name: insertroleandcapabilities(text, text[]); Type: FUNCTION; Schema: public; Owner: postgres
---
-
-CREATE FUNCTION public.insertroleandcapabilities(role_name text, capabilities_array text[]) RETURNS void
-    LANGUAGE plpgsql
-    AS $$
-DECLARE
-    role_id INT;
-    capability_id INT;
-    capability_name text;
-BEGIN
-    INSERT INTO role (name) VALUES (role_name) RETURNING id INTO role_id;
-
-    FOREACH capability_name IN ARRAY capabilities_array
-    LOOP
-        SELECT id INTO capability_id FROM capabilities WHERE name = capability_name;
-        INSERT INTO role_capabilities (role_id, capability_id) VALUES (role_id, capability_id);
-    END LOOP;
-END;
-$$;
-
-
-ALTER FUNCTION public.insertroleandcapabilities(role_name text, capabilities_array text[]) OWNER TO postgres;
-
---
--- Name: insertrolecapabilities(text[], text); Type: FUNCTION; Schema: public; Owner: postgres
---
-
-CREATE FUNCTION public.insertrolecapabilities(capabilities_array text[], role_name text) RETURNS void
-    LANGUAGE plpgsql
-    AS $$
-DECLARE
-    role_id INT;
-    capability_id INT;
-    capability_name text;
-BEGIN
-    SELECT id INTO role_id FROM role WHERE name = role_name;
-    FOREACH capability_name IN ARRAY capabilities_array
-    LOOP
-        SELECT id INTO capability_id FROM capabilities WHERE name = capability_name;
-        INSERT INTO role_capabilities (role_id, capability_id) VALUES (role_id, capability_id);
-    END LOOP;
-END;
-$$;
-
-
-ALTER FUNCTION public.insertrolecapabilities(capabilities_array text[], role_name text) OWNER TO postgres;
-
---
--- Name: assignment; Type: TABLE; Schema: public; Owner: postgres
---
 
 CREATE TABLE public.assignment (
     id integer NOT NULL,

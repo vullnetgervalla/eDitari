@@ -18,6 +18,7 @@ import { useLogout } from 'hooks/useLogout';
 import { useAxiosPrivate } from 'hooks/useAxiosPrivate';
 import { useCapabilities } from 'hooks/useCapabilities';
 import { Spin } from 'antd';
+import { Unauthorized } from './auth/Unauthorized';
 
 const { Header, Content, Sider } = Layout;
 const { Title } = Typography;
@@ -111,7 +112,7 @@ export default function NavBar({ content }) {
 			/>
 		);
 	}
-	if (!getPermissions()) return <div>Not allowed</div>;
+	if (!getPermissions()) return <Unauthorized />;
 	const handleLogout = async () => {
 		await logout();
 		navigate('/login');
