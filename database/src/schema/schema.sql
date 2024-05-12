@@ -137,8 +137,12 @@ CREATE TABLE public."User" (
     schoolid integer NOT NULL
 );
 
+ALTER TABLE public."User" OWNER TO postgres;
 
 
+--
+-- Name: assignment; Type: TABLE; Schema: public; Owner: postgres
+--
 
 CREATE TABLE public.assignment (
     id integer NOT NULL,
