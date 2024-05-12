@@ -12,8 +12,8 @@ VALUES
 ('create-notification', 'notification'),
 ('list-material', 'material'),
 ('add-material', 'material'),
-('list-role', 'admin'),
-('create-role', 'admin');
+('list-role', 'roles'),
+('create-role', 'roles');
 
 INSERT INTO role_capabilities (role_id, capability_id)
 SELECT role.id, capabilities.id
