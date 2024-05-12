@@ -7,9 +7,7 @@ $$
     WHERE schoolid = input_school_id;
 $$;
 
-
-
---Procedure for retreiving user name and lastname for email generating
+DROP FUNCTION IF EXISTS getUserName(text, text);
 CREATE OR REPLACE FUNCTION getUserName(first_name text, last_name text)
 RETURNS TABLE(firstname text, lastname text) LANGUAGE sql
 AS
@@ -37,16 +35,49 @@ CREATE OR REPLACE FUNCTION getAllAdminUsers(input_school_id integer)
 RETURNS TABLE(id integer, firstname text, lastname text) LANGUAGE sql
 AS
 $$
-    SELECT id, firstname, lastname FROM "User"
-    WHERE schoolid = input_school_id AND type = 'ADMIN';
+    SELECT "User".id, firstname, lastname FROM "User"
+    INNER JOIN role ON "User".roleid = role.id
+    WHERE "User".schoolid = input_school_id AND role.name = 'ADMIN';
 $$;
-
 
 DROP FUNCTION IF EXISTS getAllParentUsers(integer);
 CREATE OR REPLACE FUNCTION getAllParentUsers(input_school_id integer)
 RETURNS TABLE(id integer, firstname text, lastname text) LANGUAGE sql
 AS
 $$
-    SELECT id, firstname, lastname FROM "User"
-    WHERE schoolid = input_school_id AND type = 'PARENT';
+    SELECT "User".id, firstname, lastname FROM "User"
+    INNER JOIN role ON "User".roleid = role.id
+    WHERE "User".schoolid = input_school_id AND role.name = 'PARENT';
+$$;
+
+
+DROP FUNCTION IF EXISTS getUsersCapabilities(text);
+CREATE OR REPLACE FUNCTION getUsersCapabilities(name_of_role text)
+RETURNS TABLE(capability_name text, category_name text) LANGUAGE sql AS
+$$
+    SELECT capabilities.name, capabilities.category_name
+    FROM role
+    INNER JOIN role_capabilities ON role.id = role_capabilities.role_id
+    INNER JOIN capabilities ON capabilities.id = role_capabilities.capability_id
+    WHERE role.name = name_of_role;
+$$
+;
+
+DROP FUNCTION IF EXISTS insertRoleAndCapabilities(text, text[]);
+CREATE OR REPLACE FUNCTION insertRoleAndCapabilities(role_name text, capabilities_array text[])
+RETURNS void LANGUAGE plpgsql AS
+$$
+DECLARE
+    role_id INT;
+    capability_id INT;
+    capability_name text;
+BEGIN
+    INSERT INTO role (name) VALUES (role_name) RETURNING id INTO role_id;
+
+    FOREACH capability_name IN ARRAY capabilities_array
+    LOOP
+        SELECT id INTO capability_id FROM capabilities WHERE name = capability_name;
+        INSERT INTO role_capabilities (role_id, capability_id) VALUES (role_id, capability_id);
+    END LOOP;
+END;
 $$;

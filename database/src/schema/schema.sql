@@ -84,20 +84,6 @@ CREATE TYPE public.notificationreach AS ENUM (
 ALTER TYPE public.notificationreach OWNER TO postgres;
 
 --
--- Name: usertype; Type: TYPE; Schema: public; Owner: postgres
---
-
-CREATE TYPE public.usertype AS ENUM (
-    'ADMIN',
-    'TEACHER',
-    'PARENT',
-    'STUDENT'
-);
-
-
-ALTER TYPE public.usertype OWNER TO postgres;
-
---
 -- Name: weekday; Type: TYPE; Schema: public; Owner: postgres
 --
 
@@ -119,6 +105,24 @@ SET default_tablespace = '';
 SET default_table_access_method = heap;
 
 --
+-- Name: class; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.class (
+    id integer NOT NULL,
+    teacherid integer,
+    classname character varying(255),
+    classroom integer,
+    classlevel integer NOT NULL,
+    yearid integer NOT NULL,
+    schoolid integer NOT NULL
+);
+
+
+ALTER TABLE public.class OWNER TO postgres;
+
+
+--
 -- Name: User; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -129,12 +133,12 @@ CREATE TABLE public."User" (
     password character varying(255) NOT NULL,
     firstname character varying(255) NOT NULL,
     lastname character varying(255) NOT NULL,
-    type public.usertype NOT NULL,
+    roleid integer NOT NULL,
     schoolid integer NOT NULL
 );
 
-
 ALTER TABLE public."User" OWNER TO postgres;
+
 
 --
 -- Name: assignment; Type: TABLE; Schema: public; Owner: postgres
@@ -213,21 +217,39 @@ ALTER SEQUENCE public.attendance_id_seq OWNED BY public.attendance.id;
 
 
 --
--- Name: class; Type: TABLE; Schema: public; Owner: postgres
+-- Name: capabilities; Type: TABLE; Schema: public; Owner: postgres
 --
 
-CREATE TABLE public.class (
+CREATE TABLE public.capabilities (
     id integer NOT NULL,
-    teacherid integer,
-    classname character varying(255),
-    classroom integer,
-    classlevel integer NOT NULL,
-    yearid integer NOT NULL,
-    schoolid integer NOT NULL
+    name character varying(255) NOT NULL,
+    category_name character varying(50) NOT NULL
 );
 
 
-ALTER TABLE public.class OWNER TO postgres;
+ALTER TABLE public.capabilities OWNER TO postgres;
+
+--
+-- Name: capabilities_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.capabilities_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.capabilities_id_seq OWNER TO postgres;
+
+--
+-- Name: capabilities_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.capabilities_id_seq OWNED BY public.capabilities.id;
+
 
 --
 -- Name: class_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
@@ -471,6 +493,52 @@ ALTER SEQUENCE public.parent_id_seq OWNER TO postgres;
 --
 
 ALTER SEQUENCE public.parent_id_seq OWNED BY public.parent.id;
+
+
+--
+-- Name: role; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.role (
+    id integer NOT NULL,
+    name character varying(255) NOT NULL
+);
+
+
+ALTER TABLE public.role OWNER TO postgres;
+
+--
+-- Name: role_capabilities; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.role_capabilities (
+    role_id integer NOT NULL,
+    capability_id integer NOT NULL
+);
+
+
+ALTER TABLE public.role_capabilities OWNER TO postgres;
+
+--
+-- Name: role_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.role_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.role_id_seq OWNER TO postgres;
+
+--
+-- Name: role_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.role_id_seq OWNED BY public.role.id;
 
 
 --
@@ -768,6 +836,13 @@ ALTER TABLE ONLY public.attendance ALTER COLUMN id SET DEFAULT nextval('public.a
 
 
 --
+-- Name: capabilities id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.capabilities ALTER COLUMN id SET DEFAULT nextval('public.capabilities_id_seq'::regclass);
+
+
+--
 -- Name: class id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -814,6 +889,13 @@ ALTER TABLE ONLY public.notification ALTER COLUMN id SET DEFAULT nextval('public
 --
 
 ALTER TABLE ONLY public.parent ALTER COLUMN id SET DEFAULT nextval('public.parent_id_seq'::regclass);
+
+
+--
+-- Name: role id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.role ALTER COLUMN id SET DEFAULT nextval('public.role_id_seq'::regclass);
 
 
 --
@@ -883,6 +965,14 @@ ALTER TABLE ONLY public.attendance
 
 
 --
+-- Name: capabilities capabilities_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.capabilities
+    ADD CONSTRAINT capabilities_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: class class_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -936,6 +1026,22 @@ ALTER TABLE ONLY public.notification
 
 ALTER TABLE ONLY public.parent
     ADD CONSTRAINT parent_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: role_capabilities role_capabilities_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.role_capabilities
+    ADD CONSTRAINT role_capabilities_pkey PRIMARY KEY (role_id, capability_id);
+
+
+--
+-- Name: role role_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.role
+    ADD CONSTRAINT role_pkey PRIMARY KEY (id);
 
 
 --
@@ -1024,6 +1130,14 @@ ALTER TABLE ONLY public."User"
 
 ALTER TABLE ONLY public.year
     ADD CONSTRAINT year_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: User User_roleid_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."User"
+    ADD CONSTRAINT "User_roleid_fkey" FOREIGN KEY (roleid) REFERENCES public.role(id);
 
 
 --
@@ -1176,6 +1290,22 @@ ALTER TABLE ONLY public.notification
 
 ALTER TABLE ONLY public.parent
     ADD CONSTRAINT parent_id_fkey FOREIGN KEY (id) REFERENCES public."User"(id);
+
+
+--
+-- Name: role_capabilities role_capabilities_capability_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.role_capabilities
+    ADD CONSTRAINT role_capabilities_capability_id_fkey FOREIGN KEY (capability_id) REFERENCES public.capabilities(id);
+
+
+--
+-- Name: role_capabilities role_capabilities_role_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.role_capabilities
+    ADD CONSTRAINT role_capabilities_role_id_fkey FOREIGN KEY (role_id) REFERENCES public.role(id);
 
 
 --

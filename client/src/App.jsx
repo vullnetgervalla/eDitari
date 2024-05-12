@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import Home from 'pages/home';
@@ -21,24 +20,23 @@ function App() {
 			<Routes>
 				<Route path='/login' element={<Login />} />
 				<Route element={<PersistLogin />}>
-					<Route path='/*' element={<NavBar userType={userType}
-                        content={
-                            <Routes>
-                                <Route element={<RequireAuth />}>
-                                    <Route index element={ <Home />} />
+                    <Route element={<RequireAuth />}>
+                        <Route path='/*' element={
+                            <NavBar userType={userType} content={
+                                <Routes>
+                                    <Route index element={<Home />} />
                                     {AdminRoutes.map((route, i) => (
                                         <Route key={i} path={route.path} element={route.element} />
                                     ))}
-                                </Route>
-                                <Route element={<RequireAuth allowedUserTypes={['ADMIN']} />}>
-                                    <Route path='users' element={<UsersPage />} />
-                                </Route>
-                                <Route path='unauthorized' element={<Unauthorized />} />
-                                <Route path='*' element={<NotFound />} />
-                            </Routes>
-                        }
-                    />}>
-					</Route>
+                                    <Route element={<RequireAuth allowedUserTypes={['ADMIN']} />}>
+                                        <Route path='users' element={<UsersPage />} />
+                                    </Route>
+                                    <Route path='unauthorized' element={<Unauthorized />} />
+                                    <Route path='*' element={<NotFound />} />
+                                </Routes>
+                            } />
+                        } ></Route>
+                    </Route>
 				</Route>
 			</Routes>
 		</>

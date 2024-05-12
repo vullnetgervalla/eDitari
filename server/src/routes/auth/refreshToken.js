@@ -5,8 +5,8 @@ const { generateAccessToken } = require('./utils');
 const refreshRouter = Router();
 
 refreshRouter.get('/', (req, res) => {
-    if(!req?.cookies?.refreshToken) {
-        return res.sendStatus(401);
+	if (!req?.cookies?.refreshToken) {
+		return res.sendStatus(401);
     }
     const refreshToken = req?.cookies?.refreshToken;
     
