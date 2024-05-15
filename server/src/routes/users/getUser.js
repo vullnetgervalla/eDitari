@@ -70,4 +70,19 @@ getUserRouter.get('/:id', (req, res) => {
       });
 });
 
+getUserRouter.get('/totalUsers', isAdminToken, (req, res) => {
+  const {schoolid} = req.user;
+  const {role} = req.query;
+  db.query('SELECT * from getTotalNumberOfUsers($1,$2)', [schoolid, role], (err, queryRes) => {
+    if (err) {
+      console.error('Error executing query', err);
+      res.sendStatus(500);
+      return;
+    }
+
+    res.send(queryRes.rows);
+});
+});
+
+
 module.exports = { getUserRouter };
