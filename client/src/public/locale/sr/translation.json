@@ -64,5 +64,6 @@
 	"check-all-functionalities": "Označi sve funkcionalnosti",
 	"reset": "Cisti",
 	"role-created-successfully": "Korisnik uspešno kreiran",
-	"role-cannot-contain-numbers": "Naziv uloge ne može sadržati brojeve"
+	"role-cannot-contain-numbers": "Naziv uloge ne može sadržati brojeve",
+	"new-role-name": "Novi naziv uloge"
 }

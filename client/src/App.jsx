@@ -20,23 +20,23 @@ function App() {
 			<Routes>
 				<Route path='/login' element={<Login />} />
 				<Route element={<PersistLogin />}>
-                    <Route element={<RequireAuth />}>
-                        <Route path='/*' element={
-                            <NavBar userType={userType} content={
-                                <Routes>
-                                    <Route index element={<Home />} />
-                                    {AdminRoutes.map((route, i) => (
-                                        <Route key={i} path={route.path} element={route.element} />
-                                    ))}
-                                    <Route element={<RequireAuth allowedUserTypes={['ADMIN']} />}>
-                                        <Route path='users' element={<UsersPage />} />
-                                    </Route>
-                                    <Route path='unauthorized' element={<Unauthorized />} />
-                                    <Route path='*' element={<NotFound />} />
-                                </Routes>
-                            } />
-                        } ></Route>
-                    </Route>
+					<Route element={<RequireAuth />}>
+						<Route path='/*' element={
+							<NavBar userType={userType} content={
+								<Routes>
+									<Route index element={<Home />} />
+									{AdminRoutes.map((route, i) => (
+										<Route key={i} path={route.path} element={route.element} />
+									))}
+									<Route element={<RequireAuth allowedUserTypes={['ADMIN']} />}>
+										<Route path='users' element={<UsersPage />} />
+									</Route>
+									<Route path='unauthorized' element={<Unauthorized />} />
+									<Route path='*' element={<NotFound />} />
+								</Routes>
+							} />
+						} ></Route>
+					</Route>
 				</Route>
 			</Routes>
 		</>

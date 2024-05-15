@@ -3,6 +3,7 @@ const { db } = require('../../db');
 const bcrypt = require('bcrypt');
 const { isAdminToken } = require('../../middleware/isAdminToken');
 const { isAdminTeacherToken} = require('../../middleware/isAdminTeacherToken');
+const { roleMapping } = require('../../utils/roleMapping');
 
 const createUserRouter = Router();
 
@@ -43,9 +44,9 @@ createUserRouter.post('/admin', isAdminToken, async (req, res) => {
     console.log('req.body',req.body);
     const {email, password, firstname, lastname } = req.body;
     const {schoolid} = req.user;
-    const userType = "ADMIN";
+    const roleid = roleMapping("ADMIN");
     const username = `${firstname}${lastname}`.toLowerCase();
-    if( !email || !password || !firstname || !lastname || !userType || !schoolid) {
+    if( !email || !password || !firstname || !lastname || !roleid || !schoolid) {
         return res.status(400).send('Missing required fields');
     }
 
@@ -65,7 +66,7 @@ createUserRouter.post('/admin', isAdminToken, async (req, res) => {
 
         const hashedPassword = bcrypt.hashSync(password, 10);
         
-        db.query('INSERT INTO "User" (username, email, password, firstname, lastname, type, schoolid) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *', [username, email, hashedPassword, firstname, lastname, userType, schoolid], (err, queryRes) => {
+        db.query('INSERT INTO "User" (username, email, password, firstname, lastname, roleid, schoolid) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *', [username, email, hashedPassword, firstname, lastname, roleId, schoolid], (err, queryRes) => {
             if (err) {
                 console.error('Error executing query', err);
                 return res.status(500).send('Error executing query');
@@ -85,7 +86,7 @@ createUserRouter.post('/student', isAdminTeacherToken, async (req, res) => {
         return;
     }
 
-    const userType = "STUDENT"
+    const roleid = await roleMapping("STUDENT")
     const password = personalnumber;
     const hashedPassword = await bcrypt.hash(password, 10);
     const username = `${firstname}${lastname}`.toLowerCase();
@@ -97,9 +98,10 @@ createUserRouter.post('/student', isAdminTeacherToken, async (req, res) => {
                 return res.status(500).send('Error executing query');
             }
             const number = queryRes.rows.length;
-            const email = `${firstname}.${lastname}${number ? '' : number}@student.${schoolDomain}.com`.toLowerCase();
+            console.log('number', number, 'queryRes.rows', queryRes.rows)
+            const email = `${firstname}.${lastname}${!number ? '' : number}@student.${schoolDomain}.com`.toLowerCase();
 
-            db.query('INSERT INTO "User" (username, email, password, firstname, lastname, type, schoolid) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *', [username, email, hashedPassword, firstname, lastname, userType, schoolid], (err, queryRes) => {
+            db.query('INSERT INTO "User" (username, email, password, firstname, lastname, roleid, schoolid) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *', [username, email, hashedPassword, firstname, lastname, roleid, schoolid], (err, queryRes) => {
                 if (err) {
                     console.error('Error executing query', err);
                     return res.status(500).send('Error executing query');
@@ -134,7 +136,7 @@ createUserRouter.post('/teacher', isAdminToken, async (req, res) => {
         return;
     }
     
-    const userType = "TEACHER"
+    const roleid = await roleMapping("TEACHER")
     const password = personalnumber;
     const hashedPassword = await bcrypt.hash(password, 10);
     const username = `${firstname}${lastname}`.toLowerCase();
@@ -147,7 +149,7 @@ createUserRouter.post('/teacher', isAdminToken, async (req, res) => {
             const number = queryRes.rows.length;
             const email = `${firstname}.${lastname}${number ? '' : number}@student.${schoolDomain}.com`.toLowerCase();
 
-            db.query('INSERT INTO "User" (username, email, password, firstname, lastname, type, schoolid) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *', [username, email, hashedPassword, firstname, lastname, userType, schoolid], (err, queryRes) => {
+            db.query('INSERT INTO "User" (username, email, password, firstname, lastname, roleid, schoolid) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *', [username, email, hashedPassword, firstname, lastname, roleid, schoolid], (err, queryRes) => {
                 if (err) {
                     console.error('Error executing query', err);
                     return res.status(500).send('Error executing query');

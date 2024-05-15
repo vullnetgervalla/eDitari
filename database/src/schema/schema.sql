@@ -646,6 +646,27 @@ CREATE TABLE public.studentwork (
 ALTER TABLE public.studentwork OWNER TO postgres;
 
 --
+-- Name: student_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.student_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.student_id_seq OWNER TO postgres;
+
+--
+-- Name: student_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.student_id_seq OWNED BY public.student.id;
+
+--
 -- Name: studentwork_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -717,6 +738,27 @@ CREATE TABLE public.teacher (
 
 
 ALTER TABLE public.teacher OWNER TO postgres;
+
+--
+-- Name: teacher_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.teacher_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.teacher_id_seq OWNER TO postgres;
+
+--
+-- Name: teacher_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.teacher_id_seq OWNED BY public.teacher.id;
 
 --
 -- Name: teachersubject; Type: TABLE; Schema: public; Owner: postgres
@@ -920,11 +962,23 @@ ALTER TABLE ONLY public.studentwork ALTER COLUMN id SET DEFAULT nextval('public.
 
 
 --
+-- Name: student id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.student ALTER COLUMN id SET DEFAULT nextval('public.student_id_seq'::regclass);
+
+
+--
 -- Name: subject id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public.subject ALTER COLUMN id SET DEFAULT nextval('public.subject_id_seq'::regclass);
 
+--
+-- Name: teacher id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.teacher ALTER COLUMN id SET DEFAULT nextval('public.teacher_id_seq'::regclass);
 
 --
 -- Name: teachersubject id; Type: DEFAULT; Schema: public; Owner: postgres

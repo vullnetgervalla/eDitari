@@ -13,8 +13,8 @@ RETURNS TABLE(firstname text, lastname text) LANGUAGE sql
 AS
 $$
     SELECT firstname, lastname FROM "User"
-    WHERE firstname = first_name
-    AND lastname = last_name;
+    WHERE firstname ILIKE first_name
+    AND lastname ILIKE last_name;
 $$;
 
 --fix the social_security_number into database and ececute
@@ -82,21 +82,9 @@ BEGIN
 END;
 $$;
 
-DROP FUNCTION IF EXISTS getTotalNumberOfUsers(int, text);
-CREATE OR REPLACE FUNCTION getTotalNumberOfUsers(input_school_id INT, role_name text)
-RETURNS integer LANGUAGE sql
-AS
+DROP FUNCTION IF EXISTS getRoles();
+CREATE OR REPLACE FUNCTION getRoles()
+RETURNS SETOF role LANGUAGE sql AS
 $$
-    SELECT COUNT(*) FROM "User"
-    INNER JOIN role ON "User".roleid = role.id
-    WHERE "User".schoolid = input_school_id AND role.name = role_name;
-$$;
-
-DROP FUNCTION IF EXISTS getTotalClasses;
-CREATE OR REPLACE FUNCTION getTotalClasses(input_school_id INT)
-RETURNS integer LANGUAGE sql
-AS
-$$
-    SELECT COUNT(*) FROM class
-    WHERE class.schoolid = input_school_id;
+    SELECT * FROM role;
 $$;
