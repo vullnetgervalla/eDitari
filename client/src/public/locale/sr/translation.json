@@ -54,6 +54,7 @@
 	"number.students": "Broj učenika",
 	"number.teachers": "Broj nastavnika",
 	"number.parents": "Broj roditelja",
+	"number.class": "Broj časova",
 	"roles": "Uloge",
 	"list-role": "Spisak uloga",
 	"create-role": "Kreiraj ulogu",

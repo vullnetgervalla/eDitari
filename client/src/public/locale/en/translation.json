@@ -54,6 +54,7 @@
 	"number.students": "Number of students",
 	"number.teachers": "Number of teachers",
 	"number.parents": "Number of parents",
+	"number.class": "Number of classes",
 	"roles": "User Management",
 	"list-role": "List of users",
 	"create-role": "Create user",
