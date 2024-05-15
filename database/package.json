@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "create-db": "node src/scripts/createDb.js",
-    "generate-procedures": "node src/scripts/createProcedures.js"
+    "generate-procedures": "node src/scripts/createProcedures.js",
+    "restartNumbering": "node src/scripts/restartNumbering.js"
   },
   "author": "",
   "license": "ISC",

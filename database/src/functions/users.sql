@@ -13,8 +13,8 @@ RETURNS TABLE(firstname text, lastname text) LANGUAGE sql
 AS
 $$
     SELECT firstname, lastname FROM "User"
-    WHERE firstname = first_name
-    AND lastname = last_name;
+    WHERE firstname ILIKE first_name
+    AND lastname ILIKE last_name;
 $$;
 
 --fix the social_security_number into database and ececute
@@ -80,4 +80,12 @@ BEGIN
         INSERT INTO role_capabilities (role_id, capability_id) VALUES (role_id, capability_id);
     END LOOP;
 END;
+$$;
+
+
+DROP FUNCTION IF EXISTS getRoles();
+CREATE OR REPLACE FUNCTION getRoles()
+RETURNS SETOF role LANGUAGE sql AS
+$$
+    SELECT * FROM role;
 $$;

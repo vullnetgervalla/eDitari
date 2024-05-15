@@ -128,50 +128,56 @@ export default function NavBar({ content }) {
         collapsible
         collapsed={collapsed}
         style={{
+          height: '100vh',
           paddingTop: '10px',
+          position: 'sticky',
+          top: 0,
+          float: 'left',
         }}
       >
-        <div className='demo-logo-vertical' />
-        <Menu
-          theme='dark'
-          defaultSelectedKeys={['0']}
-          mode='inline'
-          openKeys={openKeys}
-          onOpenChange={onOpenChange}
-          items={items(t)}
-          onClick={({ key }) => {
-            const route = keyToPath[`${key}`];
-            if (route) {
-              setTitle(t(route));
-              if (route === 'home') navigate('/');
-              else {
-                navigate('/' + route);
+        <div className='demo-logo-vertical' >
+          {/* Logo here */}
+        </div>
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'space-between',
+            height: 'calc(100vh - 15px)',
+          }}>
+
+          <Menu
+            theme='dark'
+            defaultSelectedKeys={['0']}
+            mode='inline'
+            openKeys={openKeys}
+            onOpenChange={onOpenChange}
+            items={items(t)}
+            onClick={({ key }) => {
+              const route = keyToPath[`${key}`];
+              if (route) {
+                setTitle(t(route));
+                if (route === 'home') navigate('/');
+                else {
+                  navigate('/' + route);
+                }
               }
-            }
-          }}
-        />
-        <Tooltip title={t('logout')}>
-          <Button
-            type='primary'
-            style={{
-              position: 'absolute',
-              bottom: 0,
-              marginBottom: 20,
-              width: '100px',
-              height: '35px',
-              left: '50%',
-              transform: 'translateX(-50%)',
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              fontSize: '20px',
             }}
-            onClick={handleLogout}
+          />
+          <Menu 
+            theme='dark'
+            mode='inline'
+            // style={{ position: 'sticky', bottom: 0, width: '100%' }}
           >
-            <LogoutOutlined />
-            {t('logout')}
-          </Button>
-        </Tooltip>
+            <Menu.Item
+              key='1'
+              icon={<LogoutOutlined />}
+              onClick={handleLogout}
+            >
+              {t('logout')}
+            </Menu.Item>
+          </Menu>
+        </div>
       </Sider>
       <Layout>
         <Header
