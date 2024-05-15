@@ -1,5 +1,6 @@
 {
-    "new-role-name": "Emri i përdoruesit të ri",
+
+  "new-role-name": "Emri i përdoruesit të ri",
 	"admin": "Administratorët",
 	"list-admin": "Lista administratorëve",
 	"create-admin": "Regjistro administratorë",
@@ -67,3 +68,4 @@
 	"role-created-successfully": "Lloji i përdoruesit u krijua me sukses",
 	"role-cannot-contain-numbers": "Roli nuk mund të përmbajë numra"
 }
+    
