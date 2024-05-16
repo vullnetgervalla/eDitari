@@ -30,14 +30,13 @@ $$;
 --     WHERE social_security_number = userSSN;
 -- $$;
 
-DROP FUNCTION IF EXISTS getAllAdminUsers(integer);
-CREATE OR REPLACE FUNCTION getAllAdminUsers(input_school_id integer)
-RETURNS TABLE(id integer, firstname text, lastname text) LANGUAGE sql
-AS
+DROP FUNCTION IF EXISTS getAllUsersByRole(integer, text);
+CREATE OR REPLACE FUNCTION getAllUsersByRole(input_school_id integer, input_role_name text)
+RETURNS TABLE(id integer, firstname text, lastname text) LANGUAGE sql AS
 $$
     SELECT "User".id, firstname, lastname FROM "User"
     INNER JOIN role ON "User".roleid = role.id
-    WHERE "User".schoolid = input_school_id AND role.name = 'ADMIN';
+    WHERE "User".schoolid = input_school_id AND role.name = input_role_name;
 $$;
 
 DROP FUNCTION IF EXISTS getAllParentUsers(integer);
@@ -80,6 +79,33 @@ BEGIN
         INSERT INTO role_capabilities (role_id, capability_id) VALUES (role_id, capability_id);
     END LOOP;
 END;
+$$;
+DROP FUNCTION IF EXISTS getUser(int);
+CREATE OR REPLACE FUNCTION getUser(user_id int)
+RETURNS TABLE(
+    mail TEXT,
+    name TEXT,
+    "lastName" TEXT,
+    role TEXT,
+    gender public.gender,
+    ssn character varying(20),
+    "parentId" integer,
+    "phoneNumber" character varying(20),
+    address TEXT
+) LANGUAGE SQL AS 
+$$
+    SELECT "User".email, "User".firstname, "User".lastname, role.name, 
+    CASE WHEN role.name = 'STUDENT' THEN student.gender ELSE NULL END,
+    CASE WHEN role.name = 'STUDENT' THEN student.personalnumber ELSE teacher.personalnumber END,
+    CASE WHEN role.name = 'STUDENT' THEN student.parentid ELSE NULL END,
+    CASE WHEN role.name = 'TEACHER' THEN teacher.phonenumber ELSE NULL END,
+    CASE WHEN role.name = 'STUDENT' THEN parent.address ELSE NULL END
+    FROM "User"
+    JOIN role ON "User".roleid = role.id
+    LEFT JOIN student ON "User".id = student.id AND role.name = 'STUDENT'
+    LEFT JOIN teacher ON "User".id = teacher.id AND role.name = 'TEACHER'
+    LEFT JOIN parent ON student.parentid = parent.id AND role.name = 'STUDENT'
+    WHERE "User".id = user_id;
 $$;
 
 DROP FUNCTION IF EXISTS getRoles();

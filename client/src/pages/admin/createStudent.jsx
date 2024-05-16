@@ -7,22 +7,22 @@ import { StudentTable } from 'components/tables/listStudents';
 import moment from 'moment';
 
 const formItemLayout = {
-	labelCol: {
-		xs: {
-			span: 24,
-		},
-		sm: {
-			span: 24,
-		},
-	},
-	wrapperCol: {
-		xs: {
-			span: 24,
-		},
-		sm: {
-			span: 24,
-		},
-	},
+  labelCol: {
+    xs: {
+      span: 24,
+    },
+    sm: {
+      span: 24,
+    },
+  },
+  wrapperCol: {
+    xs: {
+      span: 24,
+    },
+    sm: {
+      span: 24,
+    },
+  },
 };
 
 function CreateStudent() {
@@ -48,20 +48,20 @@ function CreateStudent() {
 		}
 	};
 
-	useEffect(() => {
-		const getParents = async () => {
-			const res = await axios.get('/users/parents');
-			setParents(res.data);
-		};
+  useEffect(() => {
+    const getParents = async () => {
+      const res = await axios.get('/users/parents');
+      setParents(res.data);
+    };
 
-		const getClasses = async () => {
-			const res = await axios.get('/classes');
-			setClasses(res.data);
-		};
+    const getClasses = async () => {
+      const res = await axios.get('/classes');
+      setClasses(res.data);
+    };
 
-		getParents();
-		getClasses();
-	}, []);
+    getParents();
+    getClasses();
+  }, []);
 
 	return (	
 		<div style={{display: 'flex', justifyContent: 'center', gap: '10%', width: '100%'}}>

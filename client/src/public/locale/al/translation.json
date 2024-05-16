@@ -1,13 +1,13 @@
 {
 
-  "new-role-name": "Emri i përdoruesit të ri",
+    "new-role-name": "Emri i përdoruesit të ri",
 	"admin": "Administratorët",
 	"list-admin": "Lista administratorëve",
 	"create-admin": "Regjistro administratorë",
-	"teacher": "Mësues",
+	"teacher": "Mësues/e",
 	"list-teacher": "Lista mësuesve",
 	"create-teacher": "Regjistro mësues/e",
-	"student": "Nxënësit",
+	"student": "Nxënës/e",
 	"create-student": "Regjistro nxënës",
 	"list-student": "Lista nxënësve",
     "parents": "Prindërit",
@@ -87,6 +87,25 @@
     "missingEmail": "Mungon emaili ose fjalëkalimi",
     "wrongLogin": "Emaili ose fjalëkalimi i gabuar",
     "loginFailed": "Kyçja dështoi",
-    "numbersOnly": "Vetëm numra"
+    "numbersOnly": "Vetëm numra",
+	"upload-profile-pic": "Ngarko foton e profilit",
+	"profile-data": "Të dhënat e profilit",
+	"phoneNumber": "Numri i telefonit",
+	"role": "Roli",
+	"edit-data": "Ndrysho të dhënat",
+	"gpa": "Nota mesatare",
+	"place-name": "Vendos emrin",
+	"place-lastName": "Vendos mbiemrin",
+	"place-gender": "Vendos gjinin",
+	"place-mail": "Vendos mail",
+	"place-role": "Vendos rolin",
+	"place-number": "Vendos numrin",
+	"place-address": "Vendos adresën",
+	"place-ssn": "Vendos numrin personal",
+	"place-gpa": "Vendos notën mesatare",
+	"allowed-edit-data": "Ndryshimi i të dhënave është i lejuar",
+	"not-allowed-edit-data": "Ndryshimi i të dhënave nuk është i lejuar",
+	"save-data": "Ruaj të dhënat",
+	"cancel": "Anulo"
 }
     

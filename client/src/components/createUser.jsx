@@ -4,22 +4,22 @@ import { Typography } from 'antd';
 import { useTranslation } from 'react-i18next';
 const { RangePicker } = DatePicker;
 const formItemLayout = {
-	labelCol: {
-		xs: {
-			span: 24,
-		},
-		sm: {
-			span: 24,
-		},
-	},
-	wrapperCol: {
-		xs: {
-			span: 24,
-		},
-		sm: {
-			span: 24,
-		},
-	},
+  labelCol: {
+    xs: {
+      span: 24,
+    },
+    sm: {
+      span: 24,
+    },
+  },
+  wrapperCol: {
+    xs: {
+      span: 24,
+    },
+    sm: {
+      span: 24,
+    },
+  },
 };
 const { Title } = Typography;
 function CreateUser({ parent }) {
@@ -51,75 +51,75 @@ function CreateUser({ parent }) {
 					<Input />
 				</Form.Item>
 
-				<Form.Item
-					label={t('name')}
-					labelAlign='left'
-					name='name'
-					rules={[
-						{
-							required: true,
-							message: t('enterName'),
-						},
-					]}
-				>
-					<Input />
-				</Form.Item>
+        <Form.Item
+          label={t('name')}
+          labelAlign='left'
+          name='name'
+          rules={[
+            {
+              required: true,
+              message: t('enterName'),
+            },
+          ]}
+        >
+          <Input />
+        </Form.Item>
 
-				<Form.Item
-					label={t('lastName')}
-					labelAlign='left'
-					name='surname'
-					rules={[
-						{
-							required: true,
-							message: t('enterLastName'),
-						},
-					]}
-				>
-					<Input />
-				</Form.Item>
+        <Form.Item
+          label={t('lastName')}
+          labelAlign='left'
+          name='surname'
+          rules={[
+            {
+              required: true,
+              message: t('enterLastName'),
+            },
+          ]}
+        >
+          <Input />
+        </Form.Item>
 
-				<Form.Item
-					label={t('gender')}
-					labelAlign='left'
-					name='gender'
-					rules={[
-						{
-							required: true,
-							message: t('chooseGender'),
-						},
-					]}
-				>
-					<Select>
-						<Select.Option value='male'>{t('male')}</Select.Option>
-						<Select.Option value='female'>{t('female')}</Select.Option>
-					</Select>
-				</Form.Item>
+        <Form.Item
+          label={t('gender')}
+          labelAlign='left'
+          name='gender'
+          rules={[
+            {
+              required: true,
+              message: t('chooseGender'),
+            },
+          ]}
+        >
+          <Select>
+            <Select.Option value='male'>{t('male')}</Select.Option>
+            <Select.Option value='female'>{t('female')}</Select.Option>
+          </Select>
+        </Form.Item>
 
-				<Form.Item
-					label={t('birthday')}
-					labelAlign='left'
-					name='birthday'
-					rules={[
-						{
-							required: true,
-							message: t('enterBirthday'),
-						},
-					]}
-				>
-					<DatePicker style={{ float: 'left' }} />
+        <Form.Item
+          label={t('birthday')}
+          labelAlign='left'
+          name='birthday'
+          rules={[
+            {
+              required: true,
+              message: t('enterBirthday'),
+            },
+          ]}
+        >
+          <DatePicker style={{ float: 'left' }} />
 
-				</Form.Item>
-				{
+        </Form.Item>
+        {
 				/*<Form.Item
-					label={t('mail')}
+					label={t('email')}
 					labelAlign='left'
-					name='mail'
+					name='email'
 				>
 					<Input />
 				</Form.Item> */}
 
-				{/* <Form.Item
+        {/* <Form.Item
 					label={t('pass')}
 					labelAlign='left'
 					name='Password'
@@ -127,46 +127,46 @@ function CreateUser({ parent }) {
 					<Password />
 				</Form.Item> */}
 
-				<Form.Item
-					label={t('birthplace')}
-					labelAlign='left'
-					name='Birthplace'
+        <Form.Item
+          label={t('birthplace')}
+          labelAlign='left'
+          name='Birthplace'
 
-					rules={[
-						{
-							required: true,
-							message: t('enterBirthplace'),
-						},
-					]}
-				>
-					<Input />
-				</Form.Item>
+          rules={[
+            {
+              required: true,
+              message: t('enterBirthplace'),
+            },
+          ]}
+        >
+          <Input />
+        </Form.Item>
 
-				<Form.Item
-					label={t('city')}
-					labelAlign='left'
-					name='Municipality'
+        <Form.Item
+          label={t('city')}
+          labelAlign='left'
+          name='Municipality'
 
-					rules={[
-						{
-							required: true,
-							message: t('enterCity'),
-						},
-					]}
-				>
-					<Input />
-				</Form.Item>
+          rules={[
+            {
+              required: true,
+              message: t('enterCity'),
+            },
+          ]}
+        >
+          <Input />
+        </Form.Item>
 
-				<Form.Item
-					wrapperCol={{
-						offset: 0,
-						span: 24,
-					}}
-				>
-					{parent ? <Button type='primary'>{t('save')}</Button> : null}
-				</Form.Item>
-			</Form>
-		</div>
-	);
+        <Form.Item
+          wrapperCol={{
+            offset: 0,
+            span: 24,
+          }}
+        >
+          {parent ? <Button type='primary'>{t('save')}</Button> : null}
+        </Form.Item>
+      </Form>
+    </div>
+  );
 }
 export default CreateUser;

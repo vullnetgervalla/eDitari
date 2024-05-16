@@ -19,9 +19,10 @@ getUserRouter.get('/', isAdminToken, (req, res) => {
       });
 });
 
-getUserRouter.get('/admin', isAdminToken, (req, res) => {
-    const {user, schoolid} = req.user;
-    db.query('SELECT * from getAllAdminUsers($1)', [schoolid], (err, queryRes) => {
+getUserRouter.get('/roles', isAdminToken, (req, res) => {
+    const { schoolid } = req.user;
+    const { role } = req.query; 
+    db.query('SELECT * from getAllUsersByRole($1, $2)', [schoolid, role], (err, queryRes) => {
       if (err) {
         console.error('Error executing query', err);
         res.sendStatus(500);
@@ -33,7 +34,8 @@ getUserRouter.get('/admin', isAdminToken, (req, res) => {
 });
 
 getUserRouter.get('/parents', isAdminTeacherToken, (req, res) => {
-    const {user, schoolid} = req.user;
+  const { user, schoolid } = req.user;
+  console.log(typeof schoolid)
     db.query('SELECT * from getAllParentUsers($1)', [schoolid], (err, queryRes) => {
       if (err) {
         console.error('Error executing query', err);
@@ -87,15 +89,14 @@ getUserRouter.get('/totalUsers', isAdminToken, (req, res) => {
 
 // This needs to be the last route
 getUserRouter.get('/:id', (req, res) => {
-    const id = req.params.id;
-    db.query('SELECT * FROM "User" WHERE id = $1', [id], (err, queryRes) => {
+  const id = req.params.id;
+    db.query('SELECT * from getUser($1)', [id], (err, queryRes) => {
         if (err) {
           console.error('Error executing query', err);
           res.status(500).send('Error executing query');
           return;
         }
-        console.log('Query result:', queryRes.rows);
-        res.send(queryRes.rows);
+        res.send(queryRes.rows[0]);
       });
 });
 

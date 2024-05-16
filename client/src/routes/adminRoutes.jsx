@@ -3,11 +3,12 @@ import HomePage from 'pages/home';
 import CreateAdmin from 'pages/admin/createAdmin';
 import CreateStudent from 'pages/admin/createStudent';
 import CreateTeacher from 'pages/admin/createTeacher';
+import CreateRole from 'components/createRole';
 import ListStudents from 'pages/users/listStudents';
 import ListTeachers from 'pages/users/listTeachers';
 import ListAdmins from 'pages/users/listAdmins';
-import Users from 'pages/users';
-import CreateRole from 'components/createRole';
+import ListRoles from 'pages/users/listRoles';
+import UserProfile from 'components/userProfile';
 import CreateNotification from 'pages/admin/createNotification';
 import SeeNotifications from 'components/seeNotifications';
 
@@ -20,12 +21,20 @@ export const AdminRoutes = [
     element: <ListAdmins />
   },
   {
-    path: 'users/:id',
-    element: <Users />
-  },
-  {
     path: 'create-admin',
     element: <CreateAdmin />
+  },
+  {
+    path: 'list-admin/:username',
+    element: <UserProfile />
+  },
+  {
+    path: 'list-teacher/:username',
+    element: <UserProfile />
+  },
+  {
+    path: 'list-student/:username',
+    element: <UserProfile />
   },
   {
     path: 'list-teacher',
@@ -42,6 +51,10 @@ export const AdminRoutes = [
   {
     path: 'create-student',
     element: <CreateStudent />
+  },
+  {
+    path: 'list-role',
+    element: <ListRoles />
   },
   {
     path: 'create-role',

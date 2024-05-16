@@ -28,9 +28,7 @@ function App() {
 									{AdminRoutes.map((route, i) => (
 										<Route key={i} path={route.path} element={route.element} />
 									))}
-									<Route element={<RequireAuth allowedUserTypes={['ADMIN']} />}>
-										<Route path='users' element={<UsersPage />} />
-									</Route>
+									<Route element={<RequireAuth allowedUserTypes={['ADMIN']} />}/>
 									<Route path='unauthorized' element={<Unauthorized />} />
 									<Route path='*' element={<NotFound />} />
 								</Routes>

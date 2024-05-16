@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { UserOutlined } from '@ant-design/icons';
-import { Checkbox, Divider, Flex, Input, Spin, Button, Alert, message } from 'antd';
+import { Checkbox, Divider, Flex, Input, Spin, Button, message } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { useAxiosPrivate } from 'hooks/useAxiosPrivate';
 import { useCapabilities } from 'hooks/useCapabilities';
@@ -117,14 +117,13 @@ export default function CreateRole() {
         style={{ position: 'absolute', bottom: 60, right: 60 }}
       >
         <Button
-          size='large'
+          type='primary'
           danger
           onClick={resetData}
         >
           {t('reset')}
         </Button>
         <Button
-          size='large'
           type='primary'
           onClick={() => addRole(roleName.toUpperCase(), requestList)}
           style={{ padding: '0 30px 0 30px' }}
