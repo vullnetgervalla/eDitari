@@ -88,3 +88,69 @@ RETURNS SETOF role LANGUAGE sql AS
 $$
     SELECT * FROM role;
 $$;
+
+DROP FUNCTION IF EXISTS getSchoolStudents(integer);
+CREATE OR REPLACE FUNCTION getSchoolStudents(input_schoolid integer)
+RETURNS TABLE (
+    id integer,
+    username varchar,
+    email varchar,
+    firstname varchar,
+    lastname varchar,
+    roleid integer,
+    schoolid integer,
+    classid integer,
+    birthday date,
+    gender gender,
+    parentid integer,
+    personalnumber varchar
+) LANGUAGE sql
+AS
+$$
+    SELECT "User".id,
+           "User".username,
+           "User".email,
+           "User".firstname,
+           "User".lastname,
+           "User".roleid,
+           "User".schoolid,
+           student.classid,
+           student.birthday,
+           student.gender,
+           student.parentid,
+           student.personalnumber
+    FROM "User"
+    JOIN student ON "User".id = student.id
+    WHERE "User".schoolid = input_schoolid
+    AND "User".roleid = 3;
+$$;
+
+DROP FUNCTION IF EXISTS getUser(integer);
+CREATE OR REPLACE FUNCTION getUser(input_id integer)
+RETURNS SETOF "User" LANGUAGE sql
+AS
+$$
+    SELECT * FROM "User"
+    WHERE id = input_id;
+$$;
+
+DROP FUNCTION IF EXISTS deleteUser(integer);
+CREATE OR REPLACE FUNCTION deleteUser(input_id integer)
+RETURNS SETOF "User" LANGUAGE sql
+AS
+$$
+    DELETE FROM "User" 
+    WHERE id = input_id
+    RETURNING *;
+$$;
+
+DROP FUNCTION IF EXISTS updateUser(integer);
+CREATE OR REPLACE FUNCTION updateUser(input_id integer, input_username text, input_email text, input_password text, input_firstname text, input_lastname text, input_roleid integer)
+RETURNS SETOF "User" LANGUAGE sql
+AS
+$$
+    UPDATE "User" SET 
+    username = input_username, email = input_email, password = input_password, firstname = input_firstname, lastname = input_lastname, roleid = input_roleid
+    WHERE id = input_id 
+    RETURNING *;
+$$;
