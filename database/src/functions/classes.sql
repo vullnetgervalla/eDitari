@@ -6,3 +6,12 @@ $$
     SELECT * FROM Class
     WHERE schoolid = school_id;
 $$;
+
+DROP FUNCTION IF EXISTS getNumOfClasses(integer);
+CREATE OR REPLACE FUNCTION getNumOfClasses(school_id integer)
+RETURNS table (classes int) LANGUAGE sql
+AS
+$$
+    SELECT COUNT(*) FROM Class
+    WHERE schoolid = school_id;
+$$;

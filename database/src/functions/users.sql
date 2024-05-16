@@ -154,3 +154,14 @@ $$
     WHERE id = input_id 
     RETURNING *;
 $$;
+
+DROP FUNCTION IF EXISTS getTotalNumberOfUsers(int, boolean[]);
+CREATE OR REPLACE FUNCTION getTotalNumberOfUsers(schoolID int, roleName boolean[])
+RETURNS TABLE(admins int, teachers int,students int, parents int) LANGUAGE sql AS
+$$
+   SELECT 
+    (CASE WHEN roleName[1] THEN (SELECT COUNT(*) FROM "User" WHERE schoolid = schoolID AND roleid = (SELECT id FROM role WHERE name = 'ADMIN')) ELSE 0 END) AS admins,
+    (CASE WHEN roleName[2] THEN (SELECT COUNT(*) FROM "User" WHERE schoolid = schoolID AND roleid = (SELECT id FROM role WHERE name = 'TEACHER')) ELSE 0 END) AS teachers,
+    (CASE WHEN roleName[3] THEN (SELECT COUNT(*) FROM "User" WHERE schoolid = schoolID AND roleid = (SELECT id FROM role WHERE name = 'STUDENT')) ELSE 0 END) AS students,
+    (CASE WHEN roleName[4] THEN (SELECT COUNT(*) FROM "User" WHERE schoolid = schoolID AND roleid = (SELECT id FROM role WHERE name = 'PARENT')) ELSE 0 END) AS parents;
+$$;

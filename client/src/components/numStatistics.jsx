@@ -1,19 +1,18 @@
-import { Flex, Statistic } from 'antd';
-import { useTranslation } from 'react-i18next';
+import { Flex, Statistic, Card } from 'antd';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Line } from '@ant-design/plots';
 import { Column } from '@ant-design/plots';
 
-export default function NumStatistics({style, user, chartType}) {
-    const { t } = useTranslation();
-  
+export default function NumStatistics({style, user, chartType, count}) {
+
     return ( 
     <div style={style}>
+        <Card>
         <Statistic
             title={user}
-            value={112893}
-        />
+            value={count} />
+        </Card>
        {chartType}
     </div> 
     );
