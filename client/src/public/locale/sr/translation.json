@@ -65,5 +65,15 @@
 	"reset": "Cisti",
 	"role-created-successfully": "Korisnik uspešno kreiran",
 	"role-cannot-contain-numbers": "Naziv uloge ne može sadržati brojeve",
-	"new-role-name": "Novi naziv uloge"
+	"new-role-name": "Novi naziv uloge",
+	"inputTitle": "Molimo unesite naslov!",
+	"inputRecipient": "Molimo odredite primaoca!",
+	"inputText": "Molimo napišite poruku!",
+	"upload": "Postavi",
+	"file": "Fajl",
+	"message": "Poruka",
+	"title": "Naslov",
+	"to": "Za",
+	"createdTeacher": "Nastavnik uspešno kreiran!",
+	"notCreatedTeacher": "Greška prilikom kreiranja nastavnika!"
 }

@@ -44,7 +44,7 @@ function CreateUser({ parent }) {
 					rules={[
 						{
 							required: true,
-							message: 'Please input!',
+							message: t('enterSsn'),
 						},
 					]}
 				>

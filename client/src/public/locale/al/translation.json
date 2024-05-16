@@ -65,5 +65,15 @@
 	"check-all-functionalities": "Zgjidh të gjitha funksionalitetet",
 	"reset": "Pastro",
 	"role-created-successfully": "Lloji i përdoruesit u krijua me sukses",
-	"role-cannot-contain-numbers": "Roli nuk mund të përmbajë numra"
+	"role-cannot-contain-numbers": "Roli nuk mund të përmbajë numra",
+	"inputTitle":"Ju lutem shënoni titullin!",
+	"inputRecipient":"Ju lutemi caktoni marrësit!",
+	"inputText":"Ju lutem shënoni mesazhin!",
+	"upload":"Ngarko",
+	"file":"Skedar",
+	"message":"Mesazhi",
+	"title":"Titulli",
+	"to":"Për",
+	"createdTeacher":"Mësuesi/ja u krijua me sukses!",
+	"notCreatedTeacher":"Gabim gjatë krijimit të mësusesit/es!"
 }

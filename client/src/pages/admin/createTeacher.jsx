@@ -37,9 +37,9 @@ function CreateTeacher() {
 		console.log('values', values);
 		try {
 			const res = await axios.post('/users/teachers', values);
-			message.success('Teacher created successfully');
+			message.success(t('createdTeacher'));
 		} catch (e) {
-			message.error('Error creating teacher');
+			message.error(t('notCreatedTeacher'));
 		}
 	};
 
@@ -59,16 +59,17 @@ function CreateTeacher() {
 	}, []);
 
 	return (
-		<div style={{ textAlign: 'center', display: 'flex', alignItems: 'center', flexDirection: 'column' }}>
+		<div style={{ textAlign: 'center', display: 'flex', alignItems: 'center', flexDirection: 'column'}}>
 			<Form
 				{...formItemLayout}
 				variant='filled'
 				style={{
 					minWidth: 700,
-					border: '1px solid #0F1431',
 					borderRadius: 20,
 					padding: 30,
 					backgroundColor: '#fff',
+					border:'1px solid #e5e7eb', 
+					boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
 				}}
 				onFinish={handleSubmit}
 			>

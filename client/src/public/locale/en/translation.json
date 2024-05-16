@@ -65,5 +65,15 @@
 	"reset": "Reset",
 	"role-created-successfully": "Role created successfully",
 	"role-cannot-contain-numbers": "Role name cannot contain numbers",
-	"new-role-name": "New role name"
+	"new-role-name": "New role name",
+	"inputTitle": "Please enter the title!",
+	"inputRecipient": "Please specify the recipient!",
+	"inputText": "Please write the message!",
+	"upload": "Upload",
+	"file": "File",
+	"message": "Message",
+	"title": "Title",
+	"to": "To",
+	"createdTeacher": "Teacher created successfully!",
+	"notCreatedTeacher": "Error creating teacher!"
 }
