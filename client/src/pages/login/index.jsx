@@ -4,6 +4,8 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { Button, Input, Form, Checkbox } from 'antd';
 import { MailOutlined, LockOutlined } from '@ant-design/icons';
 import axios from 'api/axios';
+import { useTranslation } from 'react-i18next';
+
 
 const LOGIN_URL = '/auth/login';
 
@@ -12,6 +14,7 @@ function Login() {
     const navigate = useNavigate();
     const location = useLocation();
     const from = location?.state?.from?.pathname || '/';
+    const { t } = useTranslation();
 
     const errRef = useRef();
 
@@ -39,14 +42,14 @@ function Login() {
     }, [persist])
 
     const handleSubmit = async (e) => {
-        if(!email || !password) {
-            setErrMsg('Email and Passord are required')
-            return
+        if (!email || !password) {
+            setErrMsg(t('loginError'));
+            return;
         }
 
-        if(!/^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/.test(email)){
-            setErrMsg('Invalid Email')
-            return
+        if (!/^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/.test(email)) {
+            setErrMsg('Invalid Email');
+            return;
         }
 
         try {
@@ -59,7 +62,7 @@ function Login() {
             );
             const { user, userType, accessToken } = response?.data;
             setAuth({ email, user, userType, accessToken });
-            if(persist) {
+            if (persist) {
                 localStorage.setItem('loggedIn', true);
             }
             setEmail('');
@@ -67,31 +70,31 @@ function Login() {
             navigate(from, { replace: true });
         } catch (err) {
             if (!err?.response) {
-                setErrMsg('No Server Response');
+                setErrMsg(t('serverResponseError'));
             } else if (err.response?.status === 400) {
-                setErrMsg('Missing Email or Password');
+                setErrMsg(t('missingEmail'));
             } else if (err.response?.status === 401) {
-                setErrMsg('Wrong Email or Password');
+                setErrMsg(t('wrongLogin'));
             } else {
-                setErrMsg('Login Failed');
+                setErrMsg(t('loginFailed'));
             }
         }
     }
 
     return (
-        <div className="flex h-screen w-full items-center justify-center bg-gray-100 light:bg-gray-900">
-            <div className="w-full max-w-md space-y-6 rounded-lg bg-white p-8 shadow-lg light:bg-gray-800">
-                <div className="space-y-2 text-center">
-                    <h1 className="text-3xl font-bold">Login</h1>
+        <div className="flex h-screen overflow-hidden w-full items-center justify-end" style={{ backgroundImage: 'url(/public/images/login.jpg)', backgroundSize: 'cover', backgroundPosition: 'right' }}>
+            <div className="h-full flex flex-col items-center justify-center bg-white p-8 shadow-lg light:bg-gray-800" style={{ backgroundColor: '#F8F8FF' }}>
+                <div className="space-y-2 text-center mb-6 w-10/12">
+                    <h1 className="text-4xl font-bold">{t('login')}</h1>
                     <p className="text-gray-500 light:text-gray-400">
-                        Enter your email and password to access your school account.
+                        {t('loginText')}
                     </p>
-                    <p ref={errRef} className={errMsg ? "block text-red-600 underline" : "hidden"} >{errMsg}</p>
+                    <p ref={errRef} className={errMsg ? "block text-red-600 underline" : "hidden"}>{errMsg}</p>
                 </div>
-                <Form className="space-y-6" onFinish={handleSubmit}>
+                <Form className="space-y-6 w-10/12" onFinish={handleSubmit}>
                     <div>
                         <label className="mb-2 block text-sm font-medium text-gray-700 light:text-gray-300" htmlFor="email">
-                            Email
+                            {t('mail')}
                         </label>
                         <Input
                             prefix={<MailOutlined />}
@@ -101,11 +104,12 @@ function Login() {
                             placeholder="name@example.com"
                             onChange={(e) => setEmail(e.target.value)}
                             value={email}
+                            style={{ width: '100%' }}
                         />
                     </div>
                     <div>
                         <label className="mb-2 block text-sm font-medium text-gray-700 light:text-gray-300" htmlFor="password">
-                            Password
+                            {t('pass')}
                         </label>
                         <Input.Password
                             prefix={<LockOutlined />}
@@ -124,10 +128,10 @@ function Login() {
                         className='w-full'
                         htmlType='submit'
                     >
-                        Login
+                        {t('login')}
                     </Button>
                     <div>
-                        <Checkbox id='persist' onChange={togglePersist} checked={persist} style={{scale: '1.3'}} />
+                        <Checkbox id='persist' onChange={togglePersist} checked={persist} style={{ scale: '1.3' }} />
                         <span className='ml-2'>Remember this device?</span>
                     </div>
                 </Form>

@@ -13,8 +13,8 @@ RETURNS TABLE(firstname text, lastname text) LANGUAGE sql
 AS
 $$
     SELECT firstname, lastname FROM "User"
-    WHERE firstname = first_name
-    AND lastname = last_name;
+    WHERE firstname ILIKE first_name
+    AND lastname ILIKE last_name;
 $$;
 
 --fix the social_security_number into database and ececute
@@ -80,7 +80,6 @@ BEGIN
     END LOOP;
 END;
 $$;
-
 DROP FUNCTION IF EXISTS getUser(int);
 CREATE OR REPLACE FUNCTION getUser(user_id int)
 RETURNS TABLE(
@@ -107,4 +106,88 @@ $$
     LEFT JOIN teacher ON "User".id = teacher.id AND role.name = 'TEACHER'
     LEFT JOIN parent ON student.parentid = parent.id AND role.name = 'STUDENT'
     WHERE "User".id = user_id;
+$$;
+
+DROP FUNCTION IF EXISTS getRoles();
+CREATE OR REPLACE FUNCTION getRoles()
+RETURNS SETOF role LANGUAGE sql AS
+$$
+    SELECT * FROM role;
+$$;
+
+DROP FUNCTION IF EXISTS getSchoolStudents(integer);
+CREATE OR REPLACE FUNCTION getSchoolStudents(input_schoolid integer)
+RETURNS TABLE (
+    id integer,
+    username varchar,
+    email varchar,
+    firstname varchar,
+    lastname varchar,
+    roleid integer,
+    schoolid integer,
+    classid integer,
+    birthday date,
+    gender gender,
+    parentid integer,
+    personalnumber varchar
+) LANGUAGE sql
+AS
+$$
+    SELECT "User".id,
+           "User".username,
+           "User".email,
+           "User".firstname,
+           "User".lastname,
+           "User".roleid,
+           "User".schoolid,
+           student.classid,
+           student.birthday,
+           student.gender,
+           student.parentid,
+           student.personalnumber
+    FROM "User"
+    JOIN student ON "User".id = student.id
+    WHERE "User".schoolid = input_schoolid
+    AND "User".roleid = 3;
+$$;
+
+DROP FUNCTION IF EXISTS getUser(integer);
+CREATE OR REPLACE FUNCTION getUser(input_id integer)
+RETURNS SETOF "User" LANGUAGE sql
+AS
+$$
+    SELECT * FROM "User"
+    WHERE id = input_id;
+$$;
+
+DROP FUNCTION IF EXISTS deleteUser(integer);
+CREATE OR REPLACE FUNCTION deleteUser(input_id integer)
+RETURNS SETOF "User" LANGUAGE sql
+AS
+$$
+    DELETE FROM "User" 
+    WHERE id = input_id
+    RETURNING *;
+$$;
+
+DROP FUNCTION IF EXISTS updateUser(integer);
+CREATE OR REPLACE FUNCTION updateUser(input_id integer, input_username text, input_email text, input_password text, input_firstname text, input_lastname text, input_roleid integer)
+RETURNS SETOF "User" LANGUAGE sql
+AS
+$$
+    UPDATE "User" SET 
+    username = input_username, email = input_email, password = input_password, firstname = input_firstname, lastname = input_lastname, roleid = input_roleid
+    WHERE id = input_id 
+    RETURNING *;
+$$;
+
+DROP FUNCTION IF EXISTS getTotalNumberOfUsers(int, boolean[]);
+CREATE OR REPLACE FUNCTION getTotalNumberOfUsers(schoolID int, roleName boolean[])
+RETURNS TABLE(admins int, teachers int,students int, parents int) LANGUAGE sql AS
+$$
+   SELECT 
+    (CASE WHEN roleName[1] THEN (SELECT COUNT(*) FROM "User" WHERE schoolid = schoolID AND roleid = (SELECT id FROM role WHERE name = 'ADMIN')) ELSE 0 END) AS admins,
+    (CASE WHEN roleName[2] THEN (SELECT COUNT(*) FROM "User" WHERE schoolid = schoolID AND roleid = (SELECT id FROM role WHERE name = 'TEACHER')) ELSE 0 END) AS teachers,
+    (CASE WHEN roleName[3] THEN (SELECT COUNT(*) FROM "User" WHERE schoolid = schoolID AND roleid = (SELECT id FROM role WHERE name = 'STUDENT')) ELSE 0 END) AS students,
+    (CASE WHEN roleName[4] THEN (SELECT COUNT(*) FROM "User" WHERE schoolid = schoolID AND roleid = (SELECT id FROM role WHERE name = 'PARENT')) ELSE 0 END) AS parents;
 $$;

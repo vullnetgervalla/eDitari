@@ -9,6 +9,8 @@ import ListTeachers from 'pages/users/listTeachers';
 import ListAdmins from 'pages/users/listAdmins';
 import ListRoles from 'pages/users/listRoles';
 import UserProfile from 'components/userProfile';
+import CreateNotification from 'pages/admin/createNotification';
+import SeeNotifications from 'components/seeNotifications';
 
 export const AdminRoutes = [
   {
@@ -57,5 +59,13 @@ export const AdminRoutes = [
   {
     path: 'create-role',
     element: <CreateRole />
+  },
+  {
+    path: 'create-notification',
+    element: <CreateNotification />
+  },
+  {
+    path: 'notifications',
+    element: <SeeNotifications />
   }
 ];

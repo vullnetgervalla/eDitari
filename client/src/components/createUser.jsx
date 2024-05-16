@@ -23,33 +23,33 @@ const formItemLayout = {
 };
 const { Title } = Typography;
 function CreateUser({ parent }) {
-  const { t } = useTranslation();
-  return (
-    <div style={{ textAlign: 'center' }}>
-      <Form
-        {...formItemLayout}
-        variant='filled'
-        style={{
-          maxWidth: 500,
-          border: '1px solid #0F1431',
-          borderRadius: 20,
-          padding: 30,
-          backgroundColor: '#fff',
-        }}
-      >
-        <Form.Item
-          label={t('ssn')}
-          labelAlign='left'
-          name='personalID'
-          rules={[
-            {
-              required: true,
-              message: 'Please input!',
-            },
-          ]}
-        >
-          <Input />
-        </Form.Item>
+	const { t } = useTranslation();
+	return (
+		<div style={{ textAlign: 'center' }}>
+			<Form
+				{...formItemLayout}
+				variant='filled'
+				style={{
+					maxWidth: 500,
+					border: '1px solid #0F1431',
+					borderRadius: 20,
+					padding: 30,
+					backgroundColor: '#fff',
+				}}
+			>
+				<Form.Item
+					label={t('ssn')}
+					labelAlign='left'
+					name='personalID'
+					rules={[
+						{
+							required: true,
+							message: t('enterSsn'),
+						},
+					]}
+				>
+					<Input />
+				</Form.Item>
 
         <Form.Item
           label={t('name')}

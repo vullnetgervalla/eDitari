@@ -59,6 +59,35 @@ getUserRouter.get('/capabilities', authenticateToken, (req, res) => {
 	});
 });
 
+getUserRouter.get('/students', isAdminToken, (req, res) => {
+  const {schoolid} = req.user;
+
+  db.query('SELECT * from getSchoolStudents($1)', [schoolid], (err, queryRes) => {
+    if (err) {
+      console.error('Error executing query', err);
+      res.sendStatus(500);
+      return;
+    }
+
+    res.send(queryRes.rows);
+});
+});
+
+getUserRouter.get('/totalUsers', isAdminToken, (req, res) => {
+  const {schoolid} = req.user;
+  const {role} = req.query;
+  db.query('SELECT * from getTotalNumberOfUsers($1,$2)', [schoolid, role], (err, queryRes) => {
+    if (err) {
+      console.error('Error executing query', err);
+      res.sendStatus(500);
+      return;
+    }
+
+    res.send(queryRes.rows);
+});
+});
+
+// This needs to be the last route
 getUserRouter.get('/:id', (req, res) => {
   const id = req.params.id;
     db.query('SELECT * from getUser($1)', [id], (err, queryRes) => {
