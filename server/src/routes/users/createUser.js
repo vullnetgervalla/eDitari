@@ -107,7 +107,8 @@ createUserRouter.post('/student', isAdminTeacherToken, async (req, res) => {
                     return res.status(500).send('Error executing query');
                 }
                 console.log('Query result:', queryRes.rows);
-                let result = queryRes.rows[0];
+                
+                let {password, ...result} = queryRes.rows[0];
                 
                 db.query('INSERT INTO Student (id, parentid, personalnumber, classid, birthday, gender) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *', [result.id, parentid, personalnumber, classid, birthday, gender], (err, queryRes) => {
                     if (err) {
@@ -115,7 +116,7 @@ createUserRouter.post('/student', isAdminTeacherToken, async (req, res) => {
                         return res.status(500).send('Error executing query');
                     }
                     console.log('Query result:', queryRes.rows);
-                    result = {...result, ...queryRes.rows[0]};
+                    result = [{...result, ...queryRes.rows[0]}];
 
                     res.send(result);
                 });

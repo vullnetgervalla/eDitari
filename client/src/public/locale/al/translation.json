@@ -8,7 +8,8 @@
     "student": "Nxënësit",
     "create-student": "Regjistro nxënës",
     "list-student": "Lista nxënësve",
-    "parent": "Prindërit",
+    "parents": "Prindërit",
+    "parent": "Prindi",
     "notification": "Njoftimet",
     "notifications": "Shiko njoftimet",
     "create-notification": "Krijo njoftim",
@@ -25,6 +26,7 @@
     "city": "Komuna",
     "submit": "Dërgo",
     "name": "Emri",
+    "firstName": "Emri",
     "age": "Mosha",
     "address": "Adresa",
     "lastName": "Mbiemri",
@@ -63,5 +65,14 @@
     "check-all-functionalities": "Zgjidh të gjitha funksionalitetet",
     "reset": "Pastro",
     "role-created-successfully": "Lloji i përdoruesit u krijua me sukses",
-    "role-cannot-contain-numbers": "Roli nuk mund të përmbajë numra"
+    "role-cannot-contain-numbers": "Roli nuk mund të përmbajë numra",
+    "createdStudents": "Nxënësit e krijuar",
+    "login": "Kyçu",
+    "loginText": "Shkruani emailin dhe fjalëkalimin tuaj për të hyrë në llogarinë tuaj të shkollës.",
+    "loginError": "Mungon emaili ose fjalëkalimi",
+    "serverResponseError": "Nuk ka përgjigje nga serveri",
+    "missingEmail": "Mungon emaili ose fjalëkalimi",
+    "wrongLogin": "Emaili ose fjalëkalimi i gabuar",
+    "loginFailed": "Kyçja dështoi",
+    "numbersOnly": "Vetëm numra"
 }

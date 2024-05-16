@@ -8,7 +8,8 @@
     "student": "Učenici",
     "create-student": "Registruj učenika",
     "list-student": "Spisak učenika",
-    "parent": "Roditelji",
+    "parents": "Roditelji",
+    "parent": "Roditelj",
     "notification": "Obaveštenja",
     "notifications": "Spiksak obaveštenja",
     "create-notification": "Kreiraj obaveštenje",
@@ -25,6 +26,7 @@
     "list-material": "Spisak materijale",
     "copyright": "Sva prava zadržana za eDitari 2024.",
     "name": "Ime",
+    "firstName": "Ime",
     "age": "Godine",
     "address": "Adresa",
     "lastName": "Prezime",
@@ -63,5 +65,14 @@
     "check-all-functionalities": "Označi sve funkcionalnosti",
     "reset": "Cisti",
     "role-created-successfully": "Korisnik uspešno kreiran",
-    "role-cannot-contain-numbers": "Naziv uloge ne može sadržati brojeve"
+    "role-cannot-contain-numbers": "Naziv uloge ne može sadržati brojeve",
+    "createdStudents": "Kreirani učenici",
+    "login": "Prijavi",
+    "loginText": "Molimo unesite vaše korisničko ime i šifru",
+    "loginError": "Email i šifra su obavezni",
+    "serverResponseError": "Greška na serveru",
+    "missingEmail": "Nedostaje email ili lozinka",
+    "wrongLogin": "Pogrešan email ili lozinka",
+    "loginFailed": "neuspela Prijava",
+    "numbersOnly": "Samo brojevi"
 }
