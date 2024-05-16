@@ -50,7 +50,7 @@ createUserRouter.post('/admin', isAdminToken, async (req, res) => {
         return res.status(400).send('Missing required fields');
     }
 
-    db.query('SELECT name, schoolDomain FROM School WHERE id = $1', [schoolid], (err, queryRes) => {
+    db.query('SELECT * FROM getSchoolName($1)', [schoolid], (err, queryRes) => {
         if (err) {
             console.error('Error executing query', err);
             return res.status(500).send('Error executing query');
@@ -107,7 +107,8 @@ createUserRouter.post('/student', isAdminTeacherToken, async (req, res) => {
                     return res.status(500).send('Error executing query');
                 }
                 console.log('Query result:', queryRes.rows);
-                let result = queryRes.rows[0];
+                
+                let {password, ...result} = queryRes.rows[0];
                 
                 db.query('INSERT INTO Student (id, parentid, personalnumber, classid, birthday, gender) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *', [result.id, parentid, personalnumber, classid, birthday, gender], (err, queryRes) => {
                     if (err) {
@@ -115,7 +116,7 @@ createUserRouter.post('/student', isAdminTeacherToken, async (req, res) => {
                         return res.status(500).send('Error executing query');
                     }
                     console.log('Query result:', queryRes.rows);
-                    result = {...result, ...queryRes.rows[0]};
+                    result = [{...result, ...queryRes.rows[0]}];
 
                     res.send(result);
                 });

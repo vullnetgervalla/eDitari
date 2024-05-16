@@ -1,11 +1,14 @@
 const { Router } = require('express');
 const { db } = require('../../db');
+const { isAdminTeacherToken } = require('../../middleware/isAdminTeacherToken');
 
 const deleteUserRouter = Router();
 
-deleteUserRouter.delete('/:id', (req, res) => {
+deleteUserRouter.delete('/:id', isAdminTeacherToken, (req, res) => {
     const id = req.params.id;
-    db.query('DELETE FROM "User" WHERE id = $1', [id], (err, queryRes) => {
+    const {userType} = req.user;
+    // in progress, need to delete the child tables also
+    db.query('SELECT * FROM deleteUser($1)', [id], (err, queryRes) => {
         if (err) {
           console.error('Error executing query', err);
           res.status(500).send('Error executing query');
