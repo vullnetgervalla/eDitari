@@ -22,7 +22,7 @@ export const useCapabilities = (axiosPrivate) => {
         if (axios.isCancel(error)) {
           console.log('Request:', error.message);
         } else {
-          console.error(error);
+           console.error(error);
         }
       }
     };

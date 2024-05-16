@@ -112,9 +112,9 @@ function CreateUser({ parent }) {
         </Form.Item>
         {
 				/*<Form.Item
-					label={t('mail')}
+					label={t('email')}
 					labelAlign='left'
-					name='mail'
+					name='email'
 				>
 					<Input />
 				</Form.Item> */}

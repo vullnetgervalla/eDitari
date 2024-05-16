@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   DesktopOutlined,
   FileOutlined,
@@ -51,7 +51,8 @@ export default function NavBar({ content }) {
   const { t } = useTranslation();
   const [collapsed, setCollapsed] = useState(false);
   const navigate = useNavigate();
-  const [title, setTitle] = useState('home');
+  const [title, setTitle] = useState(sessionStorage.getItem('title') || t('home'));
+  const [selectedKey, setSelectedKey] = useState(sessionStorage.getItem('selectedKey') || '0');
   const [openKeys, setOpenKeys] = useState([]);
   const {
     token: { colorBgContainer, borderRadiusLG },
@@ -66,7 +67,8 @@ export default function NavBar({ content }) {
   };
   const getPermissions = () => {
     if (location.pathname == '/') return true;
-    const permissions = capabilities.findIndex((item) => location.pathname.includes(item.capability_name));
+    const path = location.pathname.endsWith('/') ? location.pathname.slice(0, -1) : location.pathname;
+    const permissions = capabilities.findIndex((item) => path.startsWith(`/${item.capability_name}`));
     if (permissions === -1) return false;
     return true;
   };
@@ -104,6 +106,10 @@ export default function NavBar({ content }) {
     allItems.unshift(getItem(t('home'), '0', iconMapping['home']));
     return allItems;
   };
+  useEffect(() => {
+    sessionStorage.setItem('title', title);
+    sessionStorage.setItem('selectedKey', selectedKey);
+  }, [title, selectedKey]);
   if (loading) {
     return (
       <Spin
@@ -134,7 +140,7 @@ export default function NavBar({ content }) {
         <div className='demo-logo-vertical' />
         <Menu
           theme='dark'
-          defaultSelectedKeys={['0']}
+          defaultSelectedKeys={[selectedKey]}
           mode='inline'
           openKeys={openKeys}
           onOpenChange={onOpenChange}
@@ -143,6 +149,7 @@ export default function NavBar({ content }) {
             const route = keyToPath[`${key}`];
             if (route) {
               setTitle(t(route));
+              setSelectedKey(key);
               if (route === 'home') navigate('/');
               else {
                 navigate('/' + route);

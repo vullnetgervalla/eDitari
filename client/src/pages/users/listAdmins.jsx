@@ -5,35 +5,33 @@ import { useEffect, useState } from 'react';
 import { Spin } from 'antd';
 
 export default function ListAdmins() {
-	const [users, setUsers] = useState([]);
-  const [loading, setLoading] = useState(true);
-	const axiosPrivate = useAxiosPrivate();
-
-	useEffect(() => {
-		let isMounted = true;
-		const source = axiosPrivate.CancelToken.source();
-
-		const getUsers = async () => {
-			try {
-				const response = await axiosPrivate.get('/users/admin', {
-					cancelToken: source.token,
-				});
-        isMounted && setUsers(response.data);
-        setLoading(false);
-      } catch (error) {
-        if (axios.isCancel(error)) {
-          console.log('Request:', error.message);
-        } else {
-          console.error(error);
-        }
-			}
-		};
-		getUsers();
-  }, []);
-  if (loading) {
-    return <Spin className='fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2' size='large' />;
-	}
-	return (
-      <ShowData userType={"ADMIN"} data={users} />
-	);
+    const [admins, setAdmins] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const axiosPrivate = useAxiosPrivate();
+    useEffect(() => {
+        let isMounted = true;
+        const source = axiosPrivate.CancelToken.source();
+        const getUsers = async () => {
+            try {
+                const response = await axiosPrivate.get('/users/roles?role=ADMIN', {
+                    cancelToken: source.token,
+                });
+                isMounted && setAdmins(response.data);
+                setLoading(false);
+            } catch (error) {
+                if (axios.isCancel(error)) {
+                    console.log('Request:', error.message);
+                } else {
+                    console.error(error);
+                }
+            }
+        };
+        getUsers();
+    }, []);
+    if (loading) {
+        return <Spin className='fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2' size='large' />;
+    }
+    return (
+        <ShowData userType={"ADMIN"} data={admins} />
+    );
 }

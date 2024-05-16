@@ -1,8 +1,6 @@
 const { Router } = require('express');
 const { db } = require('../../db');
 const { isAdminToken } = require('../../middleware/isAdminToken');
-const { isAdminTeacherToken } = require('../../middleware/isAdminTeacherToken');
-const { authenticateToken } = require('../../middleware/authenticateToken');
 
 const createRoleRouter = Router();
 
