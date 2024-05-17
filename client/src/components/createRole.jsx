@@ -30,7 +30,7 @@ export default function CreateRole() {
   const indeterminate = checkedList.length > 0 && checkedList.length < plainOptions.length;
   const onChange = (list) => {
     const values = capabilities.reduce((acc, item) => {
-      if (list.includes(t(item.capability_name))) {
+      if (list?.includes(t(item.capability_name))) {
         acc.push(item.capability_name);
       }
       return acc;
@@ -125,7 +125,7 @@ export default function CreateRole() {
         </Button>
         <Button
           type='primary'
-          onClick={() => addRole(roleName.toUpperCase(), requestList)}
+          onClick={() => addRole(roleName?.toUpperCase(), requestList)}
           style={{ padding: '0 30px 0 30px' }}
         >
           {t('create')}

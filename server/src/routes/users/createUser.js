@@ -45,7 +45,7 @@ createUserRouter.post('/admin', isAdminToken, async (req, res) => {
     const {email, password, firstname, lastname } = req.body;
     const {schoolid} = req.user;
     const roleid = roleMapping("ADMIN");
-    const username = `${firstname}${lastname}`.toLowerCase();
+    const username = `${firstname}${lastname}`?.toLowerCase();
     if( !email || !password || !firstname || !lastname || !roleid || !schoolid) {
         return res.status(400).send('Missing required fields');
     }
@@ -59,7 +59,7 @@ createUserRouter.post('/admin', isAdminToken, async (req, res) => {
             return res.status(400).send('Invalid school id');
         }
 
-        const schoolDomain = queryRes.rows[0].schooldomain ?? queryRes.rows[0].name.replace(" ", "_").toLowerCase();
+        const schoolDomain = queryRes.rows[0].schooldomain ?? queryRes.rows[0].name.replace(" ", "_")?.toLowerCase();
         if(email.split('@')[1] !== `${schoolDomain}.com`) {
             return res.status(400).send('Invalid email domain');
         }
@@ -89,7 +89,7 @@ createUserRouter.post('/student', isAdminTeacherToken, async (req, res) => {
     const roleid = await roleMapping("STUDENT")
     const password = personalnumber;
     const hashedPassword = await bcrypt.hash(password, 10);
-    const username = `${firstname}${lastname}`.toLowerCase();
+    const username = `${firstname}${lastname}`?.toLowerCase();
     const schoolDomain = "main";
     try{
         db.query('SELECT * from getUserName($1, $2)', [firstname, lastname], (err, queryRes) => {
@@ -99,7 +99,7 @@ createUserRouter.post('/student', isAdminTeacherToken, async (req, res) => {
             }
             const number = queryRes.rows.length;
             console.log('number', number, 'queryRes.rows', queryRes.rows)
-            const email = `${firstname}.${lastname}${!number ? '' : number}@student.${schoolDomain}.com`.toLowerCase();
+            const email = `${firstname}.${lastname}${!number ? '' : number}@student.${schoolDomain}.com`?.toLowerCase();
 
             db.query('INSERT INTO "User" (username, email, password, firstname, lastname, roleid, schoolid) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *', [username, email, hashedPassword, firstname, lastname, roleid, schoolid], (err, queryRes) => {
                 if (err) {
@@ -140,7 +140,7 @@ createUserRouter.post('/teacher', isAdminToken, async (req, res) => {
     const roleid = await roleMapping("TEACHER")
     const password = personalnumber;
     const hashedPassword = await bcrypt.hash(password, 10);
-    const username = `${firstname}${lastname}`.toLowerCase();
+    const username = `${firstname}${lastname}`?.toLowerCase();
     try{
         db.query('SELECT * from getUserName($1, $2)', [firstname, lastname], (err, queryRes) => {
             if (err) {
@@ -148,7 +148,7 @@ createUserRouter.post('/teacher', isAdminToken, async (req, res) => {
                 return res.status(500).send('Error executing query');
             }
             const number = queryRes.rows.length;
-            const email = `${firstname}.${lastname}${number ? '' : number}@student.${schoolDomain}.com`.toLowerCase();
+            const email = `${firstname}.${lastname}${number ? '' : number}@student.${schoolDomain}.com`?.toLowerCase();
 
             db.query('INSERT INTO "User" (username, email, password, firstname, lastname, roleid, schoolid) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *', [username, email, hashedPassword, firstname, lastname, roleid, schoolid], (err, queryRes) => {
                 if (err) {

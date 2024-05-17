@@ -10,7 +10,7 @@ const RequireAuth = (props) => {
     return (
         user
             ? allowedUserTypes
-                ? userType && allowedUserTypes.includes(userType)
+                ? userType && allowedUserTypes?.includes(userType)
                     ? <Outlet context={{user: user, userType: userType}}/>
                     : <Navigate to={'/unauthorized'} state={{ from: location.pathname }} replace />  
                 : <Outlet context={{user: user, userType: userType}}/>

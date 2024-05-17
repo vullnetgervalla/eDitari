@@ -104,7 +104,7 @@ const ShowData = ({ userType, data }) => {
         }}
       />
     ),
-    onFilter: (value, record) => record[dataIndex].toString().toLowerCase().includes(value.toLowerCase()),
+    onFilter: (value, record) => record[dataIndex]?.toString()?.toLowerCase()?.includes(value?.toLowerCase()),
     onFilterDropdownOpenChange: (visible) => {
       if (visible) {
         setTimeout(() => searchInput.current?.select(), 100);
@@ -119,7 +119,7 @@ const ShowData = ({ userType, data }) => {
           }}
           searchWords={[searchText]}
           autoEscape
-          textToHighlight={text ? text.toString() : ''}
+          textToHighlight={text ? text?.toString() : ''}
         />
       ) : (
         text

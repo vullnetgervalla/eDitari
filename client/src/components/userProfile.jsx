@@ -52,8 +52,8 @@ export default function UserProfile() {
     );
   }
   const { name, lastName, mail, gender: rawGender, role: rawRole, parentId, phoneNumber, address, ssn } = formData;
-  const gender = rawGender === 'M' ? t('male') : t('female');
-  const role = t(rawRole.toLowerCase());
+  const gender = rawGender === 'M' ? t('male') : rawGender === 'F' ? t('female') : undefined;
+  const role = t(rawRole?.toLowerCase());
   const formItems = Object.entries({ name, lastName, mail, gender, role, phoneNumber, address, ssn })
     .filter(([key, value]) => value !== null)
     .map(([key, value]) => (

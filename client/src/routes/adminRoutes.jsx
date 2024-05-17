@@ -25,15 +25,15 @@ export const AdminRoutes = [
     element: <CreateAdmin />
   },
   {
-    path: 'list-admin/:username',
+    path: 'list-admin/:id',
     element: <UserProfile />
   },
   {
-    path: 'list-teacher/:username',
+    path: 'list-teacher/:id',
     element: <UserProfile />
   },
   {
-    path: 'list-student/:username',
+    path: 'list-student/:id',
     element: <UserProfile />
   },
   {

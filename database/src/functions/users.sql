@@ -151,15 +151,6 @@ $$
     AND "User".roleid = 3;
 $$;
 
-DROP FUNCTION IF EXISTS getUser(integer);
-CREATE OR REPLACE FUNCTION getUser(input_id integer)
-RETURNS SETOF "User" LANGUAGE sql
-AS
-$$
-    SELECT * FROM "User"
-    WHERE id = input_id;
-$$;
-
 DROP FUNCTION IF EXISTS deleteUser(integer);
 CREATE OR REPLACE FUNCTION deleteUser(input_id integer)
 RETURNS SETOF "User" LANGUAGE sql

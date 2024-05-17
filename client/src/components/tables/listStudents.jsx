@@ -56,7 +56,7 @@ export const StudentTable = ({ data, side, classes, parents }) => {
             </div>
         ),
         filterIcon: (filtered) => <SearchOutlined style={{ color: filtered ? '#1677ff' : undefined }} />,
-        onFilter: (value, record) => record[dataIndex].toString().toLowerCase().includes(value.toLowerCase()),
+        onFilter: (value, record) => record[dataIndex]?.toString()?.toLowerCase()?.includes(value?.toLowerCase()),
         onFilterDropdownOpenChange: (visible) => {
             if (visible) {
                 setTimeout(() => searchInput.current?.select(), 100);
@@ -68,7 +68,7 @@ export const StudentTable = ({ data, side, classes, parents }) => {
                     highlightStyle={{ backgroundColor: '#ffc069', padding: 0 }}
                     searchWords={[searchText]}
                     autoEscape
-                    textToHighlight={text ? text.toString() : ''}
+                    textToHighlight={text ? text?.toString() : ''}
                 />
             ) : (
                 text
@@ -147,7 +147,7 @@ export const StudentTable = ({ data, side, classes, parents }) => {
                 dataIndex: 'account',
                 key: 'account',
                 render: (_, record) => (
-                    <Link to={`/users/${record.id}`} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%', color: 'black' }}>
+                    <Link to={`/list-student/${record.id}`} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%', color: 'black' }}>
                         <UserOutlined style={{ fontSize: '18px' }} />
                     </Link>
                 ),
