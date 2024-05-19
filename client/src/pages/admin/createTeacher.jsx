@@ -68,8 +68,8 @@ function CreateTeacher() {
 					borderRadius: 20,
 					padding: 30,
 					backgroundColor: '#fff',
-					border:'1px solid #e5e7eb', 
-					boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
+					border: '1px solid #E5E7EB',
+					boxShadow: '3px 3px 10px #eee',
 				}}
 				onFinish={handleSubmit}
 			>

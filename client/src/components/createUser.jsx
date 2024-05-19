@@ -31,7 +31,8 @@ function CreateUser({ parent }) {
 				variant='filled'
 				style={{
 					maxWidth: 500,
-					border: '1px solid #0F1431',
+          border: '1px solid #E5E7EB',
+          boxShadow: '3px 3px 10px #eee',
 					borderRadius: 20,
 					padding: 30,
 					backgroundColor: '#fff',
