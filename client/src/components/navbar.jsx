@@ -82,21 +82,21 @@ export default function NavBar({ content }) {
   };
   const items = (t) => {
     let key = 10;
-    let currentCategory = capabilities[0].category_name;
+    let currentCategory = capabilities[0]?.category_name;
     let categoryCounter = 0;
     capabilities.forEach((item) => {
-      if (item.category_name !== currentCategory) {
+      if (item?.category_name !== currentCategory) {
         key += 10;
-        currentCategory = item.category_name;
+        currentCategory = item?.category_name;
         categoryCounter = 0;
       }
       categoryCounter++;
       keyToPath[key + categoryCounter] = item.capability_name;
     });
     const groupedCapabilities = capabilities.reduce((groups, item) => {
-      const group = groups[item.category_name] || [];
+      const group = groups[item?.category_name] || [];
       group.push(item.capability_name);
-      groups[item.category_name] = group;
+      groups[item?.category_name] = group;
       return groups;
     }, {});
     const allItems = Object.entries(groupedCapabilities).map(([category, items], index) => {
