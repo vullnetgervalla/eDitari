@@ -24,7 +24,7 @@ export const StudentTable = ({ data, side, classes, parents }) => {
         confirm();
     };
 
-    const getColumnSearchProps = (dataIndex) => ({
+    const getColumnSearchProps = (dataIndex, nestedPath) => ({
         filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters, close }) => (
             <div style={{ padding: 8 }} onKeyDown={(e) => e.stopPropagation()}>
                 <Input
@@ -56,7 +56,13 @@ export const StudentTable = ({ data, side, classes, parents }) => {
             </div>
         ),
         filterIcon: (filtered) => <SearchOutlined style={{ color: filtered ? '#1677ff' : undefined }} />,
-        onFilter: (value, record) => record[dataIndex]?.toString()?.toLowerCase()?.includes(value?.toLowerCase()),
+        onFilter: (value, record) => {
+            if (nestedPath) {
+                const nestedValue = nestedPath.split('.').reduce((acc, part) => acc && acc[part], record);
+                return nestedValue?.toString().toLowerCase().includes(value.toLowerCase());
+            }
+            return record[dataIndex]?.toString().toLowerCase().includes(value.toLowerCase());
+        },
         onFilterDropdownOpenChange: (visible) => {
             if (visible) {
                 setTimeout(() => searchInput.current?.select(), 100);
@@ -74,7 +80,6 @@ export const StudentTable = ({ data, side, classes, parents }) => {
                 text
             ),
     });
-    console.log('parents', parents)
 
     const columns = [
         {
@@ -103,43 +108,38 @@ export const StudentTable = ({ data, side, classes, parents }) => {
         },
         {
             title: t('class'),
-            dataIndex: 'classid',
+            dataIndex: 'class',
             key: 'classid',
-            ...getColumnSearchProps('classid'),
-            render: (classid) => (
-                <span>{classes?.find(r => r.id === classid)?.classname}</span>
-            )
+            ...getColumnSearchProps('classname', 'class.classname'),
+            render: (studentClass) => <span>{studentClass?.classname}</span>
         },
         {
             title: t('parent'),
-            dataIndex: 'parentid',
-            key: 'parentid',
-            ...getColumnSearchProps('parentid'),
-            render: (parentid) => (
-                <span>{parents?.find(r =>  r.id === parentid)?.firstname + ' ' + parents?.find(r => r.id === parentid)?.lastname}</span>
-            )
+            dataIndex: 'parent',
+            key: 'id',
+            ...getColumnSearchProps('fullname', 'parent.fullname'),
+            render: (parent) =>{
+                return <span>{parent?.fullname ? parent?.fullname : '-'}</span>
+            }
         },
         {
             title: t('gender'),
             dataIndex: 'gender',
             key: 'gender',
             ...getColumnSearchProps('gender'),
-            render: (gender) => (
+            render: (gender) =>
                 gender === 'M' 
                     ? t('male')
                     : gender === 'F'
                         ? t('female')
                         : '-'
-            )
         },
         {
             title: t('birthday'),
             dataIndex: 'birthday',
             key: 'birthday',
             ...getColumnSearchProps('birthday'),
-            render: (birthday) => (
-                <span>{moment(birthday).format('MM/DD/YYYY')}</span>
-            )
+            render: (birthday) => <span>{birthday? moment(birthday).format('DD/MM/YYYY') : '-'}</span>
         },
         ...(!side ? [
             {
@@ -185,5 +185,5 @@ export const StudentTable = ({ data, side, classes, parents }) => {
         ] : []),
     ];
 
-    return <Table columns={columns} dataSource={data} scroll={{x:500}} rowKey={'id'} />;
+    return <Table columns={columns} dataSource={data} scroll={{ x: 500 }} rowKey={'id'} />;
 };

@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Cascader, DatePicker, Form, Input, InputNumber, Mentions, Select, TreeSelect } from 'antd';
-import { message } from 'antd';
+import { Button, DatePicker, Form, Input, Select, message } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { useAxiosPrivate } from 'hooks/useAxiosPrivate';
-import { StudentTable } from 'components/tables/listStudents';
+import { StudentTable } from 'components/tables/StudentTable';
 import moment from 'moment';
 
 const formItemLayout = {
@@ -31,6 +30,7 @@ function CreateStudent() {
 	const [parents, setParents] = useState([]);
 	const [classes, setClasses] = useState([]);
 	const [createdUsers, setCreatedUsers] = useState([]);
+	const form = Form.useForm();
 
 	const handleSubmit = async (values) => {
 		for (const key in values) {
@@ -38,11 +38,27 @@ function CreateStudent() {
 				values[key] = null;
 			}
 		}
-		console.log('values', values);
+		values.birthday = values?.birthday?.format('YYYY-MM-DD') ?? null;
+
 		try {
 			const res = await axios.post('/users/student', values);
 			message.success('Student created successfully');
-			setCreatedUsers(prev => [...prev, res.data?.[0]]);
+			const student = {
+				...res.data?.[0],
+				class:{
+					id: res.data?.[0].classid,
+					classname: classes.find(item => item.id === res.data?.[0].classid)?.classname,
+				},
+				...(!!res.data?.[0].parentid ? 
+					{parent: {
+						id: res.data?.[0].parentid,
+						firstname: parents.find(item => item.id === res.data?.[0].parentid)?.firstname,
+						lastname: parents.find(item => item.id === res.data?.[0].parentid)?.lastname,
+						fullname: parents.find(item => item.id === res.data?.[0].parentid)?.firstname + ' ' + parents.find(item => item.id === res.data?.[0].parentid)?.lastname
+					}} : {}
+				)
+			};
+			setCreatedUsers(prev => [student, ...prev]);
 		} catch (e) {
 			message.error('Error creating student');
 		}
@@ -137,6 +153,7 @@ function CreateStudent() {
 						]}
 					>
 						<DatePicker
+							format={'DD/MM/YYYY'}
 							disabledDate={(current) => current && current > moment().endOf('day')}
 							style={{ float: 'left', width: '100%' }} />
 					</Form.Item>

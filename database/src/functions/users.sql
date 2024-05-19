@@ -125,30 +125,45 @@ RETURNS TABLE (
     lastname varchar,
     roleid integer,
     schoolid integer,
-    classid integer,
     birthday date,
     gender gender,
-    parentid integer,
-    personalnumber varchar
+    personalnumber varchar,
+    parent jsonb,
+    class jsonb
 ) LANGUAGE sql
 AS
 $$
-    SELECT "User".id,
-           "User".username,
-           "User".email,
-           "User".firstname,
-           "User".lastname,
-           "User".roleid,
-           "User".schoolid,
-           student.classid,
-           student.birthday,
-           student.gender,
-           student.parentid,
-           student.personalnumber
-    FROM "User"
-    JOIN student ON "User".id = student.id
-    WHERE "User".schoolid = input_schoolid
-    AND "User".roleid = 3;
+    SELECT 
+        "U_Student".id,
+        "U_Student".username,
+        "U_Student".email,
+        "U_Student".firstname,
+        "U_Student".lastname,
+        "U_Student".roleid,
+        "U_Student".schoolid,
+        student.birthday,
+        student.gender,
+        student.personalnumber,
+        CASE
+            WHEN "Parent".id IS NOT NULL THEN
+                jsonb_build_object(
+                    'id', "Parent".id,
+                    'firstname', "Parent".firstname,
+                    'lastname', "Parent".lastname,
+                    'fullname', "Parent".firstname || ' ' || "Parent".lastname
+                )
+            ELSE NULL
+        END AS parent,
+        jsonb_build_object(
+            'id', class.id,
+            'classname', class.classname
+        ) AS class
+    FROM "User" AS "U_Student"
+    JOIN student ON "U_Student".id = student.id
+    LEFT JOIN "User" AS "Parent" ON student.parentid = "Parent".id
+    JOIN class ON student.classid = class.id
+    WHERE "U_Student".schoolid = 1
+    AND "U_Student".roleid = 3;
 $$;
 
 DROP FUNCTION IF EXISTS deleteUser(integer);

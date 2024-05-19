@@ -7,39 +7,6 @@ const { roleMapping } = require('../../utils/roleMapping');
 
 const createUserRouter = Router();
 
-
-// createUserRouter.post('/', async (req, res) => {
-//     console.log(req.body);
-//     const { userType, schoolid } = req.body;
-//     if(!userType || !schoolid) {
-//         return res.status(400).send('Missing required fields');
-//     }
-
-//     db.query('SELECT name, schoolDomain FROM School WHERE id = $1', [schoolid], (err, queryRes) => {
-//         if (err) {
-//             console.error('Error executing query', err);
-//             return res.status(500).send('Error executing query');
-//         }
-//         if (queryRes.rows.length === 0) {
-//             return res.status(400).send('Invalid school id');
-//         }
-
-//         const schoolDomain = queryRes.rows[0].schooldomain ?? queryRes.rows[0].name.replace(" ", "_").toLowerCase();
-        
-//         if (userType === "ADMIN") {
-//             return addAdmin(req, res, schoolDomain);
-//         } else if (userType === "STUDENT") {
-//             return addStudent(req, res, schoolDomain);
-//         } else if (userType === "TEACHER") {
-//             return addTeacher(req, res, schoolDomain);
-//         } else if (userType === "PARENT") {
-//             return addParent(req, res, schoolDomain);
-//         } else {
-//             return res.status(400).send('Invalid user type');
-//         }
-//     });
-// });
-
 createUserRouter.post('/admin', isAdminToken, async (req, res) => {
     console.log('req.body',req.body);
     const {email, password, firstname, lastname } = req.body;
