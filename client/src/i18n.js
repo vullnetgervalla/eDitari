@@ -5,6 +5,8 @@ import translationEN from './public/locale/en/translation.json';
 import translationAL from './public/locale/al/translation.json';
 import translationSR from './public/locale/sr/translation.json';
 
+const language = localStorage.getItem('language') || 'al';
+
 const resources = {
   en: {
     translation: translationEN
@@ -21,7 +23,7 @@ i18n
   .use(initReactI18next)
   .init({
     resources,
-    lng: "al",
+    lng: language,
 
     keySeparator: false,
 

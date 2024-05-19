@@ -11,12 +11,17 @@ import { NotFound } from 'components/NotFound';
 import './App.css';
 import UsersPage from 'pages/users/index';
 import { AdminRoutes } from './routes/adminRoutes';
+import LanguageSwitcher from 'components/language/LanguageSwitcher';
 
 function App() {
 	const { auth } = useAuth();
 	const { user, userType } = auth;
+
 	return (
 		<>
+			<div className="absolute top-4 right-4">
+				<LanguageSwitcher />
+			</div>
 			<Routes>
 				<Route path='/login' element={<Login />} />
 				<Route element={<PersistLogin />}>

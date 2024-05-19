@@ -51,7 +51,7 @@ export default function NavBar({ content }) {
   const { t } = useTranslation();
   const [collapsed, setCollapsed] = useState(false);
   const navigate = useNavigate();
-  const [title, setTitle] = useState(sessionStorage.getItem('title') || t('home'));
+  const [title, setTitle] = useState(sessionStorage.getItem('title') || 'home');
   const [selectedKey, setSelectedKey] = useState(sessionStorage.getItem('selectedKey') || '0');
   const [openKeys, setOpenKeys] = useState([]);
   const {
@@ -162,7 +162,7 @@ export default function NavBar({ content }) {
             onClick={({ key }) => {
               const route = keyToPath[`${key}`];
               if (route) {
-                setTitle(t(route));
+                setTitle(route);
                 setSelectedKey(key);
               if (route === 'home') navigate('/');
                 else {

@@ -83,7 +83,7 @@ function Login() {
 
     return (
         <div className="flex h-screen overflow-hidden w-full items-center justify-end" style={{ backgroundImage: 'url(/images/login.jpg)', backgroundSize: 'cover', backgroundPosition: 'right' }}>
-            <div className="h-full flex flex-col items-center justify-center bg-white p-8 shadow-lg light:bg-gray-800" style={{ backgroundColor: '#F8F8FF' }}>
+            <div className="h-full flex flex-col items-center justify-center bg-white p-8 shadow-lg light:bg-gray-800" style={{ backgroundColor: '#F8F8FF', minWidth: '25%' }}>
                 <div className="space-y-2 text-center mb-6 w-10/12">
                     <h1 className="text-4xl font-bold">{t('login')}</h1>
                     <p className="text-gray-500 light:text-gray-400">
