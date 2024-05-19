@@ -7,7 +7,9 @@
     "inst": "npm install && cd server && npm install && cd ../database && npm install && cd ../client && npm install",
     "create-db": "cd database && npm run create-db",
     "generate-procedures": "cd database && npm run generate-procedures",
-    "restartNumbering": "cd database && npm run restartNumbering",
+    "restart-numbering": "cd database && npm run restart-numbering",
+    "initial-data": "cd database && npm run initial-data",
+    "database": "npm run create-db && npm run generate-procedures && npm run initial-data",
     "server": "cd server && npm start",
     "client": "cd client && npm run dev",
     "start": "concurrently \"npm run server\" \"npm run client\""

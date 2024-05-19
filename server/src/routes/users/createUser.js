@@ -66,7 +66,7 @@ createUserRouter.post('/student', isAdminTeacherToken, async (req, res) => {
             }
             const number = queryRes.rows.length;
             console.log('number', number, 'queryRes.rows', queryRes.rows)
-            const email = `${firstname}.${lastname}${!number ? '' : number}@student.${schoolDomain}.com`?.toLowerCase();
+            const email = `${firstname}.${lastname}${!number ? '' : number}@parent.${schoolDomain}.com`?.toLowerCase();
 
             db.query('INSERT INTO "User" (username, email, password, firstname, lastname, roleid, schoolid) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *', [username, email, hashedPassword, firstname, lastname, roleid, schoolid], (err, queryRes) => {
                 if (err) {
@@ -115,7 +115,7 @@ createUserRouter.post('/teacher', isAdminToken, async (req, res) => {
                 return res.status(500).send('Error executing query');
             }
             const number = queryRes.rows.length;
-            const email = `${firstname}.${lastname}${number ? '' : number}@student.${schoolDomain}.com`?.toLowerCase();
+            const email = `${firstname}.${lastname}${number ? '' : number}@${schoolDomain}.com`?.toLowerCase();
 
             db.query('INSERT INTO "User" (username, email, password, firstname, lastname, roleid, schoolid) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *', [username, email, hashedPassword, firstname, lastname, roleid, schoolid], (err, queryRes) => {
                 if (err) {
