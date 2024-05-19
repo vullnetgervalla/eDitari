@@ -733,7 +733,9 @@ CREATE TABLE public.teacher (
     educationlevel character varying(255),
     experienceyears integer,
     teachingspecialization character varying(255),
-    personalnumber character varying(20)
+    personalnumber character varying(20) NOT NULL,
+    gender public.gender,
+    birthday date
 );
 
 

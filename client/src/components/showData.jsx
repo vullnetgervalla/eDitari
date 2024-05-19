@@ -16,9 +16,10 @@ const ShowData = ({ userType, data }) => {
     setSearchText(selectedKeys[0]);
     setSearchedColumn(dataIndex);
   };
-  const handleReset = (clearFilters) => {
+  const handleReset = (clearFilters, confirm) => {
     clearFilters();
     setSearchText('');
+    confirm();
   };
   const [transformedArray, setTransformedArray] = useState([]);
   useEffect(() => {
@@ -27,7 +28,8 @@ const ShowData = ({ userType, data }) => {
         ? data.map((item) => ({
           key: item.id,
           name: `${item.firstname}`,
-          lastName: `${item.lastname}`
+          lastName: `${item.lastname}`,
+          email: `${item.email}`
         }))
         : []
     );
@@ -53,46 +55,20 @@ const ShowData = ({ userType, data }) => {
         />
         <Space>
           <Button
-            type='primary'
+            type="primary"
             onClick={() => handleSearch(selectedKeys, confirm, dataIndex)}
             icon={<SearchOutlined />}
-            size='small'
-            style={{
-              width: 90,
-            }}
+            size="small"
+            style={{ width: 90 }}
           >
             Search
           </Button>
           <Button
-            onClick={() => clearFilters && handleReset(clearFilters)}
-            size='small'
-            style={{
-              width: 90,
-            }}
+            onClick={() => clearFilters && handleReset(clearFilters, confirm)}
+            size="small"
+            style={{ width: 90 }}
           >
             Reset
-          </Button>
-          <Button
-            type='link'
-            size='small'
-            onClick={() => {
-              confirm({
-                closeDropdown: false,
-              });
-              setSearchText(selectedKeys[0]);
-              setSearchedColumn(dataIndex);
-            }}
-          >
-            Filter
-          </Button>
-          <Button
-            type='link'
-            size='small'
-            onClick={() => {
-              close();
-            }}
-          >
-            close
           </Button>
         </Space>
       </div>
@@ -134,6 +110,13 @@ const ShowData = ({ userType, data }) => {
       ...getColumnSearchProps('name'),
     },
     {
+      title: t('mail'),
+      dataIndex: 'email',
+      key: 'email',
+      width: '15%',
+      ...getColumnSearchProps('email'),
+    },
+    {
       title: t('name'),
       dataIndex: 'lastName',
       key: 'lastName',
@@ -152,28 +135,28 @@ const ShowData = ({ userType, data }) => {
           </Link>);
       },
     },
-    {
-      title: t('absences'),
-      dataIndex: 'absences',
-      key: 'absences',
-      width: '5%',
-      render: () => (
-        <Link to={'/'} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%', color: 'black' }}>
-          <CloseCircleOutlined style={{ fontSize: '18px' }} />
-        </Link>
-      ),
-    },
-    {
-      title: t('attestation'),
-      dataIndex: 'attestation',
-      key: 'attestation',
-      width: '5%',
-      render: () => (
-        <Link to={'/'} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%', color: 'black' }}>
-          <PrinterFilled style={{ fontSize: '18px' }} />
-        </Link>
-      ),
-    },
+    // {
+    //   title: t('absences'),
+    //   dataIndex: 'absences',
+    //   key: 'absences',
+    //   width: '5%',
+    //   render: () => (
+    //     <Link to={'/'} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%', color: 'black' }}>
+    //       <CloseCircleOutlined style={{ fontSize: '18px' }} />
+    //     </Link>
+    //   ),
+    // },
+    // {
+    //   title: t('attestation'),
+    //   dataIndex: 'attestation',
+    //   key: 'attestation',
+    //   width: '5%',
+    //   render: () => (
+    //     <Link to={'/'} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%', color: 'black' }}>
+    //       <PrinterFilled style={{ fontSize: '18px' }} />
+    //     </Link>
+    //   ),
+    // },
     ...(userType === 'STUDENT'
       ? [
         {

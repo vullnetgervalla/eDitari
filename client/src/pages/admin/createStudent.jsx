@@ -42,7 +42,7 @@ function CreateStudent() {
 
 		try {
 			const res = await axios.post('/users/student', values);
-			message.success('Student created successfully');
+			message.success(t('createdStudent'));
 			const student = {
 				...res.data?.[0],
 				class:{
@@ -60,7 +60,7 @@ function CreateStudent() {
 			};
 			setCreatedUsers(prev => [student, ...prev]);
 		} catch (e) {
-			message.error('Error creating student');
+			message.error(t('notCreatedStudent'));
 		}
 	};
 
@@ -154,6 +154,7 @@ function CreateStudent() {
 					>
 						<DatePicker
 							format={'DD/MM/YYYY'}
+							placeholder={t('enterDate')}
 							disabledDate={(current) => current && current > moment().endOf('day')}
 							style={{ float: 'left', width: '100%' }} />
 					</Form.Item>

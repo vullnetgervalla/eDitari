@@ -105,5 +105,14 @@
 	"allowed-edit-data": "Izmena podataka je dozvoljena",
 	"not-allowed-edit-data": "Izmena podataka nije dozvoljena",
 	"save-data": "Sačuvaj podatke",
-	"cancel": "Otkaži"
+	"cancel": "Otkaži",
+	"createdStudent": "Učenik uspešno kreiran",
+	"notCreatedStudent": "Greška prilikom kreiranja učenika",
+	"educationLevel": "Nivo obrazovanja",
+	"experienceYears": "Godine iskustva",
+	"teachingSpecialization": "Nastavna specijalizacija",
+	"enterDate": "Unesite datum",
+	"createdTeachers": "Kreirani nastavnici",
+	"createdAdmin": "Administrator uspešno kreiran",
+	"notCreatedAdmin": "Greška prilikom kreiranja administratora"
 }

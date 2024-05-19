@@ -1,5 +1,4 @@
 {
-
     "new-role-name": "Emri i përdoruesit të ri",
 	"admin": "Administratorët",
 	"list-admin": "Lista administratorëve",
@@ -106,6 +105,15 @@
 	"allowed-edit-data": "Ndryshimi i të dhënave është i lejuar",
 	"not-allowed-edit-data": "Ndryshimi i të dhënave nuk është i lejuar",
 	"save-data": "Ruaj të dhënat",
-	"cancel": "Anulo"
+	"cancel": "Anulo",
+	"createdStudent": "Nxënësi u krijua me sukses!",
+	"notCreatedStudent": "Gabim gjatë krijimit të nxënësit!",
+	"educationLevel": "Niveli i arsimit",
+	"experienceYears": "Vitet e përvojës",
+	"teachingSpecialization": "Specializimi",
+	"enterDate": "Zgjedhni Datën",
+	"createdTeachers": "Mësuesit e krijuar",
+	"createdAdmin": "Administratori u krijua me sukses!",
+	"notCreatedAdmin": "Gabim gjatë krijimit të administratorit!"
 }
     

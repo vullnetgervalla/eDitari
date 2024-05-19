@@ -1,10 +1,10 @@
 const { Router } = require('express');
 const { db } = require('../../db');
-const { isAdminTeacherToken } = require('../../middleware/isAdminTeacherToken');
+const { checkRole } = require('../../middleware/checkRole');
  
 const getClassRouter = Router();
 
-getClassRouter.get('/', isAdminTeacherToken, (req, res) => {
+getClassRouter.get('/', checkRole(null, 'ADMIN'), (req, res) => {
     const {user, schoolid, userType} = req.user;
     db.query('SELECT * from getAllSchoolClasses($1)', [schoolid], (err, queryRes) => {
         if (err) {

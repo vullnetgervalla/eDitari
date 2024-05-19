@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import { Button, Cascader, DatePicker, Form, Input, InputNumber, Mentions, Select, TreeSelect } from 'antd';
-import { message } from 'antd';
+import React, {useState} from 'react';
+import { Button, DatePicker, Form, Input, InputNumber, Select, message } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { useAxiosPrivate } from 'hooks/useAxiosPrivate';
+import moment from 'moment';
+import { TeacherTable } from 'components/tables/TeacherTable';
 
 const formItemLayout = {
 	labelCol: {
@@ -26,45 +27,33 @@ const formItemLayout = {
 function CreateTeacher() {
 	const { t } = useTranslation();
 	const axios = useAxiosPrivate();
-	// const [parents, setParents] = useState([]);
-	const [classes, setClasses] = useState([]);
+	const [createdTeachers, setCreatedTeachers] = useState([]);
 	const handleSubmit = async (values) => {
 		for (const key in values) {
 			if (values[key] === undefined) {
 				values[key] = null;
 			}
 		}
-		console.log('values', values);
+		values.birthday = values?.birthday?.format('YYYY-MM-DD') ?? null;
+
 		try {
-			const res = await axios.post('/users/teachers', values);
+			const res = await axios.post('/users/teacher', values);
+			setCreatedTeachers(prev => [res?.data?.[0], ...prev]);
+			console.log('res', res?.data?.[0]);
 			message.success(t('createdTeacher'));
 		} catch (e) {
 			message.error(t('notCreatedTeacher'));
 		}
 	};
 
-	useEffect(() => {
-		// const getTeachers = async () => {
-		// 	const res = await axios.get('/users/teachers');
-		// 	setTeachers(res.data);
-		// };
-
-		const getClasses = async () => {
-			const res = await axios.get('/classes');
-			setClasses(res.data);
-		};
-
-		// getTeachers();
-		getClasses();
-	}, []);
-
 	return (
-		<div style={{ textAlign: 'center', display: 'flex', alignItems: 'center', flexDirection: 'column'}}>
+		<div style={{display: 'flex', justifyContent: 'center', gap: '10%', width: '100%'}}>
+			<div style={{ width: '47%', flexDirection: 'column', alignItems: createdTeachers.length ? 'baseline' : 'center' }}>
 			<Form
 				{...formItemLayout}
 				variant='filled'
 				style={{
-					minWidth: 700,
+					width: '100%',
 					borderRadius: 20,
 					padding: 30,
 					backgroundColor: '#fff',
@@ -110,7 +99,49 @@ function CreateTeacher() {
 							required: true,
 							message: t('enterPersonalNumber'),
 						},
+						{
+							pattern: /^[0-9]+$/,
+							message: t('numbersOnly'),
+						},
 					]}
+				>
+					<Input />
+				</Form.Item>
+
+				<Form.Item
+					label={t('phoneNumber')}
+					labelAlign='left'
+					name='phonenumber'
+				>
+					<Input />
+				</Form.Item>
+
+				<Form.Item
+					label={t('educationLevel')}
+					labelAlign='left'
+					name='educationlevel'
+				>
+					<Input />
+				</Form.Item>
+
+				<Form.Item
+					label={t('experienceYears')}
+					labelAlign='left'
+					name='experienceyears'
+					rules={[
+						{
+							pattern: /^[0-9]+$/,
+							message: t('numbersOnly'),
+						},
+					]}
+				>
+					<Input style={{ width: '100%' }} />
+				</Form.Item>
+
+				<Form.Item
+					label={t('teachingSpecialization')}
+					labelAlign='left'
+					name='teachingspecialization'
 				>
 					<Input />
 				</Form.Item>
@@ -126,7 +157,11 @@ function CreateTeacher() {
 						},
 					]}
 				>
-					<DatePicker style={{ float: 'left', width: '100%' }} />
+					<DatePicker
+						format={'DD/MM/YYYY'}
+						placeholder={t('enterDate')}
+						disabledDate={(current) => current && current > moment().endOf('day')}
+						style={{ float: 'left', width: '100%' }} />
 				</Form.Item>
 
 				<Form.Item
@@ -140,74 +175,30 @@ function CreateTeacher() {
 						},
 					]}
 				>
-					<Select>
+					<Select allowClear>
 						<Select.Option value='M'>{t('male')}</Select.Option>
 						<Select.Option value='F'>{t('female')}</Select.Option>
 					</Select>
 				</Form.Item>
-
-				<Form.Item
-					label={t('class')}
-					labelAlign='left'
-					name='classid'
-					rules={[
-						{
-							required: true,
-							message: t('selectClass'),
-						},
-					]}
-				>
-					<Select>
-						{classes.map((item) => {
-							return (
-								<Select.Option
-									key={item.id}
-									value={item.id}
-								>
-									{item.classname}
-								</Select.Option>
-							);
-						})}
-					</Select>
-				</Form.Item>
-{/* 
-				<Form.Item
-					// label={t('parent')}
-					// labelAlign='left'
-					// name='parentid'
-					// rules={[
-					// 	{
-					// 		required: false,
-					// 		message: t('selectParent'),
-					// 	},
-					// ]}
-				>
-					<Select
-						showSearch
-						optionFilterProp='children'
+				<Form.Item style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+					<Button
+						type='primary'
+						htmlType='submit'
+						style={{ marginTop: '1.5em', height: '3em' }}
 					>
-						{parents.map((item) => {
-							return (
-								<Select.Option
-									key={item.id}
-									value={item.id}
-								>
-									{item.firstname + ' ' + item.lastname}
-								</Select.Option>
-							);
-						})}
-					</Select>
-				</Form.Item> */}
-
-				<Button
-					type='primary'
-					htmlType='submit'
-					style={{ marginTop: '1.5em', height: '3em' }}
-				>
-					{t('create-teacher')}
-				</Button>
+						{t('create-teacher')}
+					</Button>
+				</Form.Item>
 			</Form>
+		</div>
+			{!!createdTeachers.length && (
+				<div style={{maxWidth: '50%'}}>
+					<h1 style={{textAlign: 'center'}}>{t('createdTeachers')}</h1>
+					<TeacherTable data={createdTeachers} side={true} />
+				</div>
+			)}
 		</div>
 	);
 }
+
 export default CreateTeacher;
