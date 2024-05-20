@@ -1,17 +1,16 @@
 
 import NumStatistics from 'components/numStatistics';
-// import StudentChart1 from 'components/studentPieChart1';
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { Line } from '@ant-design/plots';
-import { Column } from '@ant-design/plots';
-import { Area } from '@ant-design/plots';
+import { Line, Column, Area } from '@ant-design/plots';
 import { axiosPrivate } from 'api/axios';
 import { useState, useEffect } from 'react';
-import { Card, Button } from 'antd';
-import { Input } from 'antd';
-import { Flex } from 'antd'
+import { Card, Button, Input, Flex } from 'antd';
+import BestStudents from 'components/users/bestStudents';
+import MyCalendar from 'components/calendar';
+import CreateMaterial from 'components/createMaterials';
+import CreateNotification from 'pages/admin/createNotification';
+import MissingStudents from 'components/users/missingStudents';
 
 
 export function AdminPage() {
@@ -82,19 +81,46 @@ export function AdminPage() {
   }, [axiosPrivate]);
 
   return (
+    <div>
+      <Flex gap={80}>
 
-    <Flex gap={80}>
+        <Card style={{ width: '30%', boxShadow: '0 4px 4px rgba(0, 0, 0, 0.25)', border: '1px solid #e5e7eb', cursor: 'pointer' }}>
+          <NumStatistics user={t('number.students')} count={studentCount} chartType={<Line {...config1} height={400} />} />
+        </Card>
+        <Card style={{ width: '30%', boxShadow: '0 4px 4px rgba(0, 0, 0, 0.25)', border: '1px solid #e5e7eb', cursor: 'pointer' }}>
+          <NumStatistics user={t('number.teachers')} count={teacherCount} chartType={<Column {...config2} height={400} />} />
+        </Card>
+        <Card style={{ width: '30%', boxShadow: '0 4px 4px rgba(0, 0, 0, 0.25)', border: '1px solid #e5e7eb', cursor: 'pointer' }}>
+          <NumStatistics user={t('number.class')} count={classCount} chartType={<Area {...config3} height={400} />} />
+        </Card>
 
-      <Card style={{ width: '30%' }}>
-        <NumStatistics user={t('number.students')} count={studentCount} chartType={<Line {...config1} height={400} />} />
-      </Card>
-      <Card style={{ width: '30%' }}>
-        <NumStatistics user={t('number.teachers')} count={teacherCount} chartType={<Column {...config2} height={400} />} />
-      </Card>
-      <Card style={{ width: '30%' }}>
-        <NumStatistics user={t('number.class')} count={classCount} chartType={<Area {...config3} height={400} />} />
-      </Card>
+      </Flex>
 
-    </Flex>
+      <Flex gap={150} flexDirection={'column'} justifyContent={'center'} alignItems={'center'}>
+        <div style={{ marginTop: '50px', marginLeft:'60px' ,width: '40%', border: '1px solid #e5e7eb', borderRadius: '20px', cursor: 'pointer' }}>
+          <BestStudents />
+        </div>
+        <div style={{ marginTop: '50px', width: '40%', border: '1px solid #e5e7eb', borderRadius: '20px', cursor: 'pointer' }}>
+          <MissingStudents />
+        </div>
+      </Flex>
+
+      <div style={{ marginTop: '50px', cursor: 'pointer' }}>
+        <MyCalendar />
+      </div>
+
+      <Flex gap={40}>
+        <div style={{ width: '50%', marginTop: '50px', cursor: 'pointer' }}>
+          <CreateMaterial />
+        </div>
+
+        <div style={{ width: '50%', marginTop: '50px', cursor: 'pointer' }}>
+          <Card style={{ width: '100%' }}>
+            <CreateNotification />
+          </Card>
+        </div>
+      </Flex>
+
+    </div>
   );
 }
