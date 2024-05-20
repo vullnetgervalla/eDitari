@@ -11,6 +11,7 @@ import ListRoles from 'pages/users/listRoles';
 import UserProfile from 'components/userProfile';
 import CreateNotification from 'pages/admin/createNotification';
 import SeeNotifications from 'components/seeNotifications';
+import CreateMaterials from 'components/createMaterials';
 
 export const AdminRoutes = [
   {
@@ -67,5 +68,13 @@ export const AdminRoutes = [
   {
     path: 'notifications',
     element: <SeeNotifications />
+  },
+  // {
+  //   path: 'materials',
+  //   element: <SeeMaterials />
+  // },
+  {
+    path: 'create-materials',
+    element: <CreateMaterials />
   }
 ];
