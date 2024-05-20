@@ -1,18 +1,19 @@
 const { Router } = require('express');
 const { db } = require('../../db');
 const bcrypt = require('bcrypt');
-const { isAdminToken } = require('../../middleware/isAdminToken');
-const { isAdminTeacherToken} = require('../../middleware/isAdminTeacherToken');
+const { checkRole } = require('../../middleware/checkRole');
 const { roleMapping } = require('../../utils/roleMapping');
 
 const createUserRouter = Router();
 
-createUserRouter.post('/admin', isAdminToken, async (req, res) => {
+createUserRouter.post('/admin', checkRole("create-admin"), async (req, res) => {
     console.log('req.body',req.body);
     const {email, password, firstname, lastname } = req.body;
     const {schoolid} = req.user;
-    const roleid = roleMapping("ADMIN");
+    const roleid = await roleMapping("ADMIN");
     const username = `${firstname}${lastname}`?.toLowerCase();
+    const hashedPassword = await bcrypt.hash(password, 10);
+
     if( !email || !password || !firstname || !lastname || !roleid || !schoolid) {
         return res.status(400).send('Missing required fields');
     }
@@ -30,10 +31,8 @@ createUserRouter.post('/admin', isAdminToken, async (req, res) => {
         if(email.split('@')[1] !== `${schoolDomain}.com`) {
             return res.status(400).send('Invalid email domain');
         }
-
-        const hashedPassword = bcrypt.hashSync(password, 10);
         
-        db.query('INSERT INTO "User" (username, email, password, firstname, lastname, roleid, schoolid) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *', [username, email, hashedPassword, firstname, lastname, roleId, schoolid], (err, queryRes) => {
+        db.query('SELECT * FROM  insertUser($1, $2, $3, $4, $5, $6, $7)', [username, email, hashedPassword, firstname, lastname, roleid, schoolid], (err, queryRes) => {
             if (err) {
                 console.error('Error executing query', err);
                 return res.status(500).send('Error executing query');
@@ -44,7 +43,8 @@ createUserRouter.post('/admin', isAdminToken, async (req, res) => {
     });
 });
 
-createUserRouter.post('/student', isAdminTeacherToken, async (req, res) => {
+
+createUserRouter.post('/student', checkRole("create-student"), async (req, res) => {
     const { firstname, lastname, personalnumber, classid, birthday, gender, parentid } = req.body;
     const {schoolid} = req.user;
 
@@ -57,35 +57,46 @@ createUserRouter.post('/student', isAdminTeacherToken, async (req, res) => {
     const password = personalnumber;
     const hashedPassword = await bcrypt.hash(password, 10);
     const username = `${firstname}${lastname}`?.toLowerCase();
-    const schoolDomain = "main";
+
     try{
-        db.query('SELECT * from getUserName($1, $2)', [firstname, lastname], (err, queryRes) => {
+        db.query('SELECT * FROM getSchoolName($1)', [schoolid], (err, queryRes) => {
             if (err) {
                 console.error('Error executing query', err);
                 return res.status(500).send('Error executing query');
             }
-            const number = queryRes.rows.length;
-            console.log('number', number, 'queryRes.rows', queryRes.rows)
-            const email = `${firstname}.${lastname}${!number ? '' : number}@parent.${schoolDomain}.com`?.toLowerCase();
+            if (queryRes.rows.length === 0) {
+                return res.status(400).send('Invalid school id');
+            }
+    
+            const schoolDomain = queryRes.rows[0].schooldomain ?? queryRes.rows[0].name.replace(" ", "_")?.toLowerCase();
 
-            db.query('INSERT INTO "User" (username, email, password, firstname, lastname, roleid, schoolid) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *', [username, email, hashedPassword, firstname, lastname, roleid, schoolid], (err, queryRes) => {
+            db.query('SELECT * from getUserName($1, $2)', [firstname, lastname], (err, queryRes) => {
                 if (err) {
                     console.error('Error executing query', err);
                     return res.status(500).send('Error executing query');
                 }
-                console.log('Query result:', queryRes.rows);
-                
-                let {password, ...result} = queryRes.rows[0];
-                
-                db.query('INSERT INTO Student (id, parentid, personalnumber, classid, birthday, gender) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *', [result.id, parentid, personalnumber, classid, birthday, gender], (err, queryRes) => {
+                const number = queryRes.rows.length;
+                const email = `${firstname}.${lastname}${!number ? '' : number}@parent.${schoolDomain}.com`?.toLowerCase();
+
+                db.query('SELECT * FROM  insertUser($1, $2, $3, $4, $5, $6, $7)', [username, email, hashedPassword, firstname, lastname, roleid, schoolid], (err, queryRes) => {
                     if (err) {
                         console.error('Error executing query', err);
                         return res.status(500).send('Error executing query');
                     }
                     console.log('Query result:', queryRes.rows);
-                    result = [{...result, ...queryRes.rows[0]}];
+                    
+                    let {password, ...result} = queryRes.rows[0];
+                    
+                    db.query('SELECT * FROM insertStudent($1, $2, $3, $4, $5, $6)', [result.id, parentid, personalnumber, classid, birthday, gender], (err, queryRes) => {
+                        if (err) {
+                            console.error('Error executing query', err);
+                            return res.status(500).send('Error executing query');
+                        }
+                        console.log('Query result:', queryRes.rows);
+                        result = [{...result, ...queryRes.rows[0]}];
 
-                    res.send(result);
+                        res.send(result);
+                    });
                 });
             });
         });
@@ -95,11 +106,12 @@ createUserRouter.post('/student', isAdminTeacherToken, async (req, res) => {
     }
 });
 
-createUserRouter.post('/teacher', isAdminToken, async (req, res) => {
-    const { firstname, lastname, personalnumber, classid, birthday, gender, parentid } = req.body;
+
+createUserRouter.post('/teacher', checkRole("create-teacher"), async (req, res) => {
+    const { firstname, lastname, personalnumber, birthday, gender, phonenumber, educationlevel, experienceyears, teachingspecialization } = req.body;
     const {schoolid} = req.user;
 
-    if (!firstname || !lastname || !personalnumber || !classid || !personalnumber) {
+    if (!firstname || !lastname || !personalnumber || !personalnumber) {
         res.status(400).send('Missing required fields');
         return;
     }
@@ -109,33 +121,47 @@ createUserRouter.post('/teacher', isAdminToken, async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, 10);
     const username = `${firstname}${lastname}`?.toLowerCase();
     try{
-        db.query('SELECT * from getUserName($1, $2)', [firstname, lastname], (err, queryRes) => {
+        db.query('SELECT * FROM getSchoolName($1)', [schoolid], (err, queryRes) => {
             if (err) {
                 console.error('Error executing query', err);
                 return res.status(500).send('Error executing query');
             }
-            const number = queryRes.rows.length;
-            const email = `${firstname}.${lastname}${number ? '' : number}@${schoolDomain}.com`?.toLowerCase();
+            if (queryRes.rows.length === 0) {
+                return res.status(400).send('Invalid school id');
+            }
+    
+            const schoolDomain = queryRes.rows[0].schooldomain ?? queryRes.rows[0].name.replace(" ", "_")?.toLowerCase();
 
-            db.query('INSERT INTO "User" (username, email, password, firstname, lastname, roleid, schoolid) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *', [username, email, hashedPassword, firstname, lastname, roleid, schoolid], (err, queryRes) => {
+            db.query('SELECT * from getUserName($1, $2)', [firstname, lastname], (err, queryRes) => {
                 if (err) {
                     console.error('Error executing query', err);
                     return res.status(500).send('Error executing query');
                 }
-                console.log('Query result:', queryRes.rows);
-                let result = queryRes.rows[0];
-                
-                db.query('INSERT INTO Student (id, parentid, personalnumber, classid, birthday, gender) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *', [result.id, parentid, personalnumber, classid, birthday, gender], (err, queryRes) => {
+                const number = queryRes.rows.length;
+                console.log('number', number)
+                const email = `${firstname}.${lastname}${!number ? '' : number}@${schoolDomain}.com`?.toLowerCase();
+                console.log('email', email)
+
+                db.query('SELECT * FROM  insertUser($1, $2, $3, $4, $5, $6, $7)', [username, email, hashedPassword, firstname, lastname, roleid, schoolid], (err, queryRes) => {
                     if (err) {
                         console.error('Error executing query', err);
                         return res.status(500).send('Error executing query');
                     }
                     console.log('Query result:', queryRes.rows);
-                    result = {...result, ...queryRes.rows[0]};
+                    let result = queryRes.rows[0];
+                    
+                    db.query('SELECT * FROM insertTeacher($1, $2, $3, $4, $5, $6, $7, $8)', [result.id, phonenumber, educationlevel, experienceyears, teachingspecialization, personalnumber, birthday, gender], (err, queryRes) => {
+                        if (err) {
+                            console.error('Error executing query', err);
+                            return res.status(500).send('Error executing query');
+                        }
+                        console.log('Query result:', queryRes.rows);
+                        result = [{...result, ...queryRes.rows[0]}];
 
-                    res.send(result);
+                        res.send(result);
+                    });
                 });
-            });
+            })
         });
     } catch (err) {
         console.error(err);

@@ -1,10 +1,10 @@
 const { Router } = require('express');
 const { db } = require('../../db');
-const { isAdminTeacherToken } = require('../../middleware/isAdminTeacherToken');
+const { checkRole } = require('../../middleware/checkRole');
 
 const deleteUserRouter = Router();
 
-deleteUserRouter.delete('/:id', isAdminTeacherToken, (req, res) => {
+deleteUserRouter.delete('/:id', checkRole(null, ['ADMIN', 'TEACHER']), (req, res) => {
     const id = req.params.id;
     const {userType} = req.user;
     // in progress, need to delete the child tables also

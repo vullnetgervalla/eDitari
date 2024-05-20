@@ -1,5 +1,4 @@
 {
-
     "new-role-name": "Emri i përdoruesit të ri",
 	"admin": "Administratorët",
 	"list-admin": "Lista administratorëve",
@@ -109,6 +108,15 @@
 	"not-allowed-edit-data": "Ndryshimi i të dhënave nuk është i lejuar",
 	"save-data": "Ruaj të dhënat",
 	"cancel": "Anulo",
+	"createdStudent": "Nxënësi u krijua me sukses!",
+	"notCreatedStudent": "Gabim gjatë krijimit të nxënësit!",
+	"educationLevel": "Niveli i arsimit",
+	"experienceYears": "Vitet e përvojës",
+	"teachingSpecialization": "Specializimi",
+	"enterDate": "Zgjedhni Datën",
+	"createdTeachers": "Mësuesit e krijuar",
+	"createdAdmin": "Administratori u krijua me sukses!",
+	"notCreatedAdmin": "Gabim gjatë krijimit të administratorit!",
 	"bestStudents":"Nxënësit e Dalluar",
 	"missingStudents":"Nxënësit me shumë mungesa",
 	"newYearDay":"Viti i Ri",
@@ -118,10 +126,6 @@
 	"daysOffCalendar":"Kalendari i Festave Zyrtare",
 	"europeDay":"Dita e Evropës",
 	"constitutionDay":"Dita e Kushtetutës",
-	"mayFirst":"Dita Ndërkombëtare e Punës",
-	"day":"Ditë",
-	"week":"Javë",
-	"month":"Muaj"
-
+	"mayFirst":"Dita Ndërkombëtare e Punës"
 }
     

@@ -30,9 +30,9 @@ function CreateAdmin() {
   const handleSubmit = async (values) => {
     try {
       const res = await axios.post('/users/admin', values);
-      message.success('Admin created successfully');
+      message.success(t('createdAdmin'));
     } catch (e) {
-      message.error('Error creating admin');
+      message.error(t('notCreatedAdmin'));
     }
   };
   return (
@@ -53,7 +53,7 @@ function CreateAdmin() {
         <Form.Item
           label={t('name')}
           labelAlign='left'
-          name='name'
+          name='firstname'
           rules={[
             {
               required: true,
@@ -81,14 +81,14 @@ function CreateAdmin() {
         <Form.Item
           label={t('mail')}
           labelAlign='left'
-          name='mail'
+          name='email'
           rules={[
             {
               required: true,
               message: t('enterMail'),
             },
             {
-              type: 'mail',
+              type: 'email',
               message: t('invalidEmail'),
             },
           ]}

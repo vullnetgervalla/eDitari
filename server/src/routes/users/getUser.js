@@ -1,12 +1,11 @@
 const { Router } = require('express');
 const { db } = require('../../db');
-const { isAdminToken } = require('../../middleware/isAdminToken');
-const { isAdminTeacherToken } = require('../../middleware/isAdminTeacherToken');
+const { checkRole } = require('../../middleware/checkRole');
 const { authenticateToken } = require('../../middleware/authenticateToken');
 
 const getUserRouter = Router();
 
-getUserRouter.get('/', isAdminToken, (req, res) => {
+getUserRouter.get('/', checkRole(null, "ADMIN"), (req, res) => {
     const {user, schoolid, userType} = req.user;
     db.query('SELECT * from getAllSchoolUsers($1)', [schoolid], (err, queryRes) => {
         if (err) {
@@ -19,7 +18,7 @@ getUserRouter.get('/', isAdminToken, (req, res) => {
       });
 });
 
-getUserRouter.get('/roles', isAdminToken, (req, res) => {
+getUserRouter.get('/roles', checkRole("list-role"), (req, res) => {
     const { schoolid } = req.user;
     const { role } = req.query; 
     db.query('SELECT * from getAllUsersByRole($1, $2)', [schoolid, role], (err, queryRes) => {
@@ -33,7 +32,7 @@ getUserRouter.get('/roles', isAdminToken, (req, res) => {
   });
 });
 
-getUserRouter.get('/parents', isAdminTeacherToken, (req, res) => {
+getUserRouter.get('/parents', checkRole(null, ['ADMIN', 'TEACHER']), (req, res) => {
   const { user, schoolid } = req.user;
   console.log(typeof schoolid)
     db.query('SELECT * from getAllParentUsers($1)', [schoolid], (err, queryRes) => {
@@ -45,6 +44,19 @@ getUserRouter.get('/parents', isAdminTeacherToken, (req, res) => {
   
       res.send(queryRes.rows);
   });
+});
+
+getUserRouter.get('/teachers', checkRole("list-teacher"), (req, res) => {
+  const {schoolid} = req.user;
+  db.query('SELECT * from getSchoolTeachers($1)', [schoolid], (err, queryRes) => {
+    if (err) {
+      console.error('Error executing query', err);
+      res.sendStatus(500);
+      return;
+    }
+
+    res.send(queryRes.rows);
+});
 });
 
 getUserRouter.get('/capabilities', authenticateToken, (req, res) => {
@@ -59,7 +71,7 @@ getUserRouter.get('/capabilities', authenticateToken, (req, res) => {
 	});
 });
 
-getUserRouter.get('/students', isAdminToken, (req, res) => {
+getUserRouter.get('/students', checkRole("list-student"), (req, res) => {
   const {schoolid} = req.user;
 
   db.query('SELECT * from getSchoolStudents($1)', [schoolid], (err, queryRes) => {
@@ -75,7 +87,7 @@ getUserRouter.get('/students', isAdminToken, (req, res) => {
 
 
 // This needs to be the last route
-getUserRouter.get('/:id', (req, res) => {
+getUserRouter.get('/:id', authenticateToken, (req, res) => {
   const id = req.params.id;
     db.query('SELECT * from getUser($1)', [id], (err, queryRes) => {
         if (err) {

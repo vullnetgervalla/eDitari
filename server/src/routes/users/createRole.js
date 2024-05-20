@@ -1,10 +1,10 @@
 const { Router } = require('express');
 const { db } = require('../../db');
-const { isAdminToken } = require('../../middleware/isAdminToken');
+const { checkRole } = require('../../middleware/checkRole');
 
 const createRoleRouter = Router();
 
-createRoleRouter.post('/create-role', isAdminToken, async (req, res) => {
+createRoleRouter.post('/create-role', checkRole("create-role"), async (req, res) => {
   const { roleName, capabilities } = req.body;
   console.log('roleName', roleName)
   console.log('capabilities', capabilities)

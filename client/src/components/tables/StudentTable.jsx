@@ -6,7 +6,7 @@ import Highlighter from 'react-highlight-words';
 import { useTranslation } from 'react-i18next';
 import moment from 'moment';
 
-export const StudentTable = ({ data, side, classes, parents }) => {
+export const StudentTable = ({ data, side }) => {
     const { t } = useTranslation();
     const [searchText, setSearchText] = useState('');
     const [searchedColumn, setSearchedColumn] = useState('');
