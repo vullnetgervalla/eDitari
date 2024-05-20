@@ -138,9 +138,7 @@ createUserRouter.post('/teacher', checkRole("create-teacher"), async (req, res) 
                     return res.status(500).send('Error executing query');
                 }
                 const number = queryRes.rows.length;
-                console.log('number', number)
                 const email = `${firstname}.${lastname}${!number ? '' : number}@${schoolDomain}.com`?.toLowerCase();
-                console.log('email', email)
 
                 db.query('SELECT * FROM  insertUser($1, $2, $3, $4, $5, $6, $7)', [username, email, hashedPassword, firstname, lastname, roleid, schoolid], (err, queryRes) => {
                     if (err) {
@@ -169,5 +167,66 @@ createUserRouter.post('/teacher', checkRole("create-teacher"), async (req, res) 
     }
 });
 
+
+createUserRouter.post('/parent', checkRole(null, "ADMIN"), async (req, res) => {
+    const { firstname, lastname, phonenumber, address } = req.body;
+    const {schoolid} = req.user;
+
+    if (!firstname || !lastname || !phonenumber) {
+        res.status(400).send('Missing required fields');
+        return;
+    }
+    
+    const roleid = await roleMapping("PARENT")
+    const password = phonenumber;
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const username = `${firstname}${lastname}`?.toLowerCase();
+    try{
+        db.query('SELECT * FROM getSchoolName($1)', [schoolid], (err, queryRes) => {
+            if (err) {
+                console.error('Error executing query', err);
+                return res.status(500).send('Error executing query');
+            }
+            if (queryRes.rows.length === 0) {
+                return res.status(400).send('Invalid school id');
+            }
+    
+            const schoolDomain = queryRes.rows[0].schooldomain ?? queryRes.rows[0].name.replace(" ", "_")?.toLowerCase();
+
+            db.query('SELECT * from getUserName($1, $2)', [firstname, lastname], (err, queryRes) => {
+                if (err) {
+                    console.error('Error executing query', err);
+                    return res.status(500).send('Error executing query');
+                }
+                const number = queryRes.rows.length;
+                
+                const email = `${firstname}.${lastname}${!number ? '' : number}@parent.${schoolDomain}.com`?.toLowerCase();
+
+                db.query('SELECT * FROM  insertUser($1, $2, $3, $4, $5, $6, $7)', [username, email, hashedPassword, firstname, lastname, roleid, schoolid], (err, queryRes) => {
+                    if (err) {
+                        console.error('Error executing query', err);
+                        return res.status(500).send('Error executing query');
+                    }
+                    console.log('Query result:', queryRes.rows);
+                    let result = queryRes.rows[0];
+                    
+                    db.query('SELECT * FROM insertParent($1, $2, $3)', [result.id, address, phonenumber], (err, queryRes) => {
+                        if (err) {
+                            console.error('Error executing query', err);
+                            return res.status(500).send('Error executing query');
+                        }
+                        console.log('Query result:', queryRes.rows);
+                        result = [{...result, ...queryRes.rows[0]}];
+
+                        res.send(result);
+                    });
+                });
+            })
+        });
+    } catch (err) {
+        console.error(err);
+        return res.status(500).send('Error executing query');
+    }
+});
 
 module.exports = { createUserRouter };

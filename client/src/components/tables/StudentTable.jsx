@@ -185,5 +185,5 @@ export const StudentTable = ({ data, side }) => {
         ] : []),
     ];
 
-    return <Table columns={columns} dataSource={data} scroll={{ x: 500 }} rowKey={'id'} />;
+    return <Table bordered columns={columns} dataSource={data} scroll={{ x: 500 }} rowKey={'id'} />;
 };
