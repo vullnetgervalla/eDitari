@@ -15,3 +15,16 @@ $$
     SELECT COUNT(*) FROM Class
     WHERE schoolid = school_id;
 $$;
+
+DROP FUNCTION IF EXISTS getNumOfStudentsPerClass();
+CREATE OR REPLACE FUNCTION getNumOfStudentsPerClass()
+RETURNS table (
+    "classLevel" INTEGER, 
+    "studentPerClassLevel" INTEGER
+) LANGUAGE sql AS
+$$
+    SELECT class.classlevel as "classLevel", COUNT(*) as "studentPerClassLevel"
+    FROM student
+    JOIN class ON student.classid = class.id
+    GROUP BY class.classlevel;
+$$;

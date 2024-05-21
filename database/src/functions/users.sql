@@ -240,6 +240,20 @@ $$
     (CASE WHEN roleName[4] THEN (SELECT COUNT(*) FROM "User" WHERE schoolid = schoolID AND roleid = (SELECT id FROM role WHERE name = 'PARENT')) ELSE 0 END) AS parents;
 $$;
 
+-- Drop FUNCTION IF EXISTS getAverageStudentsPerClass(int);
+-- CREATE OR REPLACE FUNCTION getAverageStudentsPerClass(schoolID int)
+-- RETURNS float LANGUAGE sql AS
+-- $$
+--   SELECT 
+--     (CASE 
+--       WHEN COUNT(DISTINCT c.id) != 0 THEN CAST(COUNT(u.*) AS float) / COUNT(DISTINCT c.id)
+--       ELSE 0
+--     END) AS average_students_per_class
+--   FROM "User" u
+--   JOIN class c ON u.classid = c.id
+--   WHERE u.schoolid = schoolID AND u.roleid = (SELECT id FROM role WHERE name = 'STUDENT');
+-- $$;
+
 
 DROP FUNCTION IF EXISTS insertUser(text, text, text, text, text, integer, integer);
 CREATE OR REPLACE FUNCTION insertUser(
