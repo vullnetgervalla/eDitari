@@ -213,9 +213,24 @@ CREATE OR REPLACE FUNCTION deleteUser(input_id integer)
 RETURNS SETOF "User" LANGUAGE sql
 AS
 $$
-    DELETE FROM "User" 
-    WHERE id = input_id
-    RETURNING *;
+    WITH deleted_user AS (
+        DELETE FROM "User"
+        WHERE id = input_id
+        RETURNING *
+    ), deleted_student AS (
+        DELETE FROM student
+        WHERE id = input_id
+        RETURNING *
+    ), deleted_teacher AS (
+        DELETE FROM teacher
+        WHERE id = input_id
+        RETURNING *
+    ), deleted_parent AS (
+        DELETE FROM parent
+        WHERE id = input_id
+        RETURNING *
+    )
+    SELECT * FROM deleted_user;
 $$;
 
 DROP FUNCTION IF EXISTS updateUser(integer);
@@ -307,13 +322,30 @@ CREATE OR REPLACE FUNCTION insertTeacher(
     i_birthday date,
     i_gender gender
 )
-RETURNS SETOF "teacher" LANGUAGE plpgsql
+RETURNS SETOF teacher LANGUAGE plpgsql
 AS
 $$
 BEGIN
     RETURN QUERY
-    INSERT INTO "teacher" (id, phonenumber, educationlevel, experienceyears, teachingspecialization, personalnumber, birthday, gender)
+    INSERT INTO teacher (id, phonenumber, educationlevel, experienceyears, teachingspecialization, personalnumber, birthday, gender)
     VALUES (i_id, i_phonenumber, i_educationlevel, i_experienceyears, i_teachingspecialization, i_personalnumber, i_birthday, i_gender)
+    RETURNING *;
+END;
+$$;
+
+DROP FUNCTION IF EXISTS insertParent(integer, text, text);
+CREATE OR REPLACE FUNCTION insertParent(
+    i_id integer,
+    i_address text,
+    i_phonenumber text
+)
+RETURNS SETOF parent LANGUAGE plpgsql
+AS
+$$
+BEGIN
+    RETURN QUERY
+    INSERT INTO parent (id, address, phonenumber)
+    VALUES (i_id, i_address, i_phonenumber)
     RETURNING *;
 END;
 $$;

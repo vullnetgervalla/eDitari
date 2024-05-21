@@ -175,6 +175,7 @@ const ShowData = ({ userType, data }) => {
   ];
   return (
     <Table
+      bordered
       columns={columns(t)}
       dataSource={transformedArray}
     />

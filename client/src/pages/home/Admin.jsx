@@ -109,19 +109,20 @@ export function AdminPage() {
     <div>
       <Flex gap={80}>
 
-        <Card style={{ width: '30%', boxShadow: '0 4px 4px rgba(0, 0, 0, 0.25)', border: '1px solid #e5e7eb', cursor: 'pointer' }}>
+        <Card style={{ width: '45%', boxShadow: '0 4px 4px rgba(0, 0, 0, 0.25)', border: '1px solid #e5e7eb', cursor: 'pointer' }}>
           <NumStatistics user={t('number.students')} count={studentCount} chartType={<Line {...config1} height={400} />} />
         </Card>
-        <Card style={{ width: '30%', boxShadow: '0 4px 4px rgba(0, 0, 0, 0.25)', border: '1px solid #e5e7eb', cursor: 'pointer' }}>
+        <Card style={{ width: '45%', boxShadow: '0 4px 4px rgba(0, 0, 0, 0.25)', border: '1px solid #e5e7eb', cursor: 'pointer' }}>
           <NumStatistics user={t('number.teachers')} count={teacherCount} chartType={<Column {...config2} height={400} />} />
         </Card>
-        <Card style={{ width: '30%', boxShadow: '0 4px 4px rgba(0, 0, 0, 0.25)', border: '1px solid #e5e7eb', cursor: 'pointer' }}>
+        {/* <Card style={{ width: '30%', boxShadow: '0 4px 4px rgba(0, 0, 0, 0.25)', border: '1px solid #e5e7eb', cursor: 'pointer' }}>
           <NumStatistics user={t('number.class')} count={classCount} chartType={<Area {...config3} height={400} />} />
-        </Card>
+        </Card> */}
 
       </Flex>
 
       <Flex gap={150} flexdirection={'column'} justifycontent={'center'} alignitems={'center'}>
+
         <div style={{ marginTop: '50px', marginLeft: '60px', width: '40%', border: '1px solid #e5e7eb', borderRadius: '20px', cursor: 'pointer' }}>
           <BestStudents />
         </div>
@@ -134,16 +135,18 @@ export function AdminPage() {
         <MyCalendar />
       </div>
 
-      <Flex gap={40}>
-        <div style={{ width: '50%', marginTop: '50px', cursor: 'pointer' }}>
-          <CreateMaterial />
-        </div>
+      <Flex gap={80} style={{marginTop:'50px'}}>
+        {/* <CreateMaterial style={{ width: '45%', marginTop: '50px', cursor: 'pointer' }} /> */}
+        <Card style={{ width: '45%', boxShadow: '0 4px 4px rgba(0, 0, 0, 0.25)', border: '1px solid #e5e7eb', cursor: 'pointer' }}>
+          <NumStatistics user={t('number.class')} count={classCount} chartType={<Area {...config3} height={300} />} />
+        </Card>
 
-        <div style={{ width: '50%', marginTop: '50px', cursor: 'pointer' }}>
+
+        {/* <div style={{ width: '50%', marginTop: '50px', cursor: 'pointer' }}>
           <Card style={{ width: '100%' }}>
             <CreateNotification />
           </Card>
-        </div>
+        </div> */}
       </Flex>
 
     </div>
