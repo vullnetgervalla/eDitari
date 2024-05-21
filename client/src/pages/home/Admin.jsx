@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { Line, Column, Area } from '@ant-design/plots';
 import { axiosPrivate } from 'api/axios';
 import { useState, useEffect } from 'react';
-import { Card, Button, Input, Flex } from 'antd';
+import { Card, Button, Input, Flex, Upload } from 'antd';
 import BestStudents from 'components/users/bestStudents';
 import MyCalendar from 'components/calendar';
 import CreateMaterial from 'components/createMaterials';
@@ -13,13 +13,33 @@ import CreateNotification from 'pages/admin/createNotification';
 import MissingStudents from 'components/users/missingStudents';
 
 
+const fetchStudentAverage = async (axiosPrivate, setData) => {
+  try {
+    const response = await axiosPrivate.get('/users/getAverageStudentsPerClass');
+    setData(response.data);
+  } catch (error) {
+    console.error(error)
+  }
+};
+
+const fetchNumOfStudentsPerClass = async (axiosPrivate, setStudentsPerClassLevel) => {
+  try {
+    const response = await axiosPrivate.get('/classes/numOfStudentsPerClass')
+    console.log(response.data)
+    setStudentsPerClassLevel(response.data)
+  } catch (error) {
+    console.error(error)
+  }
+}
+
 export function AdminPage() {
   const { t } = useTranslation();
   const [data, setData] = useState(null);
   const [studentCount, setStudentCount] = useState(0);
   const [teacherCount, setTeacherCount] = useState(0);
   const [classCount, setClassCount] = useState(0);
-  // const axiosPrivate = axiosPrivate();
+  const [studentsPerClassLevel, setStudentsPerClassLevel] = useState(0)
+
   const config1 = {
     data: {
       type: 'fetch',
@@ -32,6 +52,7 @@ export function AdminPage() {
     legend: { size: false },
     colorField: 'category',
   };
+  console.log(config1.data.value)
   const config2 = {
     data: {
       type: 'fetch',
@@ -63,6 +84,10 @@ export function AdminPage() {
     yField: 'close',
   };
 
+  useEffect(() => {
+    fetchStudentAverage(axiosPrivate, setData);
+    fetchNumOfStudentsPerClass(axiosPrivate, setStudentsPerClassLevel);
+  }, []);
 
   useEffect(() => {
     const fetchStudentCount = async () => {
@@ -96,7 +121,8 @@ export function AdminPage() {
 
       </Flex>
 
-      <Flex gap={150} flexDirection={'column'} justifyContent={'center'} alignItems={'center'}>
+      <Flex gap={150} flexdirection={'column'} justifycontent={'center'} alignitems={'center'}>
+
         <div style={{ marginTop: '50px', marginLeft: '60px', width: '40%', border: '1px solid #e5e7eb', borderRadius: '20px', cursor: 'pointer' }}>
           <BestStudents />
         </div>
