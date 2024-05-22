@@ -77,6 +77,7 @@
   "inputFile": "Please upload the file!",
   "upload": "Upload",
   "uploadFile": "Klikoni ose tërhiqni skedarin në këtë zonë për ta ngarkuar",
+  "uploadMessage":"Support for a single or bulk upload. Strictly prohibited from uploading company data or other banned files.",
   "file": "File",
   "message": "Message",
   "title": "Title",

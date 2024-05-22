@@ -14,43 +14,50 @@ export default function MyCalendar() {
             title: t('newYearDay'),
             start: new Date(2024, 12, 1),
             end: new Date(2025, 0, 3),
-            allDay: true
+            allDay: true,
+            eventColor:'#1677ff'
         },
         {
             title: t('catolicChristmas'),
             start: new Date(2024, 11, 25),
             end: new Date(2024, 11, 26),
-            allDay: true
+            allDay: true,
+            eventColor:'#1677ff'
         },
         {
             title: t('orthodoxChristmas'),
             start: new Date(2024, 0, 7),
             end: new Date(2024, 0, 8),
-            allDay: true
+            allDay: true,
+            eventColor:'#1677ff'
         },
         {
             title: t('independenceDay'),
             start: new Date(2024, 1, 17),
             end: new Date(2024, 1, 18),
-            allDay: true
+            allDay: true,
+            eventColor:'#1677ff'
         },
         {
             title: t('mayFirst'),
             start: new Date(2024, 4, 1),
             end: new Date(2024, 4, 2),
-            allDay: true
+            allDay: true,
+            eventColor:'#1677ff'
         },
         {
             title: t('constitutionDay'),
             start: new Date(2024, 3, 9),
             end: new Date(2024, 3, 10),
-            allDay: true
+            allDay: true,
+            eventColor:'#1677ff'
         },
         {
             title: t('europeDay'),
             start: new Date(2024, 4, 9),
             end: new Date(2024, 4, 10),
-            allDay: true
+            allDay: true,
+            eventColor:'#1677ff'
         },
         // Add more leave days here
     ]);
@@ -67,7 +74,8 @@ export default function MyCalendar() {
             title: title,
             start: new Date(startDate),
             end: new Date(endDate),
-            allDay: true
+            allDay: true,
+            eventColor:'#1677ff'
         };
 
         setEvents([...events, newEvent]);

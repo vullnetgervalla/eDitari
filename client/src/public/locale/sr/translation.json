@@ -77,6 +77,7 @@
   "inputFile": "Molimo postavite fajl!",
   "upload": "Postavi",
   "uploadFile": "Kliknite ili povucite datoteku u ovu zonu kako biste je učitali",
+  "uploadMessage":"Podrška za jedno ili grupno otpremanje. Strogo je zabranjeno učitavanje podataka kompanije ili drugih zabranjenih datoteka.",
   "file": "Fajl",
   "message": "Poruka",
   "title": "Naslov",

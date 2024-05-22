@@ -14,6 +14,7 @@ import SeeNotifications from 'components/seeNotifications';
 import CreateMaterials from 'components/createMaterials';
 import ListClasses from 'components/class/ListClasses';
 import CreateClass from 'components/class/CreateClass';
+import SeeMaterials from 'components/seeMaterials';
 
 export const AdminRoutes = [
   {
@@ -71,12 +72,12 @@ export const AdminRoutes = [
     path: 'notifications',
     element: <SeeNotifications />
   },
-  // {
-  //   path: 'materials',
-  //   element: <SeeMaterials />
-  // },
   {
-    path: 'create-materials',
+    path: 'list-material',
+    element: <SeeMaterials />
+  },
+  {
+    path: 'add-material',
     element: <CreateMaterials />
   },
   {

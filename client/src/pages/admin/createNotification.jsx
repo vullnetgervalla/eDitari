@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Form, Input, Upload, message, Card } from 'antd';
+import { Button, Form, Input, Upload, message, Card, Spin } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { useAxiosPrivate } from 'hooks/useAxiosPrivate';
 import { UploadOutlined } from '@ant-design/icons';
@@ -86,6 +86,20 @@ function CreateNotification() {
             ]}
           >
             <Input.TextArea autoSize={{ minRows: 5 }} />
+          </Form.Item>
+
+          <Form.Item
+            label={t('to')}
+            labelAlign='left'
+            name='reach'
+            rules={[
+              {
+                required: true,
+                message: t('inputRecipient'),
+              },
+            ]}
+          >
+            <Input style={{ boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.10)', border: '1px solid #E5E7EB', }}  />
           </Form.Item>
 
           <Form.Item style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
