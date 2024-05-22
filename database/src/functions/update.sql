@@ -33,7 +33,7 @@ CREATE OR REPLACE FUNCTION updateTeacherUser(
     input_educationlevel TEXT,
     input_experienceyears INT,
     input_teachingspecialization TEXT,
-       TEXT,
+    input_personalnumber TEXT,
     input_birthday DATE,
     input_password TEXT
 )
@@ -71,7 +71,7 @@ CREATE OR REPLACE FUNCTION updateStudentUser(
     input_role TEXT,
     input_gender TEXT,
     input_personalnumber TEXT,
-	  input_class INT,
+	input_class INT,
     input_birthday DATE,
     input_parentid INT,
     input_password TEXT
