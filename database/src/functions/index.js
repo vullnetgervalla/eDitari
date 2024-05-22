@@ -4,6 +4,7 @@ const functions = [
     'src/functions/classes.sql',
     'src/functions/school.sql',
     'src/functions/update.sql',
+    'src/functions/counts.sql',
 ]
 
 module.exports = functions;

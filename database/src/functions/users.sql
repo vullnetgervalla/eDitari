@@ -231,9 +231,24 @@ CREATE OR REPLACE FUNCTION deleteUser(input_id integer)
 RETURNS SETOF "User" LANGUAGE sql
 AS
 $$
-    DELETE FROM "User" 
-    WHERE id = input_id
-    RETURNING *;
+    WITH deleted_user AS (
+        DELETE FROM "User"
+        WHERE id = input_id
+        RETURNING *
+    ), deleted_student AS (
+        DELETE FROM student
+        WHERE id = input_id
+        RETURNING *
+    ), deleted_teacher AS (
+        DELETE FROM teacher
+        WHERE id = input_id
+        RETURNING *
+    ), deleted_parent AS (
+        DELETE FROM parent
+        WHERE id = input_id
+        RETURNING *
+    )
+    SELECT * FROM deleted_user;
 $$;
 
 DROP FUNCTION IF EXISTS updateUser(integer);
@@ -257,6 +272,20 @@ $$
     (CASE WHEN roleName[3] THEN (SELECT COUNT(*) FROM "User" WHERE schoolid = schoolID AND roleid = (SELECT id FROM role WHERE name = 'STUDENT')) ELSE 0 END) AS students,
     (CASE WHEN roleName[4] THEN (SELECT COUNT(*) FROM "User" WHERE schoolid = schoolID AND roleid = (SELECT id FROM role WHERE name = 'PARENT')) ELSE 0 END) AS parents;
 $$;
+
+-- Drop FUNCTION IF EXISTS getAverageStudentsPerClass(int);
+-- CREATE OR REPLACE FUNCTION getAverageStudentsPerClass(schoolID int)
+-- RETURNS float LANGUAGE sql AS
+-- $$
+--   SELECT 
+--     (CASE 
+--       WHEN COUNT(DISTINCT c.id) != 0 THEN CAST(COUNT(u.*) AS float) / COUNT(DISTINCT c.id)
+--       ELSE 0
+--     END) AS average_students_per_class
+--   FROM "User" u
+--   JOIN class c ON u.classid = c.id
+--   WHERE u.schoolid = schoolID AND u.roleid = (SELECT id FROM role WHERE name = 'STUDENT');
+-- $$;
 
 
 DROP FUNCTION IF EXISTS insertUser(text, text, text, text, text, integer, integer);
@@ -311,12 +340,12 @@ CREATE OR REPLACE FUNCTION insertTeacher(
     i_birthday date,
     i_gender gender
 )
-RETURNS SETOF "teacher" LANGUAGE plpgsql
+RETURNS SETOF teacher LANGUAGE plpgsql
 AS
 $$
 BEGIN
     RETURN QUERY
-    INSERT INTO "teacher" (id, phonenumber, educationlevel, experienceyears, teachingspecialization, personalnumber, birthday, gender)
+    INSERT INTO teacher (id, phonenumber, educationlevel, experienceyears, teachingspecialization, personalnumber, birthday, gender)
     VALUES (i_id, i_phonenumber, i_educationlevel, i_experienceyears, i_teachingspecialization, i_personalnumber, i_birthday, i_gender)
     RETURNING *;
 END;
@@ -356,4 +385,21 @@ JOIN
     Role ON U_Parent.roleid = Role.id
 WHERE 
     U_Student.id = student_id;
+$$;
+
+DROP FUNCTION IF EXISTS insertParent(integer, text, text);
+CREATE OR REPLACE FUNCTION insertParent(
+    i_id integer,
+    i_address text,
+    i_phonenumber text
+)
+RETURNS SETOF parent LANGUAGE plpgsql
+AS
+$$
+BEGIN
+    RETURN QUERY
+    INSERT INTO parent (id, address, phonenumber)
+    VALUES (i_id, i_address, i_phonenumber)
+    RETURNING *;
+END;
 $$;

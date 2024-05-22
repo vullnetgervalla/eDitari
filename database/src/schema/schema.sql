@@ -467,7 +467,7 @@ ALTER SEQUENCE public.notification_id_seq OWNED BY public.notification.id;
 CREATE TABLE public.parent (
     id integer NOT NULL,
     address character varying(255),
-    phonenumber character varying(20)
+    phonenumber character varying(20) NOT NULL
 );
 
 
