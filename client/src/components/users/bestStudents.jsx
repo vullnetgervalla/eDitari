@@ -20,7 +20,7 @@ export default function BestStudents() {
     return (
         <div>
             <Card style={{borderRadius:'20px'}}>
-                <h1>{t('bestStudents')}</h1>
+                <h2>{t('bestStudents')}</h2>
                 <hr />
                 <div>
                     

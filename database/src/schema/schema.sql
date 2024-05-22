@@ -432,7 +432,9 @@ CREATE TABLE public.notification (
     title character varying(255),
     reach public.notificationreach,
     description text,
-    parentid integer
+    parentid integer,
+    date date,
+    createdat date NOT NULL
 );
 
 

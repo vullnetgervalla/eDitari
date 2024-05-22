@@ -1,6 +1,6 @@
-import { Flex, Statistic, Card, List, Avatar, Col, Row } from 'antd';
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import { Flex, Card } from 'antd';
+import React from 'react';
+import moment from 'moment';
 
 export default function NotificationCard({date, title, description}){
     return(
@@ -8,7 +8,7 @@ export default function NotificationCard({date, title, description}){
             <Flex>
                 <Card style={{width:'100%', boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)'} } >
                     <div style={{width: '20%'}}>
-                        <h3 style={{color:'#6b7280'}}>{date}</h3>
+                        <h3 style={{color:'#6b7280'}}>{moment(date).format('DD/MM/YYYY')}</h3>
                         <hr />
                     </div>
                     <h2>{title}</h2>
@@ -18,17 +18,3 @@ export default function NotificationCard({date, title, description}){
         </div>
     )
 }
-
-// export default function NotificationCard(){
-//     return(
-//        <div style={{width:'80%', alignItems:'center'}}>
-//          <Row gutter={20}>
-//     <Col span={24}>
-//       <Card title="Card title" bordered={false}>
-//         Card content
-//       </Card>
-//     </Col>
-//   </Row>
-//        </div>
-//     )
-// }

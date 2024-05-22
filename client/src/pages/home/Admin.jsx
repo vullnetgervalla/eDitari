@@ -1,21 +1,19 @@
 
-import NumStatistics from 'components/numStatistics';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Line, Column, Area } from '@ant-design/plots';
-import { axiosPrivate } from 'api/axios';
 import { useState, useEffect } from 'react';
-import { Card, Button, Input, Flex, Upload } from 'antd';
+import { Card, Button, Input, Flex, Upload, notification } from 'antd';
 import BestStudents from 'components/users/bestStudents';
 import MyCalendar from 'components/calendar';
-import CreateMaterial from 'components/createMaterials';
-import CreateNotification from 'pages/admin/createNotification';
 import MissingStudents from 'components/users/missingStudents';
-
+import { useAxiosPrivate } from 'hooks/useAxiosPrivate';
+import GraphStatistics from 'components/graphStatistics';
+import NumStatistics from 'components/numStatistics';
 
 const fetchStudentAverage = async (axiosPrivate, setData) => {
   try {
-    const response = await axiosPrivate.get('/users/getAverageStudentsPerClass');
+    const response = await axiosPrivate.get('/classes/numOfStudentsPerClass');
     setData(response.data);
   } catch (error) {
     console.error(error)
@@ -25,78 +23,83 @@ const fetchStudentAverage = async (axiosPrivate, setData) => {
 const fetchNumOfStudentsPerClass = async (axiosPrivate, setStudentsPerClassLevel) => {
   try {
     const response = await axiosPrivate.get('/classes/numOfStudentsPerClass')
-    console.log(response.data)
     setStudentsPerClassLevel(response.data)
   } catch (error) {
     console.error(error)
   }
 }
 
+const fetchGenderTeachers = async (axiosPrivate, setGenderTeachers) => {
+  try {
+    const response = await axiosPrivate.get('/classes/getTeacherCountByGender');
+    setGenderTeachers(response.data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
 export function AdminPage() {
+  const axiosPrivate = useAxiosPrivate()
   const { t } = useTranslation();
   const [data, setData] = useState(null);
-  const [studentCount, setStudentCount] = useState(0);
-  const [teacherCount, setTeacherCount] = useState(0);
-  const [classCount, setClassCount] = useState(0);
-  const [studentsPerClassLevel, setStudentsPerClassLevel] = useState(0)
+  const [studentCount, setStudentCount] = useState({});
+  const [teacherCount, setTeacherCount] = useState({});
+  const [classCount, setClassCount] = useState({});
+  const [parentCount, setParentCount] = useState({});
+  const [studentsPerClassLevel, setStudentsPerClassLevel] = useState({});
+  const [genderTeachers, setGenderTeachers] = useState({});
 
-  const config1 = {
-    data: {
-      type: 'fetch',
-      value: 'https://gw.alipayobjects.com/os/bmw-prod/55424a73-7cb8-4f79-b60d-3ab627ac5698.json',
-    },
-    xField: (d) => new Date(d.year),
-    yField: 'value',
-    sizeField: 'value',
-    shapeField: 'trail',
-    legend: { size: false },
-    colorField: 'category',
-  };
-  console.log(config1.data.value)
-  const config2 = {
-    data: {
-      type: 'fetch',
-      value: 'https://render.alipay.com/p/yuyan/180020010001215413/antd-charts/column-column.json',
-    },
-    xField: 'letter',
-    yField: 'frequency',
-    label: {
-      text: (d) => `${(d.frequency * 100).toFixed(1)}%`,
-      textBaseline: 'bottom',
-    },
+  const firstPlotData = {
+    data: studentsPerClassLevel,
+    xField: 'classLevel',
+    yField: 'studentPerClassLevel',
     axis: {
-      y: {
-        labelFormatter: '.0%',
+      x: {
+        title: t('classesYear'),
+        tickInterval: 1,
       },
+      y: {
+        title: t('number.students')
+      }
+    }
+  };
+  const secondPlotData = {
+    data: genderTeachers,
+    xField: 'gender',
+    yField: 'count',
+    axis: {
+      x: {
+        title: t('genderTeachers')
+      },
+      y: {
+        title: t('number.teachers')
+      }
     },
     style: {
-
-      radiusTopLeft: 10,
-      radiusTopRight: 10,
-    },
-  };
-  const config3 = {
-    data: {
-      type: 'fetch',
-      value: 'https://assets.antv.antgroup.com/g2/aapl.json',
-    },
-    xField: (d) => new Date(d.date),
-    yField: 'close',
+      fill: ({ gender }) => {
+        if (gender === 'F') {
+          return 'pink';
+        }
+        return 'lightblue';
+      }
+    }
   };
 
   useEffect(() => {
     fetchStudentAverage(axiosPrivate, setData);
     fetchNumOfStudentsPerClass(axiosPrivate, setStudentsPerClassLevel);
+    fetchGenderTeachers(axiosPrivate, setGenderTeachers);
   }, []);
 
   useEffect(() => {
     const fetchStudentCount = async () => {
       try {
-        const users = await axiosPrivate.get('/users/totalUsers?role=[0,1,1,0]');
+        const users = await axiosPrivate.get('/users/totalUsers?role=[0,1,1,1]');
         const classes = await axiosPrivate.get('/users/totalClasses');
         setStudentCount(users.data?.[0]?.students);
         setTeacherCount(users.data?.[0]?.teachers);
         setClassCount(classes.data?.[0]?.classes);
+        setParentCount(users.data?.[0]?.parents);
       } catch (error) {
         console.error(error);
       }
@@ -104,51 +107,36 @@ export function AdminPage() {
 
     fetchStudentCount();
   }, [axiosPrivate]);
-
   return (
-    <div>
-      <Flex gap={80}>
+    <div style={{ flexdirection: 'column', marginTop: '30px' }}>
 
-        <Card style={{ width: '45%', boxShadow: '0 4px 4px rgba(0, 0, 0, 0.25)', border: '1px solid #e5e7eb', cursor: 'pointer' }}>
-          <NumStatistics user={t('number.students')} count={studentCount} chartType={<Line {...config1} height={400} />} />
-        </Card>
-        <Card style={{ width: '45%', boxShadow: '0 4px 4px rgba(0, 0, 0, 0.25)', border: '1px solid #e5e7eb', cursor: 'pointer' }}>
-          <NumStatistics user={t('number.teachers')} count={teacherCount} chartType={<Column {...config2} height={400} />} />
-        </Card>
-        {/* <Card style={{ width: '30%', boxShadow: '0 4px 4px rgba(0, 0, 0, 0.25)', border: '1px solid #e5e7eb', cursor: 'pointer' }}>
-          <NumStatistics user={t('number.class')} count={classCount} chartType={<Area {...config3} height={400} />} />
-        </Card> */}
-
+      <Flex style={{ width: '100%', height: '120px' }} gap={30}>
+        <NumStatistics style={{ width: '100%', height: '120px' }} user={t('number.teachers')} count={teacherCount} />
+        <NumStatistics style={{ width: '100%', height: '120px' }} user={t('number.students')} count={studentCount} />
+        <NumStatistics style={{ width: '100%', height: '120px' }} user={t('number.parents')} count={parentCount} />
       </Flex>
 
-      <Flex gap={150} flexdirection={'column'} justifycontent={'center'} alignitems={'center'}>
+      <Flex style={{ justifyContent: 'space-between', marginTop: '60px' }}>
+        <Card style={{ width: '46%', boxShadow: '0 4px 4px rgba(0, 0, 0, 0.25)', border: '1px solid #e5e7eb', cursor: 'pointer' }}>
+          <GraphStatistics chartType={<Line {...firstPlotData} height={450} />} />
+        </Card>
+        <Card style={{ width: '46%', boxShadow: '0 4px 4px rgba(0, 0, 0, 0.25)', border: '1px solid #e5e7eb', cursor: 'pointer' }}>
+          <GraphStatistics chartType={<Column {...secondPlotData} height={450} />} />
+        </Card>
+      </Flex>
 
-        <div style={{ marginTop: '50px', marginLeft: '60px', width: '40%', border: '1px solid #e5e7eb', borderRadius: '20px', cursor: 'pointer' }}>
+      <Flex style={{ justifyContent: 'space-between', marginTop: '100px' }}>
+        <div style={{ width: '46%', border: '1px solid #e5e7eb', borderRadius: '20px', cursor: 'pointer', boxShadow: '0 4px 4px rgba(0, 0, 0, 0.25)' }}>
           <BestStudents />
         </div>
-        <div style={{ marginTop: '50px', width: '40%', border: '1px solid #e5e7eb', borderRadius: '20px', cursor: 'pointer' }}>
+        <div style={{ width: '46%', border: '1px solid #e5e7eb', borderRadius: '20px', cursor: 'pointer', boxShadow: '0 4px 4px rgba(0, 0, 0, 0.25)' }}>
           <MissingStudents />
         </div>
       </Flex>
 
-      <div style={{ marginTop: '50px', cursor: 'pointer' }}>
+      <div style={{ marginTop: '100px', cursor: 'pointer' }}>
         <MyCalendar />
       </div>
-
-      <Flex gap={80} style={{marginTop:'50px'}}>
-        {/* <CreateMaterial style={{ width: '45%', marginTop: '50px', cursor: 'pointer' }} /> */}
-        <Card style={{ width: '45%', boxShadow: '0 4px 4px rgba(0, 0, 0, 0.25)', border: '1px solid #e5e7eb', cursor: 'pointer' }}>
-          <NumStatistics user={t('number.class')} count={classCount} chartType={<Area {...config3} height={300} />} />
-        </Card>
-
-
-        {/* <div style={{ width: '50%', marginTop: '50px', cursor: 'pointer' }}>
-          <Card style={{ width: '100%' }}>
-            <CreateNotification />
-          </Card>
-        </div> */}
-      </Flex>
-
     </div>
   );
 }
