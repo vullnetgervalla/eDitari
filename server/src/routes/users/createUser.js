@@ -7,7 +7,6 @@ const { roleMapping } = require('../../utils/roleMapping');
 const createUserRouter = Router();
 
 createUserRouter.post('/admin', checkRole("create-admin"), async (req, res) => {
-    console.log('req.body',req.body);
     const {email, password, firstname, lastname } = req.body;
     const {schoolid} = req.user;
     const roleid = await roleMapping("ADMIN");
@@ -37,7 +36,6 @@ createUserRouter.post('/admin', checkRole("create-admin"), async (req, res) => {
                 console.error('Error executing query', err);
                 return res.status(500).send('Error executing query');
             }
-            console.log('Query result:', queryRes.rows[0]);
             return res.send(queryRes.rows[0]);
         });
     });
@@ -83,7 +81,6 @@ createUserRouter.post('/student', checkRole("create-student"), async (req, res) 
                         console.error('Error executing query', err);
                         return res.status(500).send('Error executing query');
                     }
-                    console.log('Query result:', queryRes.rows);
                     
                     let {password, ...result} = queryRes.rows[0];
                     
@@ -92,7 +89,6 @@ createUserRouter.post('/student', checkRole("create-student"), async (req, res) 
                             console.error('Error executing query', err);
                             return res.status(500).send('Error executing query');
                         }
-                        console.log('Query result:', queryRes.rows);
                         result = [{...result, ...queryRes.rows[0]}];
 
                         res.send(result);
@@ -145,7 +141,6 @@ createUserRouter.post('/teacher', checkRole("create-teacher"), async (req, res) 
                         console.error('Error executing query', err);
                         return res.status(500).send('Error executing query');
                     }
-                    console.log('Query result:', queryRes.rows);
                     let result = queryRes.rows[0];
                     
                     db.query('SELECT * FROM insertTeacher($1, $2, $3, $4, $5, $6, $7, $8)', [result.id, phonenumber, educationlevel, experienceyears, teachingspecialization, personalnumber, birthday, gender], (err, queryRes) => {
@@ -153,7 +148,6 @@ createUserRouter.post('/teacher', checkRole("create-teacher"), async (req, res) 
                             console.error('Error executing query', err);
                             return res.status(500).send('Error executing query');
                         }
-                        console.log('Query result:', queryRes.rows);
                         result = [{...result, ...queryRes.rows[0]}];
 
                         res.send(result);
@@ -207,7 +201,6 @@ createUserRouter.post('/parent', checkRole("create-student"), async (req, res) =
                         console.error('Error executing query', err);
                         return res.status(500).send('Error executing query');
                     }
-                    console.log('Query result:', queryRes.rows);
                     let result = queryRes.rows[0];
                     
                     db.query('SELECT * FROM insertParent($1, $2, $3)', [result.id, address, phonenumber], (err, queryRes) => {
@@ -215,7 +208,6 @@ createUserRouter.post('/parent', checkRole("create-student"), async (req, res) =
                             console.error('Error executing query', err);
                             return res.status(500).send('Error executing query');
                         }
-                        console.log('Query result:', queryRes.rows);
                         result = [{...result, ...queryRes.rows[0]}];
 
                         res.send(result);

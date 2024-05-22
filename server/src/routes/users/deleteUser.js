@@ -14,7 +14,6 @@ deleteUserRouter.delete('/:id', checkRole(null, ['ADMIN', 'TEACHER']), (req, res
           res.status(500).send('Error executing query');
           return;
         }
-        console.log('Query result:', queryRes.rows);
         res.send(queryRes.rows);
     });
 });

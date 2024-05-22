@@ -27,19 +27,19 @@ function Login() {
         if (loggedIn) {
             navigate(from, { replace: true });
         }
-    }, [])
+    }, []);
 
     useEffect(() => {
         setErrMsg('');
-    }, [email, password])
+    }, [email, password]);
 
     const togglePersist = () => {
         setPersist(persist => !persist);
-    }
+    };
 
     useEffect(() => {
         localStorage.setItem('persist', persist);
-    }, [persist])
+    }, [persist]);
 
     const handleSubmit = async (e) => {
         if (!email || !password) {
@@ -79,7 +79,7 @@ function Login() {
                 setErrMsg(t('loginFailed'));
             }
         }
-    }
+    };
 
     return (
         <div className="flex h-screen overflow-hidden w-full items-center justify-end" style={{ backgroundImage: 'url(/images/login.jpg)', backgroundSize: 'cover', backgroundPosition: 'right' }}>
@@ -94,7 +94,7 @@ function Login() {
                 <Form className="space-y-6 w-10/12" onFinish={handleSubmit}>
                     <div>
                         <label className="mb-2 block text-sm font-medium text-gray-700 light:text-gray-300" htmlFor="email">
-                            {t('mail')}
+                            {t('email')}
                         </label>
                         <Input
                             prefix={<MailOutlined />}
@@ -109,7 +109,7 @@ function Login() {
                     </div>
                     <div>
                         <label className="mb-2 block text-sm font-medium text-gray-700 light:text-gray-300" htmlFor="password">
-                            {t('pass')}
+                            {t('password')}
                         </label>
                         <Input.Password
                             prefix={<LockOutlined />}
@@ -137,7 +137,7 @@ function Login() {
                 </Form>
             </div>
         </div>
-    )
+    );
 }
 
 export default Login;

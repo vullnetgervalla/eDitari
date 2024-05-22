@@ -24,7 +24,6 @@ getClassRouter.get('/getTeacherCountByGender', checkRole(null, 'ADMIN'), (req, r
       res.sendStatus(500);
       return;
     }
-    console.log(queryRes.rows);
     res.send(queryRes.rows);
   })
 })

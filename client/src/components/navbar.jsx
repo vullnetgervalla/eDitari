@@ -11,7 +11,7 @@ import {
   LogoutOutlined,
   PlusCircleOutlined,
   FundProjectionScreenOutlined,
-  CalendarOutlined, 
+  CalendarOutlined,
   BookOutlined
 } from '@ant-design/icons';
 import { Button, Layout, Menu, theme, Typography, Tooltip } from 'antd';
@@ -65,8 +65,7 @@ export default function NavBar({ content }) {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
   const contentStyle = {
-    margin: '24px 16px',
-    padding: 60,
+    padding: '30px 60px 60px 60px',
     minHeight: 280,
     background: colorBgContainer,
     borderRadius: borderRadiusLG,
@@ -150,7 +149,7 @@ export default function NavBar({ content }) {
           paddingTop: '10px',
           position: 'sticky',
           top: 0,
-          float: 'left',
+          float: 'left'
         }}
       >
         <div className='demo-logo-vertical' >
@@ -163,7 +162,6 @@ export default function NavBar({ content }) {
             justifyContent: 'space-between',
             height: 'calc(100vh - 15px)',
           }}>
-
           <Menu
             theme='dark'
             defaultSelectedKeys={[selectedKey]}
@@ -203,7 +201,11 @@ export default function NavBar({ content }) {
             display: 'flex',
             alignItems: 'center',
             padding: 0,
-            background: colorBgContainer,
+            position: 'sticky',
+            top: 0,
+            zIndex: 1,
+            backgroundColor: 'white',
+            boxShadow: '0 4px 4px rgba(0, 0, 0, 0.25)'
           }}
         >
           <Button

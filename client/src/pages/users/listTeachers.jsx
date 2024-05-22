@@ -15,8 +15,8 @@ export default function ListTeachers() {
 				setTeachers(res.data)
         setLoading(false)
 			}
-			catch (e) {
-				console.log(e)
+			catch (error) {
+				console.error(error)
 			}
 		}
 		getTeachers()

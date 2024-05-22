@@ -85,7 +85,6 @@ getUserRouter.get('/students', checkRole("list-student"), (req, res) => {
 });
 });
 
-
 // This needs to be the last route
 getUserRouter.get('/:id', authenticateToken, (req, res) => {
   const id = req.params.id;

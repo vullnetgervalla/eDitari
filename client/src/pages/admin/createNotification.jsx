@@ -29,7 +29,6 @@ function CreateNotification() {
     try {
       const res = await axios.post('/notifications', values);
       setCreatedNotifications(prev => [res?.data?.[0], ...prev]);
-      console.log('res', res?.data?.[0]);
       message.success(t('createdNotification'));
     } catch (e) {
       message.error(t('notCreatedNotification'));

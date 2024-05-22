@@ -28,7 +28,7 @@ const ShowData = ({ userType, data }) => {
         ? data.map((item) => ({
           key: item.id,
           name: `${item.firstname}`,
-          lastName: `${item.lastname}`,
+          lastname: `${item.lastname}`,
           email: `${item.email}`
         }))
         : []
@@ -110,7 +110,7 @@ const ShowData = ({ userType, data }) => {
       ...getColumnSearchProps('name'),
     },
     {
-      title: t('mail'),
+      title: t('email'),
       dataIndex: 'email',
       key: 'email',
       width: '15%',
@@ -118,8 +118,8 @@ const ShowData = ({ userType, data }) => {
     },
     {
       title: t('name'),
-      dataIndex: 'lastName',
-      key: 'lastName',
+      dataIndex: 'lastname',
+      key: 'lastname',
       width: '15%',
       ...getColumnSearchProps('name'),
     },

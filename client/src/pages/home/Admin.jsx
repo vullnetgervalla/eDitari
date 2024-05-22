@@ -11,15 +11,6 @@ import { useAxiosPrivate } from 'hooks/useAxiosPrivate';
 import GraphStatistics from 'components/graphStatistics';
 import NumStatistics from 'components/numStatistics';
 
-const fetchStudentAverage = async (axiosPrivate, setData) => {
-  try {
-    const response = await axiosPrivate.get('/classes/numOfStudentsPerClass');
-    setData(response.data);
-  } catch (error) {
-    console.error(error)
-  }
-};
-
 const fetchNumOfStudentsPerClass = async (axiosPrivate, setStudentsPerClassLevel) => {
   try {
     const response = await axiosPrivate.get('/classes/numOfStudentsPerClass')
@@ -28,7 +19,6 @@ const fetchNumOfStudentsPerClass = async (axiosPrivate, setStudentsPerClassLevel
     console.error(error)
   }
 }
-
 const fetchGenderTeachers = async (axiosPrivate, setGenderTeachers) => {
   try {
     const response = await axiosPrivate.get('/classes/getTeacherCountByGender');
@@ -37,17 +27,29 @@ const fetchGenderTeachers = async (axiosPrivate, setGenderTeachers) => {
     console.error(error);
   }
 }
+const fetchStudentCount = async (axiosPrivate, setStudentCount, setTeacherCount, setClassCount, setParentCount) => {
+  try {
+    const users = await axiosPrivate.get('/users/totalUsers?role=[0,1,1,1]');
+    const classes = await axiosPrivate.get('/users/totalClasses');
+    setStudentCount(users.data?.[0]?.students);
+    setTeacherCount(users.data?.[0]?.teachers);
+    setClassCount(classes.data?.[0]?.classes);
+    setParentCount(users.data?.[0]?.parents);
+  } catch (error) {
+    console.error(error);
+  }
+}
 
 export function AdminPage() {
   const axiosPrivate = useAxiosPrivate()
   const { t } = useTranslation();
-  const [data, setData] = useState(null);
   const [studentCount, setStudentCount] = useState({});
   const [teacherCount, setTeacherCount] = useState({});
-  const [classCount, setClassCount] = useState({});
   const [parentCount, setParentCount] = useState({});
+  const [classCount, setClassCount] = useState({})
   const [studentsPerClassLevel, setStudentsPerClassLevel] = useState({});
   const [genderTeachers, setGenderTeachers] = useState({});
+  const [loadingData, setLoadingData] = useState([true, true, true])
 
   const firstPlotData = {
     data: studentsPerClassLevel,
@@ -86,29 +88,13 @@ export function AdminPage() {
   };
 
   useEffect(() => {
-    fetchStudentAverage(axiosPrivate, setData);
     fetchNumOfStudentsPerClass(axiosPrivate, setStudentsPerClassLevel);
     fetchGenderTeachers(axiosPrivate, setGenderTeachers);
-  }, []);
-
-  useEffect(() => {
-    const fetchStudentCount = async () => {
-      try {
-        const users = await axiosPrivate.get('/users/totalUsers?role=[0,1,1,1]');
-        const classes = await axiosPrivate.get('/users/totalClasses');
-        setStudentCount(users.data?.[0]?.students);
-        setTeacherCount(users.data?.[0]?.teachers);
-        setClassCount(classes.data?.[0]?.classes);
-        setParentCount(users.data?.[0]?.parents);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
-    fetchStudentCount();
+    fetchStudentCount(axiosPrivate, setStudentCount, setTeacherCount, setClassCount, setParentCount);
   }, [axiosPrivate]);
+
   return (
-    <div style={{ flexdirection: 'column', marginTop: '30px' }}>
+    <div style={{ flexdirection: 'column', margin: '40px 0' }}>
 
       <Flex style={{ width: '100%', height: '120px' }} gap={30}>
         <NumStatistics style={{ width: '100%', height: '120px' }} user={t('number.teachers')} count={teacherCount} />

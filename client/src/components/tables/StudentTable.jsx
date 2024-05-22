@@ -83,13 +83,13 @@ export const StudentTable = ({ data, side }) => {
 
     const columns = [
         {
-            title: t('firstName'),
+            title: t('firstname'),
             dataIndex: 'firstname',
             key: 'firstname',
             ...getColumnSearchProps('firstname'),
         },
         {
-            title: t('lastName'),
+            title: t('lastname'),
             dataIndex: 'lastname',
             key: 'lastname',
             ...getColumnSearchProps('lastname'),
@@ -101,7 +101,7 @@ export const StudentTable = ({ data, side }) => {
             ...getColumnSearchProps('personalnumber'),
         },
         {
-            title: t('mail'),
+            title: t('email'),
             dataIndex: 'email',
             key: 'email',
             ...getColumnSearchProps('email'),
@@ -118,8 +118,8 @@ export const StudentTable = ({ data, side }) => {
             dataIndex: 'parent',
             key: 'id',
             ...getColumnSearchProps('fullname', 'parent.fullname'),
-            render: (parent) =>{
-                return <span>{parent?.fullname ? parent?.fullname : '-'}</span>
+            render: (parent) => {
+                return <span>{parent?.fullname ? parent?.fullname : '-'}</span>;
             }
         },
         {
@@ -128,7 +128,7 @@ export const StudentTable = ({ data, side }) => {
             key: 'gender',
             ...getColumnSearchProps('gender'),
             render: (gender) =>
-                gender === 'M' 
+                gender === 'M'
                     ? t('male')
                     : gender === 'F'
                         ? t('female')
@@ -139,7 +139,7 @@ export const StudentTable = ({ data, side }) => {
             dataIndex: 'birthday',
             key: 'birthday',
             ...getColumnSearchProps('birthday'),
-            render: (birthday) => <span>{birthday? moment(birthday).format('DD/MM/YYYY') : '-'}</span>
+            render: (birthday) => <span>{birthday ? moment(birthday).format('DD/MM/YYYY') : '-'}</span>
         },
         ...(!side ? [
             {
