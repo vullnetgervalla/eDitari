@@ -80,26 +80,44 @@ BEGIN
     END LOOP;
 END;
 $$;
+
 DROP FUNCTION IF EXISTS getUser(int);
 CREATE OR REPLACE FUNCTION getUser(user_id int)
 RETURNS TABLE(
-    mail TEXT,
-    name TEXT,
+    id integer,
+    "userName" TEXT,
+    "firstName" TEXT,
     "lastName" TEXT,
     role TEXT,
+    mail TEXT,
     gender public.gender,
     ssn character varying(20),
     "parentId" integer,
     "phoneNumber" character varying(20),
     address TEXT
-) LANGUAGE SQL AS 
+) LANGUAGE SQL AS
 $$
-    SELECT "User".email, "User".firstname, "User".lastname, role.name, 
-    CASE WHEN role.name = 'STUDENT' THEN student.gender ELSE NULL END,
-    CASE WHEN role.name = 'STUDENT' THEN student.personalnumber ELSE teacher.personalnumber END,
-    CASE WHEN role.name = 'STUDENT' THEN student.parentid ELSE NULL END,
-    CASE WHEN role.name = 'TEACHER' THEN teacher.phonenumber ELSE NULL END,
-    CASE WHEN role.name = 'STUDENT' THEN parent.address ELSE NULL END
+    SELECT "User".id, username, firstname, lastname, role.name, email,
+    CASE 
+      WHEN role.name = 'STUDENT' THEN student.gender 
+      ELSE NULL
+    END,
+    CASE 
+      WHEN role.name = 'STUDENT' THEN student.personalnumber 
+      ELSE teacher.personalnumber
+    END,
+    CASE 
+      WHEN role.name = 'STUDENT' THEN student.parentid 
+      ELSE NULL
+    END,
+    CASE 
+      WHEN role.name = 'TEACHER' THEN teacher.phonenumber 
+      ELSE NULL
+    END,
+    CASE 
+      WHEN role.name = 'STUDENT' THEN parent.address 
+      ELSE NULL
+    END
     FROM "User"
     JOIN role ON "User".roleid = role.id
     LEFT JOIN student ON "User".id = student.id AND role.name = 'STUDENT'
@@ -331,6 +349,42 @@ BEGIN
     VALUES (i_id, i_phonenumber, i_educationlevel, i_experienceyears, i_teachingspecialization, i_personalnumber, i_birthday, i_gender)
     RETURNING *;
 END;
+$$;
+
+DROP FUNCTION IF EXISTS getParent(int);
+CREATE OR REPLACE FUNCTION getParent(student_id int)
+RETURNS TABLE(
+    id integer,
+    username TEXT,
+    "firstName" TEXT,
+    "lastName" TEXT,
+    mail TEXT,
+    "phoneNumber" character varying(20),
+    address TEXT,
+    role TEXT
+) LANGUAGE SQL AS 
+$$
+    SELECT 
+    U_Parent.id AS id,
+    U_Parent.username as username,
+    U_Parent.firstname AS firstName,
+    U_Parent.lastname AS lastName,
+    U_Parent.email AS email,
+    parent.phonenumber AS phoneNumber,
+    parent.address AS address,
+    Role.name AS roleName
+FROM 
+    "User" AS U_Student
+JOIN 
+    student ON U_Student.id = student.id
+JOIN 
+    parent ON student.parentid = parent.id
+JOIN 
+    "User" AS U_Parent ON parent.id = U_Parent.id
+JOIN
+    Role ON U_Parent.roleid = Role.id
+WHERE 
+    U_Student.id = student_id;
 $$;
 
 DROP FUNCTION IF EXISTS insertParent(integer, text, text);
