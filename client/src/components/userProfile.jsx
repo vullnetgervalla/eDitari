@@ -67,6 +67,7 @@ export default function UserProfile() {
       />
     );
   }
+  console.log(formData)
   const { userName, firstName, lastName, mail, gender: rawGender, role: rawRole, parentId, phoneNumber, address, ssn } = formData;
   const gender = rawGender === 'M' ? t('male') : rawGender === 'F' ? t('female') : null;
   const role = t(rawRole?.toLowerCase());
