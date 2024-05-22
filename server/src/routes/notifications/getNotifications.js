@@ -7,7 +7,6 @@ const getNotificationsRouter = Router();
 
 getNotificationsRouter.get('/', authenticateToken, (req, res) => {
     const { schoolid } = req.user;
-    console.log('test')
     db.query('SELECT * FROM getNotificationsDetails($1)', [schoolid],(err, results) => {
         if (err) {
             console.error(err);

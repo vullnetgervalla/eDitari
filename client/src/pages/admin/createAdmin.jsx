@@ -64,22 +64,22 @@ function CreateAdmin() {
           <Input />
         </Form.Item>
 
-				<Form.Item
-					label={t('lastName')}
-					labelAlign='left'
-					name='lastname'
-					rules={[
-						{
-							required: true,
-							message: t('enterLastName'),
-						},
-					]}
-				>
-					<Input />
-				</Form.Item>
+        <Form.Item
+          label={t('lastname')}
+          labelAlign='left'
+          name='lastname'
+          rules={[
+            {
+              required: true,
+              message: t('enterLastName'),
+            },
+          ]}
+        >
+          <Input />
+        </Form.Item>
 
         <Form.Item
-          label={t('mail')}
+          label={t('email')}
           labelAlign='left'
           name='email'
           rules={[
@@ -97,7 +97,7 @@ function CreateAdmin() {
         </Form.Item>
 
         <Form.Item
-          label={t('pass')}
+          label={t('password')}
           labelAlign='left'
           name='password'
           rules={[

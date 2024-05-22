@@ -85,45 +85,81 @@ DROP FUNCTION IF EXISTS getUser(int);
 CREATE OR REPLACE FUNCTION getUser(user_id int)
 RETURNS TABLE(
     id integer,
-    "userName" TEXT,
-    "firstName" TEXT,
-    "lastName" TEXT,
+    username TEXT,
+    firstname TEXT,
+    lastname TEXT,
     role TEXT,
-    mail TEXT,
+    email TEXT,
+    password TEXT,
+    phonenumber character varying(20),
+    educationlevel character varying(50),
+    experienceyears integer,
+    teachingspecialization character varying(100),
+    personalnumber character varying(20),
     gender public.gender,
-    ssn character varying(20),
-    "parentId" integer,
-    "phoneNumber" character varying(20),
+    birthday date,
+    classname character varying(20),
+    parentid integer,
     address TEXT
 ) LANGUAGE SQL AS
 $$
-    SELECT "User".id, username, firstname, lastname, role.name, email,
-    CASE 
-      WHEN role.name = 'STUDENT' THEN student.gender 
-      ELSE NULL
-    END,
-    CASE 
-      WHEN role.name = 'STUDENT' THEN student.personalnumber 
-      ELSE teacher.personalnumber
-    END,
-    CASE 
-      WHEN role.name = 'STUDENT' THEN student.parentid 
-      ELSE NULL
-    END,
-    CASE 
-      WHEN role.name = 'TEACHER' THEN teacher.phonenumber 
-      ELSE NULL
-    END,
-    CASE 
-      WHEN role.name = 'STUDENT' THEN parent.address 
-      ELSE NULL
-    END
-    FROM "User"
-    JOIN role ON "User".roleid = role.id
-    LEFT JOIN student ON "User".id = student.id AND role.name = 'STUDENT'
-    LEFT JOIN teacher ON "User".id = teacher.id AND role.name = 'TEACHER'
-    LEFT JOIN parent ON student.parentid = parent.id AND role.name = 'STUDENT'
-    WHERE "User".id = user_id;
+  SELECT "User".id, username, firstname, lastname, role.name, email,
+	CASE 
+		WHEN role.name IN( 'TEACHER','STUDENT', 'PARENT') THEN '********' 
+		ELSE null
+  END AS password,
+  CASE 
+    WHEN role.name = 'TEACHER' THEN teacher.phonenumber 
+    ELSE parent.phonenumber
+  END,
+  CASE 
+    WHEN role.name = 'TEACHER' THEN teacher.educationlevel 
+    ELSE NULL
+  END,
+  CASE 
+    WHEN role.name = 'TEACHER' THEN teacher.experienceyears 
+    ELSE NULL
+  END,
+  CASE 
+    WHEN role.name = 'TEACHER' THEN teacher.teachingspecialization 
+    ELSE NULL
+  END,
+  CASE 
+    WHEN role.name = 'STUDENT' THEN student.personalnumber 
+    WHEN role.name = 'TEACHER' THEN teacher.personalnumber 
+    ELSE NULL
+  END,
+  CASE 
+    WHEN role.name = 'STUDENT' THEN student.gender 
+    WHEN role.name = 'TEACHER' THEN teacher.gender 
+    ELSE NULL
+  END,
+  CASE 
+    WHEN role.name = 'STUDENT' THEN student.birthday 
+    WHEN role.name = 'TEACHER' THEN teacher.birthday 
+    ELSE NULL
+  END,
+  CASE 
+    WHEN role.name = 'STUDENT' THEN class.classname 
+    ELSE NULL
+  END,
+  CASE 
+    WHEN role.name = 'STUDENT' THEN student.parentid 
+    ELSE NULL
+  END,
+  CASE 
+	  WHEN role.name = 'STUDENT' THEN parent.address 
+	  WHEN role.name = 'PARENT' THEN parent_role.address
+	  ELSE NULL
+	END
+  FROM "User"
+  JOIN role ON "User".roleid = role.id
+  LEFT JOIN student ON "User".id = student.id AND role.name = 'STUDENT'
+  LEFT JOIN teacher ON "User".id = teacher.id AND role.name = 'TEACHER'
+  LEFT JOIN parent ON student.parentid = parent.id AND role.name = 'STUDENT'
+  LEFT JOIN parent AS parent_role ON "User".id = parent_role.id AND role.name = 'PARENT'	
+  LEFT JOIN class ON student.classid = class.id AND role.name = 'STUDENT'
+  WHERE "User".id = user_id;
 $$;
 
 DROP FUNCTION IF EXISTS getRoles();
@@ -356,9 +392,9 @@ CREATE OR REPLACE FUNCTION getParent(student_id int)
 RETURNS TABLE(
     id integer,
     username TEXT,
-    "firstName" TEXT,
+    "firstname" TEXT,
     "lastName" TEXT,
-    mail TEXT,
+    email TEXT,
     "phoneNumber" character varying(20),
     address TEXT,
     role TEXT

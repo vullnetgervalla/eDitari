@@ -6,9 +6,7 @@ import { useTranslation } from 'react-i18next';
 export default function ListStudents() {
 	const axios = useAxiosPrivate();
 	const { t } = useTranslation();
-
 	const [students, setStudents] = useState([]);
-	console.log('students', students)
 
 	useEffect(() => {
 		const getStudents = async () => {
@@ -16,8 +14,8 @@ export default function ListStudents() {
 				const res = await axios.get('/users/students')
 				setStudents(res.data)
 			}
-			catch (e) {
-				console.log(e)
+			catch (error) {
+				console.error(error)
 			}
 		}
 

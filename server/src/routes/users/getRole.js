@@ -11,7 +11,6 @@ getRoleRouter.get('/get-roles', checkRole(null, ['ADMIN', 'TEACHER']), (req, res
       res.sendStatus(500);
       return;
     }
-    console.log(queryRes.rows)
     res.send(queryRes.rows);
   }
   );

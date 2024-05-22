@@ -23,34 +23,34 @@ const formItemLayout = {
 };
 const { Title } = Typography;
 function CreateUser({ parent }) {
-	const { t } = useTranslation();
-	return (
-		<div style={{ textAlign: 'center' }}>
-			<Form
-				{...formItemLayout}
-				variant='filled'
-				style={{
-					maxWidth: 500,
+  const { t } = useTranslation();
+  return (
+    <div style={{ textAlign: 'center' }}>
+      <Form
+        {...formItemLayout}
+        variant='filled'
+        style={{
+          maxWidth: 500,
           border: '1px solid #E5E7EB',
           boxShadow: '3px 3px 10px #eee',
-					borderRadius: 20,
-					padding: 30,
-					backgroundColor: '#fff',
-				}}
-			>
-				<Form.Item
-					label={t('ssn')}
-					labelAlign='left'
-					name='personalID'
-					rules={[
-						{
-							required: true,
-							message: t('enterSsn'),
-						},
-					]}
-				>
-					<Input />
-				</Form.Item>
+          borderRadius: 20,
+          padding: 30,
+          backgroundColor: '#fff',
+        }}
+      >
+        <Form.Item
+          label={t('personalnumber')}
+          labelAlign='left'
+          name='personalID'
+          rules={[
+            {
+              required: true,
+              message: t('enterSsn'),
+            },
+          ]}
+        >
+          <Input />
+        </Form.Item>
 
         <Form.Item
           label={t('name')}
@@ -67,7 +67,7 @@ function CreateUser({ parent }) {
         </Form.Item>
 
         <Form.Item
-          label={t('lastName')}
+          label={t('lastname')}
           labelAlign='left'
           name='surname'
           rules={[
@@ -121,7 +121,7 @@ function CreateUser({ parent }) {
 				</Form.Item> */}
 
         {/* <Form.Item
-					label={t('pass')}
+					label={t('password')}
 					labelAlign='left'
 					name='Password'
 				>
