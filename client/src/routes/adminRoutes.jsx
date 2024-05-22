@@ -12,6 +12,8 @@ import UserProfile from 'components/userProfile';
 import CreateNotification from 'pages/admin/createNotification';
 import SeeNotifications from 'components/seeNotifications';
 import CreateMaterials from 'components/createMaterials';
+import ListClasses from 'components/class/ListClasses';
+import CreateClass from 'components/class/CreateClass';
 
 export const AdminRoutes = [
   {
@@ -76,5 +78,13 @@ export const AdminRoutes = [
   {
     path: 'create-materials',
     element: <CreateMaterials />
+  },
+  {
+    path: 'list-class',
+    element: <ListClasses />
+  },
+  {
+    path: 'create-class',
+    element: <CreateClass />
   }
 ];

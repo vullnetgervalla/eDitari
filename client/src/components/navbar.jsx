@@ -10,6 +10,7 @@ import {
   HomeFilled,
   LogoutOutlined,
   PlusCircleOutlined,
+  FundProjectionScreenOutlined,
   CalendarOutlined,
   BookOutlined
 } from '@ant-design/icons';
@@ -47,7 +48,7 @@ const iconMapping = {
   parent: <UserOutlined />,
   schedule: <CalendarOutlined />,
   subject: <BookOutlined />,
-
+  class: <FundProjectionScreenOutlined />,
 };
 export default function NavBar({ content }) {
   const axiosPrivate = useAxiosPrivate();

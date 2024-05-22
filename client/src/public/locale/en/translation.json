@@ -132,6 +132,8 @@
   "europeDay": "Europe Day",
   "constitutionDay": "Constitution Day",
   "mayFirst": "International Workers' Day",
+  "classesYear":"Classes in years",
+	"genderTeachers":"Teachers based on gender",
   "create-parent": "Register parent",
   "list-parent": "List of parents",
   "schedule": "Schedule",
@@ -142,5 +144,10 @@
   "notCorrectNumberFormat": "Not correct number format",
   "createdParent": "Parent created successfully!",
   "notCreatedParent": "Error creating parent!",
-  "data-changed-correctly": "Data changed correctly"
+  "data-changed-correctly": "Data changed correctly",
+	"list-class": "List of classes",
+	"create-class": "Register class",
+	"yes": "Yes",
+	"no": "No",
+	"headTeacher": "Head teacher"
 }

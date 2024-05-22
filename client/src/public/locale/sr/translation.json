@@ -133,6 +133,8 @@
   "europeDay": "Dan Evrope",
   "constitutionDay": "Dan ustava",
   "mayFirst": "Međunarodni praznik rada",
+  "classesYear":"Časovi u godinama",
+	"genderTeachers":"Nastavnici po polu",
   "create-parent": "Registruj roditelja",
   "list-parent": "Spisak roditelja",
   "schedule": "Raspored",
@@ -143,5 +145,10 @@
   "notCorrectNumberFormat": "Nije ispravan format broja",
   "createdParent": "Roditelj uspešno kreiran",
   "notCreatedParent": "Greška prilikom kreiranja roditelja",
-  "data-changed-correctly": "Podaci uspešno promenjeni"
+  "data-changed-correctly": "Podaci uspešno promenjeni",
+	"list-class": "Spisak odeljenja",
+	"create-class": "Registruj odeljenje",
+	"yes": "Da",
+	"no": "Ne",
+	"headTeacher": "Razredni starešina"
 }

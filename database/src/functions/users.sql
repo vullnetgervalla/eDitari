@@ -1,3 +1,33 @@
+DROP FUNCTION IF EXISTS login(TEXT);
+CREATE OR REPLACE FUNCTION login(i_email TEXT)
+RETURNS TABLE(
+    id integer,
+    username TEXT,
+    email TEXT,
+    password TEXT,
+    firstname TEXT,
+    lastname TEXT,
+    roleid integer,
+    schoolid integer,
+    role TEXT
+) LANGUAGE sql
+AS
+$$
+    SELECT 
+        "User".id,
+        username,
+        email,
+        password,
+        firstname,
+        lastname,
+        roleid,
+        schoolid,
+    role.name AS role FROM "User"
+    INNER JOIN role ON "User".roleid = role.id 
+    WHERE "User".email = i_email;
+$$;
+
+
 DROP FUNCTION IF EXISTS getAllSchoolUsers(integer);
 CREATE OR REPLACE FUNCTION getAllSchoolUsers(input_school_id integer)
 RETURNS SETOF "User" LANGUAGE sql
