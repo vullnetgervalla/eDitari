@@ -3,6 +3,7 @@ const functions = [
     'src/functions/users.sql',
     'src/functions/classes.sql',
     'src/functions/school.sql',
+    'src/functions/update.sql',
     'src/functions/counts.sql',
     'src/functions/notifications.sql',
 ]

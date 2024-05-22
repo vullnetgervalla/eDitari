@@ -10,6 +10,8 @@ import {
   HomeFilled,
   LogoutOutlined,
   PlusCircleOutlined,
+  CalendarOutlined, 
+  BookOutlined
 } from '@ant-design/icons';
 import { Button, Layout, Menu, theme, Typography, Tooltip } from 'antd';
 import { useTranslation } from 'react-i18next';
@@ -42,6 +44,10 @@ const iconMapping = {
   notification: <NotificationOutlined />,
   material: <FileOutlined />,
   roles: <PlusCircleOutlined />,
+  parent: <UserOutlined />,
+  schedule: <CalendarOutlined />,
+  subject: <BookOutlined />,
+
 };
 export default function NavBar({ content }) {
   const axiosPrivate = useAxiosPrivate();
@@ -81,29 +87,34 @@ export default function NavBar({ content }) {
     }
   };
   const items = (t) => {
-    let key = 10;
+    let standaloneKey = 0;
+    let groupedKey = 0;
     let currentCategory = capabilities[0]?.category_name;
     let categoryCounter = 0;
-    capabilities.forEach((item) => {
+    const standaloneItems = [];
+    const groupedCapabilities = capabilities.reduce((groups, item) => {
+      if (item?.category_name === 'default') {
+        standaloneItems.push(getItem(t(item.capability_name), `${standaloneKey}`, iconMapping[item.capability_name]));
+        standaloneKey += 1;
+        return groups;
+      }
       if (item?.category_name !== currentCategory) {
-        key += 10;
+        groupedKey = Math.floor(groupedKey / 10) * 10 + 10;
         currentCategory = item?.category_name;
         categoryCounter = 0;
       }
       categoryCounter++;
-      keyToPath[key + categoryCounter] = item.capability_name;
-    });
-    const groupedCapabilities = capabilities.reduce((groups, item) => {
+      keyToPath[groupedKey + categoryCounter] = item.capability_name;
       const group = groups[item?.category_name] || [];
-      group.push(item.capability_name);
+      group.push({ capability_name: item.capability_name, key: groupedKey + categoryCounter });
       groups[item?.category_name] = group;
       return groups;
     }, {});
     const allItems = Object.entries(groupedCapabilities).map(([category, items], index) => {
-      const subItems = items.map((capability_name, subIndex) => getItem(t(capability_name), `${index + 1}${subIndex + 1}`));
-      return getItem(t(category), `${index + 1}`, iconMapping[category], subItems);
+      const subItems = items.map((item, subIndex) => getItem(t(item.capability_name), `${item.key}`));
+      return getItem(t(category), `${index + 1}0`, iconMapping[category], subItems);
     });
-    allItems.unshift(getItem(t('home'), '0', iconMapping['home']));
+    allItems.unshift(...standaloneItems);
     return allItems;
   };
   useEffect(() => {
@@ -164,17 +175,16 @@ export default function NavBar({ content }) {
               if (route) {
                 setTitle(route);
                 setSelectedKey(key);
-              if (route === 'home') navigate('/');
+                if (route == 'home') navigate('/');
                 else {
                   navigate('/' + route);
                 }
               }
             }}
           />
-          <Menu 
+          <Menu
             theme='dark'
             mode='inline'
-            // style={{ position: 'sticky', bottom: 0, width: '100%' }}
           >
             <Menu.Item
               key='1'

@@ -34,7 +34,7 @@ getUserRouter.get('/roles', checkRole("list-role"), (req, res) => {
 
 getUserRouter.get('/parents', checkRole(null, ['ADMIN', 'TEACHER']), (req, res) => {
   const { user, schoolid } = req.user;
-  console.log(typeof schoolid)
+  
     db.query('SELECT * from getAllParentUsers($1)', [schoolid], (err, queryRes) => {
       if (err) {
         console.error('Error executing query', err);

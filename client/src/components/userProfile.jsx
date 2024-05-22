@@ -2,8 +2,8 @@ import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useAxiosPrivate } from 'hooks/useAxiosPrivate';
-import { UserOutlined } from '@ant-design/icons';
-import { Spin, Button, Flex, Typography, Card, Form, Input, message } from 'antd';
+import { UserOutlined, EditOutlined, SaveOutlined } from '@ant-design/icons';
+import { Spin, Button, Flex, Typography, Card, Form, Input, message, Select } from 'antd';
 
 const { Title } = Typography;
 const fetchData = async (axiosPrivate, userId, setOriginalData, setFormData, setLoading) => {
@@ -15,6 +15,14 @@ const fetchData = async (axiosPrivate, userId, setOriginalData, setFormData, set
   } catch (error) {
     console.error('There was an error!', error);
     message.error('There was an error fetching user data!');
+  }
+};
+const fetchRoles = async (axiosPrivate, setAllRoles) => {
+  try {
+    const response = await axiosPrivate.get('/users/get-roles');
+    setAllRoles(response.data);
+  } catch (error) {
+    console.error('Error fetching roles:', error);
   }
 };
 const inputWidth = {
@@ -38,9 +46,17 @@ export default function UserProfile() {
   const [form] = Form.useForm();
   const [allowToEdit, setAllowToEdit] = useState(false);
   const [messageApi, contextHolder] = message.useMessage();
+  const [allRoles, setAllRoles] = useState();
+  const tabList = [
+    {
+      key: t('profile-data'),
+      label: t('profile-data'),
+    },
+  ];
   const userId = location.pathname.split('/').pop();
   useEffect(() => {
     fetchData(axiosPrivate, userId, setOriginUserData, setFormData, setLoading);
+    fetchRoles(axiosPrivate, setAllRoles);
   }, [axiosPrivate, userId]
   );
   if (loading) {
@@ -51,21 +67,46 @@ export default function UserProfile() {
       />
     );
   }
-  const { name, lastName, mail, gender: rawGender, role: rawRole, parentId, phoneNumber, address, ssn } = formData;
-  const gender = rawGender === 'M' ? t('male') : rawGender === 'F' ? t('female') : undefined;
+  console.log(formData)
+  const { userName, firstName, lastName, mail, gender: rawGender, role: rawRole, parentId, phoneNumber, address, ssn } = formData;
+  const gender = rawGender === 'M' ? t('male') : rawGender === 'F' ? t('female') : null;
   const role = t(rawRole?.toLowerCase());
-  const formItems = Object.entries({ name, lastName, mail, gender, role, phoneNumber, address, ssn })
+  if (parentId) {
+    tabList.push({
+      key: t('parent-data'),
+      label: t('parent-data'),
+    });
+  }
+  const formItems = Object.entries({ firstName, lastName, mail, gender, role, phoneNumber, address, ssn })
     .filter(([key, value]) => value !== null)
-    .map(([key, value]) => (
-      <Form.Item label={t(key)} style={{ width: inputWidth[key] }}>
-        <StyledInput
-          placeholder={t(`place-${key}`)}
-          value={value}
-          onChange={(e) => setValues(key, e.target.value)}
-        />
+    .map(([key, value], index) => (
+      <Form.Item key={index} label={t(key)}>
+        {(key === 'role' || key === 'gender') ? (
+          <StyledSelect
+            placeholder={t(`place-${key}`)}
+            defaultValue={value}
+            onChange={(value) => setValues(key, value)}
+            options={
+              key === 'role' ?
+                allRoles?.map((role) => ({
+                  value: role.id,
+                  label: t(role.name?.toLowerCase()),
+                })) :
+                [
+                  { value: 'male', label: t('male') },
+                  { value: 'female', label: t('female') }
+                ]
+            }
+          />
+        ) : (
+          <StyledInput
+            placeholder={t(`place-${key}`)}
+            value={value}
+            onChange={(e) => setValues(key, e.target.value)}
+          />
+        )}
       </Form.Item>
     ));
-
   const setValues = (key, value) => {
     setFormData(prevState => ({ ...prevState, [key]: value }));
   };
@@ -73,44 +114,47 @@ export default function UserProfile() {
     setFormData(originalUserData);
   };
   return (
-    <>
+    <div style={{ marginTop: '100px' }}>
+      <Background />
       <div style={{ display: 'flex', margin: '30px 30px 0 30px' }}>
         {contextHolder}
-        <Flex vertical style={{ alignItems: 'center' }} >
-          <Button style={{ width: '150px', height: '150px', borderRadius: '50%' }}>{
+        <Card style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '30%', height: 'fit-content', borderRadius: '20px', border: '1px solid Gray', padding: '20px 10px' }}>
+          <Button style={{ width: '200px', height: '200px', borderRadius: '50%' }}>{
             formData.image ? <img src={formData.image} alt='profile-pic' style={{ width: '100%', height: '100%', borderRadius: '50%' }} /> : <UserOutlined style={{ fontSize: '65px' }} />
           }</Button>
-          {formData.image ? null : <Title level={5} style={{ width: 'max-content' }}>{t('upload-profile-pic')}</Title>}
-        </Flex>
+          <Title strong level={4} style={{ textAlign: 'center', margin: '25px 0 5px' }}>@{userName}</Title>
+          <Title level={5} style={{ textAlign: 'center', marginTop: '0' }}>{role}</Title>
+        </Card>
         <Card
-          title={t('profile-data')}
-          extra={<a href="#">More</a>}
+          tabList={tabList}
           style={{
             position: 'relation',
             marginLeft: '100px',
             width: '100%',
-            padding: '10px 20px 15px'
+            padding: '10px 20px 15px',
+            border: '1px solid Gray',
+            borderRadius: '20px'
           }}
         >
           <Form
             layout='vertical'
             form={form}
             disabled={!allowToEdit}
-            style={{ display: 'flex', flexWrap: 'wrap', gap: '25px', marginBottom: '40px' }}
+            style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '25px', margin: '20px 0 60px 0' }}
           >
             {formItems}
           </Form>
           <Flex gap='middle' style={{
             position: 'absolute',
-            bottom: 25, right: 30
+            bottom: 25, right: 44
           }}>
-            {!allowToEdit ? null : <Button type="primary" danger onClick={
+            {!allowToEdit ? null : <Button type="primary" size="large" danger onClick={
               () => {
                 cancelNewDataChange();
                 setAllowToEdit(false);
               }
             }>{t('cancel')} </Button>}
-            <Button type="primary" onClick={
+            <Button type="primary" size="large" onClick={
               () => {
                 setAllowToEdit(!allowToEdit);
                 {
@@ -124,19 +168,36 @@ export default function UserProfile() {
                 }
 
               }
-            }>{!allowToEdit ? t('edit-data') : t('save-data')}</Button>
+            }>{!allowToEdit ? <><EditOutlined /> {t('edit-data')}</> : <><SaveOutlined /> {t('save-data')}</>}</Button>
           </Flex>
         </Card>
       </div >
-    </>
+    </div>
   );
 }
 
-const StyledInput = (props) => (
-  <Input
+const Background = () => (
+  <div style={{
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    width: '100%',
+    height: '40%',
+    backgroundImage: 'url(/images/profile-background.jpg)',
+    backgroundSize: 'cover',
+    borderRadius: '8px 8px 0 0',
+  }} />
+);
+
+const withLargeStyle = (Component) => (props) => (
+  <Component
     {...props}
+    size="large"
     style={{
       color: 'black'
     }}
   />
 );
+
+const StyledInput = withLargeStyle(Input);
+const StyledSelect = withLargeStyle(Select);

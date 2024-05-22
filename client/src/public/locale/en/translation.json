@@ -1,5 +1,7 @@
 {
-	"admin": "Administrators",
+
+	"admin": "Administrator",
+  "admins": "Administrators",
 	"list-admin": "List of admins",
 	"create-admin": "Register admin",
 	"teacher": "Teacher",
@@ -28,6 +30,7 @@
 	"submit": "Submit",
 	"name": "Name",
 	"firstName": "First Name",
+  "userName": "Username",
 	"age": "Age",
 	"address": "Address",
 	"lastName": "Last Name",
@@ -93,6 +96,7 @@
 	"numbersOnly": "Numbers only",
 	"upload-profile-pic": "Upload profile picture",
 	"profile-data": "Profile data",
+  "parent-data": "Parent data",
 	"phoneNumber": "Phone number",
 	"role": "Role",
 	"edit-data": "Edit data",
@@ -102,7 +106,7 @@
 	"place-gender": "Enter gender",
 	"place-mail": "Enter email",
 	"place-role": "Enter role",
-	"place-phoneNumber": "Enter number",
+	"enterPhoneNumber": "Please enter your phone number",
 	"place-address": "Enter address",
 	"place-ssn": "Enter personal number",
 	"place-gpa": "Enter average grade",
@@ -130,5 +134,15 @@
 	"constitutionDay": "Constitution Day",
 	"mayFirst": "International Workers' Day",
 	"classesYear":"Classes in years",
-	"genderTeachers":"Teachers based on gender"
+	"genderTeachers":"Teachers based on gender",
+	"create-parent": "Register parent",
+	"list-parent": "List of parents",
+	"schedule": "Schedule",
+	"subject": "Subject",
+	"list-subject": "List of subjects",
+	"create-subject": "Register subject",
+	"noParentFoundCreateNew": "No parent found. Create new",
+	"notCorrectNumberFormat": "Not correct number format",
+	"createdParent": "Parent created successfully!",
+	"notCreatedParent": "Error creating parent!"
 }
