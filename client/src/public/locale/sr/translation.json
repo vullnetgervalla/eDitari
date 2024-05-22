@@ -1,5 +1,6 @@
 {
-	"admin": "Administratori",
+	"admin": "Administrator",
+  "admins": "Administratori",
 	"list-admin": "Spisak administratora",
 	"create-admin": "Registruj administratora",
 	"teacher": "Profesor/ka",
@@ -28,6 +29,7 @@
 	"copyright": "Sva prava zadržana za eDitari 2024.",
 	"name": "Ime",
 	"firstName": "Ime",
+  "userName": "Korisničko ime",
 	"age": "Godine",
 	"address": "Adresa",
 	"lastName": "Prezime",
@@ -94,6 +96,7 @@
 	"numbersOnly": "Samo brojevi",
 	"upload-profile-pic": "Postavi profilnu sliku",
 	"profile-data": "Podaci profila",
+  "parent-data": "Podaci roditelja",
 	"phoneNumber": "Broj telefona",
 	"role": "Uloga",
 	"edit-data": "Izmeni podatke",
@@ -129,5 +132,11 @@
 	"daysOffCalendar": "Kalendar zvaničnih praznika",
 	"europeDay": "Dan Evrope",
 	"constitutionDay": "Dan ustava",
-	"mayFirst": "Međunarodni praznik rada"
+	"mayFirst": "Međunarodni praznik rada",
+  "create-parent": "Registruj roditelja",
+  "list-parent": "Spisak roditelja",
+  "schedule": "Raspored",
+  "subject": "Predmet",
+  "list-subject": "Spisak predmeta",
+  "create-subject": "Registruj predmet"
 }

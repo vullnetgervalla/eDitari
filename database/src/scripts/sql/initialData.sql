@@ -2,6 +2,11 @@ insert into role (name) values('ADMIN'), ('TEACHER'), ('STUDENT'), ('PARENT');
 
 INSERT INTO capabilities (name, category_name)
 VALUES
+('home', 'default'),
+('schedule', 'default'),
+('subject', 'default'),
+('notification', 'default'),
+('material', 'default'),
 ('list-admin', 'admin'),
 ('create-admin', 'admin'),
 ('list-teacher', 'teacher'),
@@ -13,25 +18,33 @@ VALUES
 ('list-material', 'material'),
 ('add-material', 'material'),
 ('list-role', 'roles'),
-('create-role', 'roles');
+('create-role', 'roles'),
+('list-subject', 'subject'),
+('create-subject', 'subject');
 
 INSERT INTO role_capabilities (role_id, capability_id)
 SELECT role.id, capabilities.id
 FROM role, capabilities
 WHERE role.name = 'ADMIN'
-AND capabilities.name IN ('list-admin', 'create-admin', 'list-teacher', 'create-teacher', 'list-student', 'create-student', 'notifications', 'create-notification', 'list-material', 'add-material', 'list-role', 'create-role');
+AND capabilities.name IN ('home', 'list-admin', 'create-admin', 'list-teacher', 'create-teacher', 'list-student', 'create-student', 'notifications', 'create-notification', 'list-role', 'create-role', 'list-subject', 'create-subject');
 
 INSERT INTO role_capabilities (role_id, capability_id)
 SELECT role.id, capabilities.id
 FROM role, capabilities
 WHERE role.name = 'TEACHER'
-AND capabilities.name IN ('list-student', 'create-student', 'notifications', 'create-notification', 'list-material', 'add-material');
+AND capabilities.name IN ('home', 'schedule', 'list-student', 'create-student', 'notifications', 'create-notification', 'list-material', 'add-material', 'list-subject');
 
 INSERT INTO role_capabilities (role_id, capability_id)
 SELECT role.id, capabilities.id
 FROM role, capabilities
 WHERE role.name = 'STUDENT'
-AND capabilities.name IN ('notifications', 'create-notification', 'list-material', 'add-material');
+AND capabilities.name IN ('home', 'schedule', 'subject', 'notification','material' );
+
+INSERT INTO role_capabilities (role_id, capability_id)
+SELECT role.id, capabilities.id
+FROM role, capabilities
+WHERE role.name = 'PARENT'
+AND capabilities.name IN ('home', 'schedule', 'subject', 'notification', 'material' );
 
 
 INSERT INTO year (year, startdate, enddate, isactive)
@@ -77,11 +90,11 @@ VALUES
 ((SELECT id FROM "User" WHERE username = 'arberhoxha'), '72 Kodra e Trimave, Prishtina, Kosova', '+38349597032');
 
 
-INSERT INTO teacher (id, phonenumber, educationlevel, experienceyears, teachingspecialization, personalnumber)
+INSERT INTO teacher (id, phonenumber, educationlevel, experienceyears, teachingspecialization, personalnumber, gender, birthday)
 VALUES
-((SELECT id FROM "User" WHERE username = 'teacher'), '+38344753456', 'Masters Degree in Mathematics', 10, 'Mathematics', '2012353233'),
-((SELECT id FROM "User" WHERE username = 'florajanushi'), '+38345764657', 'Bachelors Degree in Literature', 5, 'Literature', '2150323123'),
-((SELECT id FROM "User" WHERE username = 'elbanazeqiri'), '+38349746345', 'Bachelors Degree in Science', 7, 'Physics', '2103423576');
+((SELECT id FROM "User" WHERE username = 'teacher'), '+38344753456', 'Masters Degree in Mathematics', 10, 'Mathematics', '2012353233', 'M', '1990-01-15'),
+((SELECT id FROM "User" WHERE username = 'florajanushi'), '+38345764657', 'Bachelors Degree in Literature', 5, 'Literature', '2150323123', 'F', '1985-06-30'),
+((SELECT id FROM "User" WHERE username = 'elbanazeqiri'), '+38349746345', 'Bachelors Degree in Science', 7, 'Physics', '2103423576', 'F', '2000-12-25');
 
 
 INSERT INTO student (id, classid, birthday, gender, parentid, personalnumber)

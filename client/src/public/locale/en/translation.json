@@ -1,5 +1,7 @@
 {
-	"admin": "Administrators",
+
+	"admin": "Administrator",
+  "admins": "Administrators",
 	"list-admin": "List of admins",
 	"create-admin": "Register admin",
 	"teacher": "Teacher",
@@ -28,6 +30,7 @@
 	"submit": "Submit",
 	"name": "Name",
 	"firstName": "First Name",
+  "userName": "Username",
 	"age": "Age",
 	"address": "Address",
 	"lastName": "Last Name",
@@ -93,6 +96,7 @@
 	"numbersOnly": "Numbers only",
 	"upload-profile-pic": "Upload profile picture",
 	"profile-data": "Profile data",
+  "parent-data": "Parent data",
 	"phoneNumber": "Phone number",
 	"role": "Role",
 	"edit-data": "Edit data",
@@ -128,5 +132,11 @@
 	"daysOffCalendar": "Official Holidays Calendar",
 	"europeDay": "Europe Day",
 	"constitutionDay": "Constitution Day",
-	"mayFirst": "International Workers' Day"
+	"mayFirst": "International Workers' Day",
+  "create-parent": "Register parent",
+  "list-parent": "List of parents",
+  "schedule": "Schedule",
+  "subject": "Subject",
+  "list-subject": "List of subjects",
+  "create-subject": "Register subject"
 }
