@@ -112,8 +112,14 @@ function CreateTeacher() {
 					label={t('phoneNumber')}
 					labelAlign='left'
 					name='phonenumber'
+					rules={[
+						{
+							pattern: /^\+\d{11,14}$/,
+							message: t('notCorrectNumberFormat'),
+						},
+					]}
 				>
-					<Input />
+					<Input placeholder='+38344123456' />
 				</Form.Item>
 
 				<Form.Item

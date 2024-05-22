@@ -168,7 +168,7 @@ createUserRouter.post('/teacher', checkRole("create-teacher"), async (req, res) 
 });
 
 
-createUserRouter.post('/parent', checkRole(null, "ADMIN"), async (req, res) => {
+createUserRouter.post('/parent', checkRole("create-student"), async (req, res) => {
     const { firstname, lastname, phonenumber, address } = req.body;
     const {schoolid} = req.user;
 
