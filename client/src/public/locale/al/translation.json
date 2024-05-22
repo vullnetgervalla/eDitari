@@ -1,6 +1,7 @@
 {
     "new-role-name": "Emri i përdoruesit të ri",
-	"admin": "Administratorët",
+	"admin": "Administrator",
+  "admins": "Administratorët",
 	"list-admin": "Lista administratorëve",
 	"create-admin": "Regjistro administratorë",
 	"teacher": "Mësues/e",
@@ -10,7 +11,7 @@
 	"create-student": "Regjistro nxënës",
 	"list-student": "Lista nxënësve",
     "parents": "Prindërit",
-	"parent": "Prindi",
+	"parent": "Prind",
 	"notification": "Njoftimet",
 	"notifications": "Shiko njoftimet",
 	"create-notification": "Krijo njoftim",
@@ -27,7 +28,8 @@
 	"city": "Komuna",
 	"submit": "Dërgo",
 	"name": "Emri",
-    "firstName": "Emri",
+  "firstName": "Emri",
+  "userName": "Emri i përdoruesit",
 	"age": "Mosha",
 	"address": "Adresa",
 	"lastName": "Mbiemri",
@@ -91,6 +93,7 @@
     "numbersOnly": "Vetëm numra",
 	"upload-profile-pic": "Ngarko foton e profilit",
 	"profile-data": "Të dhënat e profilit",
+  "parent-data": "Të dhënat e prindit",
 	"phoneNumber": "Numri i telefonit",
 	"role": "Roli",
 	"edit-data": "Ndrysho të dhënat",
@@ -126,6 +129,12 @@
 	"daysOffCalendar":"Kalendari i Festave Zyrtare",
 	"europeDay":"Dita e Evropës",
 	"constitutionDay":"Dita e Kushtetutës",
-	"mayFirst":"Dita Ndërkombëtare e Punës"
+	"mayFirst":"Dita Ndërkombëtare e Punës",
+  "create-parent": "Regjistro prind",
+  "list-parent": "Lista e prindërve",
+  "schedule": "Orari",
+  "subject": "Lënda",
+  "list-subject": "Lista e lëndëve",
+  "create-subject": "Regjistro lëndë"
 }
     

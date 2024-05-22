@@ -159,37 +159,7 @@ export const TeacherTable = ({ data, side }) => {
 						<UserOutlined style={{ fontSize: '18px' }} />
 					</Link>
 				),
-			},
-			// {
-			// 	title: t('absences'),
-			// 	dataIndex: 'absences',
-			// 	key: 'absences',
-			// 	render: () => (
-			// 		<Link to={'/'} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%', color: 'black' }}>
-			// 			<CloseCircleOutlined style={{ fontSize: '18px' }} />
-			// 		</Link>
-			// 	),
-			// },
-			// {
-			// 	title: t('attestation'),
-			// 	dataIndex: 'attestation',
-			// 	key: 'attestation',
-			// 	render: () => (
-			// 		<Link to={'/'} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%', color: 'black' }}>
-			// 			<PrinterFilled style={{ fontSize: '18px' }} />
-			// 		</Link>
-			// 	),
-			// },
-			// {
-			// 	title: t('grades'),
-			// 	dataIndex: 'grades',
-			// 	key: 'grades',
-			// 	render: () => (
-			// 		<div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
-			// 			<BookOutlined style={{ fontSize: '18px' }} />
-			// 		</div>
-			// 	),
-			// },
+			}
 		] : []),
 	];
 
