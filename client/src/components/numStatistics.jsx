@@ -1,19 +1,17 @@
-import { Flex, Statistic, Card } from 'antd';
+import { Statistic, Card } from 'antd';
 import React from 'react';
 import { UserOutlined } from '@ant-design/icons';
 
-export default function NumStatistics({ style, user, chartType, count }) {
-
+export default function NumStatistics({ style, user, count }) {
     return (
         <div style={style}>
-            <Card style={{border: '1.5px solid #e5e7eb', marginBottom:'40px'}}>
+            <Card style={{...style, border: '2px solid #e5e7eb', cursor:'pointer'}} >
                 <Statistic
-                    title={user}
+                    title={<span style={{color: 'black'}}>{user}</span>}
                     value={count}
                     prefix={<UserOutlined />}
                 />
             </Card>
-            {chartType}
         </div>
     );
 }

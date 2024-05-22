@@ -128,5 +128,7 @@
 	"daysOffCalendar": "Official Holidays Calendar",
 	"europeDay": "Europe Day",
 	"constitutionDay": "Constitution Day",
-	"mayFirst": "International Workers' Day"
+	"mayFirst": "International Workers' Day",
+	"classesYear":"Classes in years",
+	"genderTeachers":"Teachers based on gender"
 }
