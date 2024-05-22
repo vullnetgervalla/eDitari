@@ -102,7 +102,7 @@
 	"place-gender": "Enter gender",
 	"place-mail": "Enter email",
 	"place-role": "Enter role",
-	"place-phoneNumber": "Enter number",
+	"enterPhoneNumber": "Please enter your phone number",
 	"place-address": "Enter address",
 	"place-ssn": "Enter personal number",
 	"place-gpa": "Enter average grade",
@@ -128,5 +128,10 @@
 	"daysOffCalendar": "Official Holidays Calendar",
 	"europeDay": "Europe Day",
 	"constitutionDay": "Constitution Day",
-	"mayFirst": "International Workers' Day"
+	"mayFirst": "International Workers' Day",
+	"noParentFoundCreateNew": "No parent found. Create new",
+	"create-parent": "Create parent",
+	"notCorrectNumberFormat": "Not correct number format",
+	"createdParent": "Parent created successfully!",
+	"notCreatedParent": "Error creating parent!"
 }

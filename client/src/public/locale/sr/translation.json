@@ -103,7 +103,7 @@
 	"place-gender": "Unesite pol",
 	"place-mail": "Unesite email",
 	"place-role": "Unesite ulogu",
-	"place-number": "Unesite broj",
+	"enterPhoneNumber": "Molimo unesite broj telefona",
 	"place-address": "Unesite adresu",
 	"place-ssn": "Unesite lični broj",
 	"place-gpa": "Unesite prosečnu ocenu",
@@ -129,5 +129,10 @@
 	"daysOffCalendar": "Kalendar zvaničnih praznika",
 	"europeDay": "Dan Evrope",
 	"constitutionDay": "Dan ustava",
-	"mayFirst": "Međunarodni praznik rada"
+	"mayFirst": "Međunarodni praznik rada",
+	"noParentFoundCreateNew": "Nema roditelja, kreirajte novog",
+	"create-parent": "Kreiraj roditelja",
+	"notCorrectNumberFormat": "Nije ispravan format broja",
+	"createdParent": "Roditelj uspešno kreiran",
+	"notCreatedParent": "Greška prilikom kreiranja roditelja"
 }
