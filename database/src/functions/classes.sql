@@ -67,5 +67,6 @@ $$
     SELECT class.classlevel as "classLevel", COUNT(*) as "studentPerClassLevel"
     FROM student
     JOIN class ON student.classid = class.id
-    GROUP BY class.classlevel;
+    GROUP BY class.classlevel
+    ORDER BY class.classlevel ASC;
 $$;

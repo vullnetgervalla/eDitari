@@ -1,17 +1,31 @@
-import { Flex, Statistic, Card, List } from 'antd';
+import { Flex, Statistic, Card, List, notification } from 'antd';
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import { useAxiosPrivate } from 'hooks/useAxiosPrivate';
 import NotificationCard from './cardNotification';
 
-export default function SeeNotifications() {
 
-  const date = "2022-01-01";
-  const title = "Notification Title";
-  const description = "Notification Description dasdasdas afdsdasdasd asdasdasdasda sdasdasdasd asdasdasd ad asdasdasd asdas";
+export default function SeeNotifications() {
+  const [notifications, setNotifications] = useState([]);
+  const axiosPrivate = useAxiosPrivate();
+
+  const fetchNotificationsData = async () => {
+    try {
+      const response = await axiosPrivate.get('/notifications/');
+      setNotifications(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  useEffect(() => {
+    fetchNotificationsData(axiosPrivate, setNotifications);
+  },[]);
   return ( 
   
     <Flex gap={'40px'}>
-      <NotificationCard date={date} title={title} description={description} />
+      {notifications?.map((notification, index) => (
+        <NotificationCard key={index} date={notification.createdat} title={notification.title} description={notification.description} />
+      ))}
   </Flex>
   );
 }

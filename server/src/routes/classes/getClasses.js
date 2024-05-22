@@ -17,6 +17,18 @@ getClassRouter.get('/', checkRole('list-class'), (req, res) => {
       });
 });
 
+getClassRouter.get('/getTeacherCountByGender', checkRole(null, 'ADMIN'), (req, res) => {
+  db.query('SELECT * FROM GetTeacherCountByGender()', (err, queryRes) => {
+    if (err) {
+      console.error('Error executing query', err);
+      res.sendStatus(500);
+      return;
+    }
+    console.log(queryRes.rows);
+    res.send(queryRes.rows);
+  })
+})
+
 getClassRouter.get('/numOfStudentsPerClass', checkRole(null, 'ADMIN'), (req, res) => {
     db.query('SELECT * FROM getNumOfStudentsPerClass()', (err, queryRes) => {
       if (err) {

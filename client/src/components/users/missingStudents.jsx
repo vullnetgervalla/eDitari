@@ -20,7 +20,7 @@ export default function MissingStudents() {
     return (
         <div>
             <Card style={{borderRadius:'20px'}}>
-                <h1>{t('missingStudents')}</h1>
+                <h2>{t('missingStudents')}</h2>
                 <hr />
                 <div>
                     
