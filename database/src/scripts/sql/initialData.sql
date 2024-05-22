@@ -20,19 +20,22 @@ VALUES
 ('list-role', 'roles'),
 ('create-role', 'roles'),
 ('list-subject', 'subject'),
-('create-subject', 'subject');
+('create-subject', 'subject'),
+('list-class', 'class'),
+('create-class', 'class'),
+('class', 'default');
 
 INSERT INTO role_capabilities (role_id, capability_id)
 SELECT role.id, capabilities.id
 FROM role, capabilities
 WHERE role.name = 'ADMIN'
-AND capabilities.name IN ('home', 'list-admin', 'create-admin', 'list-teacher', 'create-teacher', 'list-student', 'create-student', 'notifications', 'create-notification', 'list-role', 'create-role', 'list-subject', 'create-subject');
+AND capabilities.name IN ('home', 'list-admin', 'create-admin', 'list-teacher', 'create-teacher', 'list-student', 'create-student', 'notifications', 'create-notification', 'list-role', 'create-role', 'list-subject', 'create-subject', 'list-class', 'create-class');
 
 INSERT INTO role_capabilities (role_id, capability_id)
 SELECT role.id, capabilities.id
 FROM role, capabilities
 WHERE role.name = 'TEACHER'
-AND capabilities.name IN ('home', 'schedule', 'list-student', 'create-student', 'notifications', 'create-notification', 'list-material', 'add-material', 'list-subject');
+AND capabilities.name IN ('home', 'schedule', 'list-student', 'create-student', 'notifications', 'create-notification', 'list-material', 'add-material', 'list-subject', 'class');
 
 INSERT INTO role_capabilities (role_id, capability_id)
 SELECT role.id, capabilities.id

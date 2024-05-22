@@ -141,6 +141,11 @@
 	"noParentFoundCreateNew":"Nuk u gjet prindi. Krijo një të ri.",
 	"notCorrectNumberFormat":"Formati i numrit nuk është i saktë",
 	"createdParent": "Prindi u krijua me sukses!",
-	"notCreatedParent": "Gabim gjatë krijimit të prindit!"
+	"notCreatedParent": "Gabim gjatë krijimit të prindit!",
+	"list-class": "Lista e klasave",
+	"create-class": "Regjistro klasë",
+	"yes": "Po",
+	"no": "Jo",
+	"headTeacher": "Kujdestar/e"
 }
     

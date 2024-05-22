@@ -142,5 +142,10 @@
 	"noParentFoundCreateNew": "Nema roditelja, kreirajte novog",
 	"notCorrectNumberFormat": "Nije ispravan format broja",
 	"createdParent": "Roditelj uspešno kreiran",
-	"notCreatedParent": "Greška prilikom kreiranja roditelja"
+	"notCreatedParent": "Greška prilikom kreiranja roditelja",
+	"list-class": "Spisak odeljenja",
+	"create-class": "Registruj odeljenje",
+	"yes": "Da",
+	"no": "Ne",
+	"headTeacher": "Razredni starešina"
 }
