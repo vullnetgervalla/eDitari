@@ -7,6 +7,8 @@ VALUES
 ('subject', 'default'),
 ('notification', 'default'),
 ('material', 'default'),
+('role', 'default'),
+('class', 'default'),
 ('list-admin', 'admin'),
 ('create-admin', 'admin'),
 ('list-teacher', 'teacher'),
@@ -17,12 +19,10 @@ VALUES
 ('create-notification', 'notification'),
 ('list-material', 'material'),
 ('add-material', 'material'),
-('role', 'default'),
 ('list-subject', 'subject'),
 ('create-subject', 'subject'),
 ('list-class', 'class'),
-('create-class', 'class'),
-('class', 'default');
+('create-class', 'class');
 
 INSERT INTO role_capabilities (role_id, capability_id)
 SELECT role.id, capabilities.id

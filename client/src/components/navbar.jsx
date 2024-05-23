@@ -105,6 +105,7 @@ export default function NavBar({ content }) {
     const groupedCapabilities = capabilities.reduce((groups, item) => {
       if (item?.category_name === 'default') {
         standaloneItems.push(getItem(t(item.capability_name), `${standaloneKey}`, iconMapping[item.capability_name]));
+        keyToPath[standaloneKey] = item.capability_name;
         standaloneKey += 1;
         return groups;
       }
@@ -181,6 +182,7 @@ export default function NavBar({ content }) {
             items={items(t)}
             onClick={({ key }) => {
               const route = keyToPath[`${key}`];
+              console.log('route', route)
               if (route) {
                 setTitle(route);
                 setSelectedKey(key);
