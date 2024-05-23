@@ -183,5 +183,11 @@
   "enddate": "Data e përfundimit",
   "enterEnddate": "Ju lutem shtypni datën e përfundimit",
   "selectDate": "Zgjidhni datën",
-  "required": "E nevojshme"
+  "required": "E nevojshme",
+  "createdSubject": "Lënda u krijua me sukses!",
+  "notCreatedSubject": "Gabim gjatë krijimit të lëndës!",
+  "noSubjectFoundCreateNew": "Nuk u gjet lënda. Krijo një të re.",
+  "selectSubject": "Zgjidhni lëndën",
+  "selectTeacher": "Zgjidhni mësuesin",
+  "enterSubject": "Ju lutem shtypni lëndën"
 }

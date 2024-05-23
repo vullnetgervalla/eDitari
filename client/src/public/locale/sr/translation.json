@@ -184,5 +184,11 @@
   "enddate": "Datum završetka",
   "enterEnddate": "Molimo unesite datum završetka",
   "selectDate": "Izaberite datum",
-  "required": "Obavezno"
+  "required": "Obavezno",
+  "createdSubject": "Predmet uspešno kreiran",
+  "notCreatedSubject": "Greška prilikom kreiranja predmeta",
+  "noSubjectFoundCreateNew": "Nema predmeta, kreirajte novi",
+  "selectSubject": "Izaberite predmet",
+  "selectTeacher": "Izaberite nastavnika",
+  "enterSubject": "Molimo unesite predmet"
 }

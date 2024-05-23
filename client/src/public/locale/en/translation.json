@@ -183,5 +183,11 @@
   "enddate": "End date",
   "enterEnddate": "Please enter end date",
   "selectDate": "Select date",
-  "required": "Required"
+  "required": "Required",
+  "createdSubject": "Subject created successfully!",
+  "notCreatedSubject": "Error creating subject!",
+  "noSubjectFoundCreateNew": "No subject found. Create new",
+  "selectSubject": "Select subject",
+  "selectTeacher": "Select teacher",
+  "enterSubject": "Please enter subject"
 }

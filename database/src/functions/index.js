@@ -6,6 +6,7 @@ const functions = [
     'src/functions/update.sql',
     'src/functions/counts.sql',
     'src/functions/notifications.sql',
+    'src/functions/subjects.sql',
 ]
 
 module.exports = functions;
