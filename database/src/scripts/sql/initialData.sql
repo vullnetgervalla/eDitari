@@ -157,7 +157,7 @@ VALUES
 ((SELECT id FROM "User" WHERE username = 'donatgosalci'),1, '2005-05-15', 'M', null, '2432532218');
 
 
-INSERT INTO teachersubject (teacherid, subjectid, yearid, isactive, classid) 
+INSERT INTO teachersubject (teacherid, subjectid, yearid, isactive) 
 VALUES (
   (SELECT teacher.id FROM teacher JOIN "User" ON teacher.id="User".id WHERE firstname = 'Flora'), 
   (SELECT id FROM subject WHERE name = 'Literature'),
