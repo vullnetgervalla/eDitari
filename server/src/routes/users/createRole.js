@@ -4,7 +4,7 @@ const { checkRole } = require('../../middleware/checkRole');
 
 const createRoleRouter = Router();
 
-createRoleRouter.post('/create-role', checkRole("create-role"), async (req, res) => {
+createRoleRouter.post('/create-role', checkRole(null, "ADMIN"), async (req, res) => {
   const { roleName, capabilities } = req.body;
   try {
     await db.query('SELECT insertRoleAndCapabilities($1, $2)', [roleName, capabilities]);
