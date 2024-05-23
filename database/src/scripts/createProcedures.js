@@ -3,11 +3,11 @@ const { Client } = require('pg');
 const fs = require('fs');
 const functions = require('../functions');
 
-const host = 'localhost';
-const port = '5432';
-const user = 'postgres';
-const databaseName = 'SchoolDB';
-const password = 'admin';
+const host = process.env.DB_HOST;
+const port = process.env.DB_PORT;
+const user = process.env.DB_USER;
+const databaseName = process.env.DB_NAME;
+const password = process.env.DB_PASSWORD;
 const connectionString = `postgres://${user}:${password}@${host}:${port}/${databaseName}`;
 
 async function runScript() {
