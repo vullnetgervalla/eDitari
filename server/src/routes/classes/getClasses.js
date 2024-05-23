@@ -39,4 +39,15 @@ getClassRouter.get('/numOfStudentsPerClass', checkRole(null, 'ADMIN'), (req, res
     })
 })  
 
+getClassRouter.get('/years', checkRole(null, 'ADMIN'), (req, res) => {
+  db.query('SELECT * FROM getYears()', (err, queryRes) => {
+    if (err) {
+      console.error('Error executing query', err);
+      res.sendStatus(500);
+      return;
+    }
+    res.send(queryRes.rows);
+  })
+})
+
 module.exports = { getClassRouter };

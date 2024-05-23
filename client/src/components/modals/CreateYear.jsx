@@ -1,9 +1,11 @@
 import React from "react";
-import { Modal, Form, Input, message } from "antd";
+import { Modal, Form, Input, DatePicker, message, Select } from "antd";
 import { useTranslation } from "react-i18next";
 import { useAxiosPrivate } from "hooks/useAxiosPrivate";
 
-export function CreateParentModal(props) {
+const { Option } = Select;
+
+export function CreateYearModal(props) {
     const { open, setOpen } = props;
     const [form] = Form.useForm();
     const { t } = useTranslation();
@@ -15,13 +17,13 @@ export function CreateParentModal(props) {
                 values[key] = null;
             }
         }
-        console.log(values);
+
         try {
-            const res = await axios.post('/users/parent', values);
-            message.success(t('createdParent'));
+            const res = await axios.post('classes/year', values);
+            message.success(t('createdYear'));
             setOpen(false);
         } catch (e) {
-            message.error(t('notCreatedParent'));
+            message.error(t('notCreatedYear'));
         }
     };
 
@@ -42,10 +44,9 @@ export function CreateParentModal(props) {
             });
     };
 
-
     return (
         <Modal
-            title={<h2>{t('create-parent')}</h2>}
+            title={<h2>{t('createYear')}</h2>}
             open={open}
             onOk={handleOk}
             onCancel={handleCancel}
@@ -54,60 +55,64 @@ export function CreateParentModal(props) {
         >
             <Form form={form} layout="vertical">
                 <Form.Item
-                    label={t('name')}
+                    label={t('year')}
                     labelAlign='left'
-                    name='firstname'
+                    name='year'
                     rules={[
                         {
                             required: true,
-                            message: t('enterName'),
+                            message: t('enterYear'),
                         },
+                        {
+                            pattern: /^\d{4}-\d{4}$/,
+                            message: t('yearPattern'),
+                        }
                     ]}
                 >
-                    <Input />
+                    <Input placeholder="2023-2024" />
                 </Form.Item>
                 <Form.Item
-                    label={t('lastname')}
+                    label={t('startdate')}
                     labelAlign='left'
-                    name='lastname'
+                    name='startdate'
                     rules={[
                         {
                             required: true,
-                            message: t('enterLastName'),
+                            message: t('enterStartdate'),
                         },
                     ]}
                 >
-                    <Input />
+                    <DatePicker placeholder={t('selectDate')} style={{ width: '100%' }} />
                 </Form.Item>
                 <Form.Item
-                    label={t('phoneNumber')}
+                    label={t('enddate')}
                     labelAlign='left'
-                    name='phonenumber'
+                    name='enddate'
                     rules={[
                         {
                             required: true,
-                            message: t('enterPhoneNumber'),
-                        },
-                        {
-                            pattern: /^\+\d{11,14}$/,
-                            message: t('notCorrectNumberFormat'),
+                            message: t('enterEnddate'),
                         },
                     ]}
                 >
-                    <Input placeholder="+38344123456" />
+                    <DatePicker placeholder={t('selectDate')} style={{ width: '100%' }} />
                 </Form.Item>
                 <Form.Item
-                    label={t('address')}
+                    label={t('active')}
                     labelAlign='left'
-                    name='address'
+                    name='isactive'
+                    initialValue={true}
                     rules={[
                         {
-                            required: false,
-                            message: t('enterAddress'),
+                            required: true,
+                            message: t('required'),
                         },
                     ]}
                 >
-                    <Input />
+                    <Select>
+                        <Option value={true}>{t('yes')}</Option>
+                        <Option value={false}>{t('no')}</Option>
+                    </Select>
                 </Form.Item>
             </Form>
         </Modal>

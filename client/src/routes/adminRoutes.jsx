@@ -57,11 +57,7 @@ export const AdminRoutes = [
     element: <CreateStudent />
   },
   {
-    path: 'list-role',
-    element: <ListRoles />
-  },
-  {
-    path: 'create-role',
+    path: 'role',
     element: <CreateRole />
   },
   {

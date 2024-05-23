@@ -99,6 +99,9 @@ console.log('data', data)
 			dataIndex: 'classroom',
 			key: 'classroom',
 			...getColumnSearchProps('classroom'),
+            render: (classroom) => (
+                <span>{classroom ? `Klasa ${classroom}` : '-'}</span>
+            )
 		},
         {
             title: t('headTeacher'),
