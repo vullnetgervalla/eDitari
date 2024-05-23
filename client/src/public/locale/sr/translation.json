@@ -204,8 +204,9 @@
   "day": "Dan",
   "create-period": "Registruj period",
   "scheduleExists": "Raspored postoji",
-  "required": "Obavezno",
   "holiday": "Praznik",
   "createdNotification": "Obaveštenje uspešno kreirano",
-  "notCreatedNotification": "Greška prilikom kreiranja obaveštenja"
+  "notCreatedNotification": "Greška prilikom kreiranja obaveštenja",
+  "number.subjects": "Broj predmeta",
+  "number.missing": "Broj izostanaka"
 }

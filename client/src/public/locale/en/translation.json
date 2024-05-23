@@ -205,5 +205,7 @@
   "scheduleExists": "Period already exists",
   "holiday": "Holiday",
   "createdNotification": "Notification created successfully!",
-  "notCreatedNotification": "Error creating notification!"
+  "notCreatedNotification": "Error creating notification!",
+  "number.subjects": "Number of subjects",
+  "number.missing": "Number of missing students"
 }

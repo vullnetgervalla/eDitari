@@ -1,16 +1,15 @@
 
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Line, Column, Area } from '@ant-design/plots';
+import { Line, Column } from '@ant-design/plots';
 import { useState, useEffect } from 'react';
-import { Card, Button, Input, Flex, Upload, notification, Spin } from 'antd';
+import { Card, Flex, Spin } from 'antd';
 import BestStudents from 'components/users/bestStudents';
 import MyCalendar from 'components/calendar';
 import MissingStudents from 'components/users/missingStudents';
 import { useAxiosPrivate } from 'hooks/useAxiosPrivate';
 import GraphStatistics from 'components/graphStatistics';
 import NumStatistics from 'components/numStatistics';
-import { StudentTable } from 'components/tables/StudentTable';
 
 const fetchNumOfStudentsPerClass = async (axiosPrivate, setStudentsPerClassLevel) => {
   try {

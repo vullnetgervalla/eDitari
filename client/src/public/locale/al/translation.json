@@ -205,5 +205,7 @@
   "scheduleExists": "Ora ekziston",
   "holiday": "Festë",
   "createdNotification": "Njoftimi u krijua me sukses!",
-  "notCreatedNotification": "Gabim gjatë krijimit të njoftimit!"
+  "notCreatedNotification": "Gabim gjatë krijimit të njoftimit!",
+  "number.subjects": "Numri i lëndëve",
+  "number.missing": "Numri i mungesave"
 }
