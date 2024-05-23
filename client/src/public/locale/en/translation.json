@@ -182,5 +182,8 @@
   "enddate": "End date",
   "enterEnddate": "Please enter end date",
   "selectDate": "Select date",
-  "required": "Required"
+  "required": "Required",
+  "holiday": "Holiday",
+  "createdNotification": "Notification created successfully!",
+  "notCreatedNotification": "Error creating notification!"
 }

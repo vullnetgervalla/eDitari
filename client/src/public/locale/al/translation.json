@@ -182,5 +182,8 @@
   "enddate": "Data e përfundimit",
   "enterEnddate": "Ju lutem shtypni datën e përfundimit",
   "selectDate": "Zgjidhni datën",
-  "required": "E nevojshme"
+  "required": "E nevojshme",
+  "holiday": "Festë",
+  "createdNotification": "Njoftimi u krijua me sukses!",
+  "notCreatedNotification": "Gabim gjatë krijimit të njoftimit!"
 }

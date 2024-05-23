@@ -183,5 +183,8 @@
   "enddate": "Datum završetka",
   "enterEnddate": "Molimo unesite datum završetka",
   "selectDate": "Izaberite datum",
-  "required": "Obavezno"
+  "required": "Obavezno",
+  "holiday": "Praznik",
+  "createdNotification": "Obaveštenje uspešno kreirano",
+  "notCreatedNotification": "Greška prilikom kreiranja obaveštenja"
 }
