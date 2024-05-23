@@ -103,11 +103,18 @@ const ShowData = ({ userType, data }) => {
   });
   const columns = (t) => [
     {
-      title: t('name'),
+      title: t('firstname'),
       dataIndex: 'name',
       key: 'name',
       width: '15%',
       ...getColumnSearchProps('name'),
+    },
+    {
+      title: t('lastname'),
+      dataIndex: 'lastname',
+      key: 'lastname',
+      width: '15%',
+      ...getColumnSearchProps('lastname'),
     },
     {
       title: t('email'),
@@ -115,13 +122,6 @@ const ShowData = ({ userType, data }) => {
       key: 'email',
       width: '15%',
       ...getColumnSearchProps('email'),
-    },
-    {
-      title: t('name'),
-      dataIndex: 'lastname',
-      key: 'lastname',
-      width: '15%',
-      ...getColumnSearchProps('name'),
     },
     {
       title: t('account'),
