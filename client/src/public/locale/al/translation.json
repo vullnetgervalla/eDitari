@@ -77,6 +77,7 @@
   "inputFile": "Ju lutemi ngarkoni skedarin",
   "upload": "Ngarko",
   "uploadFile": "Klikoni ose tërhiqni skedarin në këtë zonë për ta ngarkuar",
+  "uploadMessage":"Mbështetje për një ngarkim të vetëm ose me shumicë. Ndalohet rreptësisht ngarkimi i të dhënave të kompanisë ose skedarëve të tjerë të ndaluar.",
   "file": "Skedar",
   "message": "Mesazhi",
   "title": "Titulli",
