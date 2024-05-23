@@ -189,5 +189,6 @@
   "noSubjectFoundCreateNew": "No subject found. Create new",
   "selectSubject": "Select subject",
   "selectTeacher": "Select teacher",
-  "enterSubject": "Please enter subject"
+  "enterSubject": "Please enter subject",
+  "numbersOnly12range": "Numbers from 1-12 only"
 }

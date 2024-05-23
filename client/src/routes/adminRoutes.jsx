@@ -15,6 +15,7 @@ import CreateMaterials from 'components/createMaterials';
 import ListClasses from 'components/class/ListClasses';
 import CreateClass from 'components/class/CreateClass';
 import CreateSubject from 'components/subject/CreateSubjectForm';
+import ListSubjects from 'components/subject/ListSubjects';
 
 export const AdminRoutes = [
   {
@@ -83,5 +84,9 @@ export const AdminRoutes = [
   {
     path: 'create-subject',
     element: <CreateSubject />
+  },
+  {
+    path: 'list-subject',
+    element: <ListSubjects />
   }
 ];

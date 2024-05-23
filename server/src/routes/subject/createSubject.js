@@ -18,8 +18,8 @@ createSubjectRouter.post('/', checkRole('create-subject'), (req, res) => {
 });
 
 createSubjectRouter.post('/teacherSubject', checkRole('create-subject'), (req, res) => {
-    const {teacherid, subjectid, yearid, isactive, classid} = req.body;
-    db.query('SELECT createTeacherSubject($1, $2, $3, $4, $5)', [teacherid, subjectid, yearid, isactive, classid], (err, queryRes) => {
+    const {teacherid, subjectid, yearid, isactive} = req.body;
+    db.query('SELECT createTeacherSubject($1, $2, $3, $4)', [teacherid, subjectid, yearid, isactive], (err, queryRes) => {
         if (err) {
           console.error('Error executing query', err);
           res.sendStatus(500);

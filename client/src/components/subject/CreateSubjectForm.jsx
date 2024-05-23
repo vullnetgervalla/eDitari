@@ -168,42 +168,6 @@ function CreateSubjectForm() {
                     </Select>
                 </Form.Item>
                 <Form.Item
-                    label={t('class')}
-                    labelAlign='left'
-                    name='classid'
-                    rules={[
-                        {
-                            required: true,
-                            message: t('selectClass'),
-                        },
-                    ]}
-                >
-                    <Select
-                        showSearch
-                        optionFilterProp='children'
-                        allowClear
-                        notFoundContent={
-                            <div onClick={() => { navigate('/create-class') }}
-                                style={{ cursor: 'pointer', color: '#1677FF', height: '3rem', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.1rem' }}
-                            >
-                                {t('noClassFoundCreateNew')}
-                            </div>
-                        }
-
-                    >
-                        {classes.map((item) => {
-                            return (
-                                <Select.Option
-                                    key={item.id}
-                                    value={item.id}
-                                >
-                                    {item.classname}
-                                </Select.Option>
-                            );
-                        })}
-                    </Select>
-                </Form.Item>
-                <Form.Item
                     label={t('year')}
                     labelAlign='left'
                     name='yearid'

@@ -189,5 +189,6 @@
   "noSubjectFoundCreateNew": "Nuk u gjet lënda. Krijo një të re.",
   "selectSubject": "Zgjidhni lëndën",
   "selectTeacher": "Zgjidhni mësuesin",
-  "enterSubject": "Ju lutem shtypni lëndën"
+  "enterSubject": "Ju lutem shtypni lëndën",
+  "numbersOnly12range": "Vetëm numra prej 1-12"
 }

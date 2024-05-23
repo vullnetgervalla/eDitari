@@ -110,8 +110,8 @@ function CreateClass() {
                             message: t('enterClasslevel'),
                         },
                         {
-                            pattern: /^[0-9]+$/,
-                            message: t('numbersOnly'),
+                            pattern: /^(1[0-2]|[1-9])$/,
+                            message: t('numbersOnly12range'),
                         },
                     ]}
                 >
