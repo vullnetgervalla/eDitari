@@ -61,6 +61,16 @@ export default function NavBar({ content }) {
   const [title, setTitle] = useState(sessionStorage.getItem('title') || 'home');
   const [selectedKey, setSelectedKey] = useState(sessionStorage.getItem('selectedKey') || '0');
   const [openKeys, setOpenKeys] = useState([]);
+  
+  useEffect(() => {
+    const path = location.pathname.endsWith('/') ? location.pathname.slice(0, -1) : location.pathname;
+    const key = Object.keys(keyToPath).find(key => `/${keyToPath[key]}` === path);
+    if (key) {
+      setSelectedKey(key);
+      setTitle(keyToPath[key]);
+    }
+  }, [location.pathname]);
+
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
@@ -164,7 +174,7 @@ export default function NavBar({ content }) {
           }}>
           <Menu
             theme='dark'
-            defaultSelectedKeys={[selectedKey]}
+            selectedKeys={[selectedKey]}
             mode='inline'
             openKeys={openKeys}
             onOpenChange={onOpenChange}

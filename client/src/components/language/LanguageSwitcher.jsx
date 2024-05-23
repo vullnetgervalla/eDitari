@@ -24,6 +24,7 @@ const LanguageSwitcher = () => {
         <Select
             value={currentLanguage}
             onChange={changeLanguage}
+            style={{ zIndex: 3000}}
         >
             {languages.map((lang) => (
                 <Option key={lang.code} value={lang.code}>
