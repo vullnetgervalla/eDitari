@@ -7,7 +7,7 @@ VALUES
 ('subject', 'default'),
 ('notification', 'default'),
 ('material', 'default'),
-('subject', 'default')
+('subject', 'default'),
 ('role', 'default'),
 ('class', 'default'),
 ('list-admin', 'admin'),
