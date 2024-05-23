@@ -18,6 +18,7 @@ import ListSubjects from 'components/subject/ListSubjects';
 import CreateSchedule from 'components/schedule/CreateSchedule';
 import SeeMaterials from 'components/materials/seeMaterials';
 import ListSchedules from 'pages/users/listSchedule';
+import SubjectPage from 'pages/subject';
 
 export const AdminRoutes = [
   {
@@ -64,11 +65,7 @@ export const AdminRoutes = [
     element: <CreateRole />
   },
   {
-    path: 'create-notification',
-    element: <CreateNotification />
-  },
-  {
-    path: 'notifications',
+    path: 'notification',
     element: <SeeNotifications />
   },
   {
@@ -98,5 +95,9 @@ export const AdminRoutes = [
   {
     path: 'create-schedule',
     element: <CreateSchedule />
+  },
+  {
+    path: 'subject',
+    element: <SubjectPage />
   }
 ];
