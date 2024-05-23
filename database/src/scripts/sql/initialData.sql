@@ -108,8 +108,22 @@ VALUES
 ('albionkryeziu', '$2a$10$PP5o8/1esrQC2OAihgsL2Orvkpx4GFIRdV2WfQ7WHM/YONCbKS0ke', 'albionkryeziu@teacher.main.com', (SELECT id FROM role WHERE name = 'TEACHER'), 'Albion', 'Kryeziu', 1),
 ('samirbllacaku', '$2a$10$PP5o8/1esrQC2OAihgsL2Orvkpx4GFIRdV2WfQ7WHM/YONCbKS0ke', 'samirbllacaku@teacher.main.com', (SELECT id FROM role WHERE name = 'TEACHER'), 'Samir', 'Bllacaku', 1),
 ('gentinklaiqi', '$2a$10$PP5o8/1esrQC2OAihgsL2Orvkpx4GFIRdV2WfQ7WHM/YONCbKS0ke', 'gentinklaiqi@student.main.com', (SELECT id FROM role WHERE name = 'STUDENT'), 'Gentin', 'Klaiqi', 1),
-('donatgosalci', '$2a$10$PP5o8/1esrQC2OAihgsL2Orvkpx4GFIRdV2WfQ7WHM/YONCbKS0ke', 'donatgosalci@student.main.com', (SELECT id FROM role WHERE name = 'STUDENT'), 'Donat', 'Gosalci', 1);
-
+('donatgosalci', '$2a$10$PP5o8/1esrQC2OAihgsL2Orvkpx4GFIRdV2WfQ7WHM/YONCbKS0ke', 'donatgosalci@student.main.com', (SELECT id FROM role WHERE name = 'STUDENT'), 'Donat', 'Gosalci', 1),
+('syarddauti','$2a$10$PP5o8/1esrQC2OAihgsL2Orvkpx4GFIRdV2WfQ7WHM/YONCbKS0ke','syarddauti@student.main.com',(SELECT id FROM role WHERE name = 'STUDENT'),'Syard','Dauti',1),
+('blendirexhepi','$2a$10$PP5o8/1esrQC2OAihgsL2Orvkpx4GFIRdV2WfQ7WHM/YONCbKS0ke','blendirexhepi@student.main.com',(SELECT id FROM role WHERE name ='STUDENT'),'Blend','Rexhepi',1),
+('drenushakolgeci','$2a$10$PP5o8/1esrQC2OAihgsL2Orvkpx4GFIRdV2WfQ7WHM/YONCbKS0ke','drenushakolgeci@student.main.com',(SELECT id FROM role WHERE name ='STUDENT'),'Drenusha','Kolgeci',1),
+('elviragashi','$2a$10$PP5o8/1esrQC2OAihgsL2Orvkpx4GFIRdV2WfQ7WHM/YONCbKS0ke','elviragashi@student.main.com',(SELECT id FROM role WHERE name ='STUDENT'),'Elvira','Gashi',1),
+('erzakrasniqi','$2a$10$PP5o8/1esrQC2OAihgsL2Orvkpx4GFIRdV2WfQ7WHM/YONCbKS0ke','erzakrasniqi@student.main.com',(SELECT id FROM role WHERE name = 'STUDENT'),'Erza','Krasniqi',1),
+('johndoe','$2a$10$PP5o8/1esrQC2OAihgsL2Orvkpx4GFIRdV2WfQ7WHM/YONCbKS0ke','johndoe@student.main.com',(SELECT id FROM role WHERE name ='STUDENT'),'John','Doe',1),
+('janedoe','$2a$10$PP5o8/1esrQC2OAihgsL2Orvkpx4GFIRdV2WfQ7WHM/YONCbKS0ke','janedoe@student.main.com',(SELECT id FROM role WHERE name ='STUDENT'),'Jane','Doe',1),
+('robertsmith','$2a$10$PP5o8/1esrQC2OAihgsL2Orvkpx4GFIRdV2WfQ7WHM/YONCbKS0ke','robertsmith@student.main.com',(SELECT id FROM role WHERE name ='STUDENT'),'Robert','Smith',1),
+('emilyjohnson','$2a$10$PP5o8/1esrQC2OAihgsL2Orvkpx4GFIRdV2WfQ7WHM/YONCbKS0ke','emilyjohnson@student.main.com',(SELECT id FROM role WHERE name ='STUDENT'),'Emily','Johnson',1),
+('michaelbrown','$2a$10$PP5o8/1esrQC2OAihgsL2Orvkpx4GFIRdV2WfQ7WHM/YONCbKS0ke','michaelbrown@student.main.com',(SELECT id FROM role WHERE name ='STUDENT'),'Michael','Brown',1),
+('sarahmiller','$2a$10$PP5o8/1esrQC2OAihgsL2Orvkpx4GFIRdV2WfQ7WHM/YONCbKS0ke','sarahmiller@student.main.com',(SELECT id FROM role WHERE name ='STUDENT'),'Sarah','Miller',1),
+('williamdavis','$2a$10$PP5o8/1esrQC2OAihgsL2Orvkpx4GFIRdV2WfQ7WHM/YONCbKS0ke','williamdavis@student.main.com',(SELECT id FROM role WHERE name ='STUDENT'),'William','Davis',1),
+('jessicataylor','$2a$10$PP5o8/1esrQC2OAihgsL2Orvkpx4GFIRdV2WfQ7WHM/YONCbKS0ke','jessicataylor@student.main.com',(SELECT id FROM role WHERE name ='STUDENT'),'Jessica','Taylor',1),
+('davidanderson','$2a$10$PP5o8/1esrQC2OAihgsL2Orvkpx4GFIRdV2WfQ7WHM/YONCbKS0ke','davidanderson@student.main.com',(SELECT id FROM role WHERE name ='STUDENT'),'David','Anderson',1),
+('lindathomas','$2a$10$PP5o8/1esrQC2OAihgsL2Orvkpx4GFIRdV2WfQ7WHM/YONCbKS0ke','lindathomas@student.main.com',(SELECT id FROM role WHERE name ='STUDENT'),'Linda','Thomas',1)
 
 Insert into subject (name, schoolid)
 Values ('Mathematics', 1),
@@ -147,15 +161,29 @@ VALUES
 INSERT INTO student (id, classid, birthday, gender, parentid, personalnumber)
 VALUES
 ((SELECT id FROM "User" WHERE username = 'student'), 1, '2006-05-15', 'M', (SELECT id FROM parent WHERE id = (SELECT id FROM "User" WHERE username = 'parent')), '2432532212'),
-((SELECT id FROM "User" WHERE username = 'teutakrasniqi'), 1, '2007-08-25', 'F', (SELECT id FROM parent WHERE id = (SELECT id FROM "User" WHERE username = 'besimqerreti')), '2312532321'),
+((SELECT id FROM "User" WHERE username = 'teutakrasniqi'), , '2007-08-25', 'F', (SELECT id FROM parent WHERE id = (SELECT id FROM "User" WHERE username = 'besimqerreti')), '2312532321'),
 ((SELECT id FROM "User" WHERE username = 'ervinkola'), 1, '2006-03-10', 'M', (SELECT id FROM parent WHERE id = (SELECT id FROM "User" WHERE username = 'arberhoxha')), '2353123212'),
 ((SELECT id FROM "User" WHERE username = 'astritzeneli'), 1, '2006-11-30', 'M', null, '2647438975'),
 ((SELECT id FROM "User" WHERE username = 'edonalban'), 1, '2007-01-20', 'F', (SELECT id FROM parent WHERE id = (SELECT id FROM "User" WHERE username = 'parent')), '2123435423'),
 ((SELECT id FROM "User" WHERE username = 'valonashala'), 1, '2006-09-10', 'M', (SELECT id FROM parent WHERE id = (SELECT id FROM "User" WHERE username = 'besimqerreti')), '2432546437'),
 ((SELECT id FROM "User" WHERE username = 'atlantklaiqi'),1, '2003-10-18', 'M', null, '2432532202'),
 ((SELECT id FROM "User" WHERE username = 'gentinklaiqi'),1, '2004-05-15', 'M', null, '2432532219'),
-((SELECT id FROM "User" WHERE username = 'donatgosalci'),1, '2005-05-15', 'M', null, '2432532218');
-
+((SELECT id FROM "User" WHERE username = 'donatgosalci'),1, '2005-05-15', 'M', null, '2432532218'),
+((SELECT id FROM "User" WHERE username = 'syarddauti'),2, '2005-05-15', 'M', null, '2432532211'),
+((SELECT id FROM "User" WHERE username = 'blendirexhepi'),1, '2005-05-15', 'M', null, '1111132212'),
+((SELECT id FROM "User" WHERE username = 'drenushakolgeci'),2, '2005-05-15', 'M', null, '2432532213'),
+((SELECT id FROM "User" WHERE username = 'elviragashi'),1, '2005-05-15', 'M', null, '2432532214'),
+((SELECT id FROM "User" WHERE username = 'erzakrasniqi'),2, '2005-05-15', 'M', null, '2432532215'),
+((SELECT id FROM "User" WHERE username = 'johndoe'),3, '2005-05-15', 'M', null, '2432532216'),
+((SELECT id FROM "User" WHERE username = 'janedoe'),3, '2005-05-15', 'M', null, '2432532217'),
+((SELECT id FROM "User" WHERE username = 'robertsmith'),3, '2005-05-15', 'M', null, '2432532219'),
+((SELECT id FROM "User" WHERE username = 'emilyjohnson'),3, '2005-05-15', 'M', null, '2432532220'),
+((SELECT id FROM "User" WHERE username = 'michaelbrown'),3, '2005-05-15', 'M', null, '2432532221'),
+((SELECT id FROM "User" WHERE username = 'sarahmiller'),4, '2005-05-15', 'M', null, '2432532222'),
+((SELECT id FROM "User" WHERE username = 'williamdavis'),4, '2005-05-15', 'M', null, '2432532223'),
+((SELECT id FROM "User" WHERE username = 'jessicataylor'),4, '2005-05-15', 'M', null, '2432532224'),
+((SELECT id FROM "User" WHERE username = 'davidanderson'),4, '2005-05-15', 'M', null, '2432532225'),
+((SELECT id FROM "User" WHERE username = 'lindathomas'),4, '2005-05-15', 'M', null, '2432532226');
 
 INSERT INTO teachersubject (teacherid, subjectid, yearid, isactive) 
 VALUES (
@@ -319,3 +347,20 @@ join teacher on teachersubject.teacherid = teacher.id
 join "User" on teacher.id = "User".id
 join subject on subject.id = teachersubject.subjectid
 where firstname = 'Main' and subject.name = 'Chemistry' ),'2024-02-6','5');
+
+
+INSERT INTO lecture (description, period, date, classid, teachersubjectid)
+VALUES 
+('Numrat komplekse', 1, '2022-01-05', 1, 6),
+('Drita dhe rendesia e saj',6, '2022-01-09',1,3);
+('Letersia e vjeter shqipe', 2, '2024-01-05',1,1);
+
+INSERT into attendance (id,studentid, date, period, lecture, status)
+VALUES 
+(1, 15, '2024-01-05', 1, 1, 'Justified'),
+(2, 11,'2024-01-09',6,2,'Unjustified'),
+(3,12,'2024-01-05',2,3,'Justified'),
+(4,15,'2024-01-05',2,3,'Unjustified'),
+(5,18,'2024-01-05',2,3,'Justified'),
+(6,19,'2024-01-05',2,3,'Unjustified'),
+(7,7, '2024-01-09',6,1,'Justified');

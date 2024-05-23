@@ -190,5 +190,6 @@
   "selectSubject": "Select subject",
   "selectTeacher": "Select teacher",
   "enterSubject": "Please enter subject",
-  "numbersOnly12range": "Numbers from 1-12 only"
+  "numbersOnly12range": "Numbers from 1-12 only",
+  "attendance_count":"Attendances number"
 }
