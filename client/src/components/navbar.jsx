@@ -80,6 +80,7 @@ export default function NavBar({ content }) {
     background: colorBgContainer,
     borderRadius: borderRadiusLG,
     position: 'relative',
+    backgroundColor: '#f4f6fa'
   };
   const getPermissions = () => {
     if (location.pathname == '/') return true;
@@ -182,7 +183,6 @@ export default function NavBar({ content }) {
             items={items(t)}
             onClick={({ key }) => {
               const route = keyToPath[`${key}`];
-              console.log('route', route)
               if (route) {
                 setTitle(route);
                 setSelectedKey(key);
