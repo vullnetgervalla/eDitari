@@ -1,9 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next'
 import { SearchOutlined } from '@ant-design/icons';
-import { Card, Table, Input, Space, Button } from 'antd';
+import { Card, Table, Input, Space, Button, Pagination} from 'antd';
 import { useAxiosPrivate } from 'hooks/useAxiosPrivate';
 import { axiosPrivate } from 'api/axios';
+import { TrophyOutlined } from '@ant-design/icons';
+
 
 
 const fetchTopStudents = async (axiosPrivate, setDataSource) => {
@@ -106,6 +108,14 @@ export default function BestStudents() {
             dataIndex: 'average_grade',
             key: 'average_grade',
             ...getColumnSearchProps('average_grade'),
+            render: (text, record, index) => {
+                return index < 3 ?
+                    <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                        <span>{text}</span>
+                        <TrophyOutlined />
+                    </div>
+                    : text;
+            }
         }
     ]
 
@@ -114,7 +124,10 @@ export default function BestStudents() {
             <Card style={{ borderRadius: '20px' }}>
                 <h2>{t('bestStudents')}</h2>
                 <hr />
-                <Table dataSource={dataSource} columns={columns} />
+                <div style={{ minHeight: '400px', overflow: 'auto' }}>
+                    <Table dataSource={dataSource} columns={columns} rowKey="id" pagination={{ pageSize: 5 }} />
+                    {/* <Pagination pageSize={5} total={dataSource.length} /> */}
+                </div>
             </Card>
         </div>
     )
