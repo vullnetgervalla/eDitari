@@ -86,10 +86,6 @@ VALUES
 (null, '9-1', 17, 9, 1, 1),
 (null, '9-2', 18, 9, 1, 1);
 
-
-
-
-
 INSERT INTO "User" (username, password, email, roleid, firstname, lastname, schoolid)
 VALUES
 ('admin', '$2a$10$PP5o8/1esrQC2OAihgsL2Orvkpx4GFIRdV2WfQ7WHM/YONCbKS0ke', 'admin@main.com', (SELECT id FROM role WHERE name = 'ADMIN'), 'Main', 'Admin', 1),

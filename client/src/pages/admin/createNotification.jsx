@@ -11,7 +11,6 @@ function CreateNotification(props) {
     const { t } = useTranslation();
     const axiosPrivate = useAxiosPrivate();
     const [form] = Form.useForm();
-    const [createdNotifications, setCreatedNotifications] = useState()
     const [holiday, setHoliday] = useState(false);
     const handleSubmit = async (values) => {
         for (const key in values) {
@@ -26,7 +25,6 @@ function CreateNotification(props) {
         try {
             const res = await axiosPrivate.post('/notifications/create', data);
             setNewNotification(true)
-            setCreatedNotifications(prev => [res?.data?.[0], ...prev]);
             message.success(t('createdNotification'));
             setOpen(false);
         } catch (e) {
@@ -98,7 +96,6 @@ function CreateNotification(props) {
                                 style={{ height: '3em', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
                                 checked={holiday}
                                 onChange={(e) => {
-                                    console.log(e.target.checked)
                                     setHoliday(e.target.checked)
                                 }}
                             >
@@ -107,12 +104,6 @@ function CreateNotification(props) {
                         </Form.Item>
                     </Form>
                 </div>
-                {/* {!!createdNotifications.length && (
-                    <div style={{ maxWidth: '50%' }}>
-                        <h1 style={{ textAlign: 'center' }}>{t('createdNotifications')}</h1>
-                        <NotificationTable data={createdNotifications} side={true} />
-                    </div>
-                )} */}
             </div>
         </Modal>
     );

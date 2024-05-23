@@ -15,7 +15,10 @@ $$
     SELECT 
     notification.id,
     userid,
-    title, 
+    CASE 
+        WHEN position('holiday:' in title) > 0 THEN REPLACE(title, 'holiday:', '')
+        ELSE title
+    END AS title, 
     reach, 
     description,
     createdat, 
