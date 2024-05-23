@@ -152,5 +152,12 @@
     "ADMIN": "Administrator",
     "STUDENT": "Učenik/ca",
     "TEACHER": "Profesor/ka",
-    "PARENT": "Roditelj"
+    "PARENT": "Roditelj",
+    "classesYear":"Časovi u godinama",
+	"genderTeachers":"Nastavnici po polu",
+    "list-class": "Spisak odeljenja",
+	"create-class": "Registruj odeljenje",
+	"yes": "Da",
+	"no": "Ne",
+	"headTeacher": "Razredni starešina"
 }

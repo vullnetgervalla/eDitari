@@ -151,5 +151,13 @@
     "ADMIN": "Administrator",
     "STUDENT": "Nxënës/e",
     "TEACHER": "Mësues/e",
-    "PARENT": "Prind"
+    "PARENT": "Prind",
+    "classesYear":"Klasat në vite",
+	"genderTeachers":"Mësuesit sipas gjinisë"
+    ,
+	"list-class": "Lista e klasave",
+	"create-class": "Regjistro klasë",
+	"yes": "Po",
+	"no": "Jo",
+	"headTeacher": "Kujdestar/e"
 }

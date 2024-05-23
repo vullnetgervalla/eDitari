@@ -151,5 +151,12 @@
     "ADMIN": "Administrator",
     "STUDENT": "Student",
     "TEACHER": "Teacher",
-    "PARENT": "Parent"
+    "PARENT": "Parent",
+	"list-class": "List of classes",
+	"create-class": "Register class",
+	"yes": "Yes",
+	"no": "No",
+	"headTeacher": "Head teacher",
+    "classesYear":"Classes in years",
+    "genderTeachers":"Teachers based on gender"
 }

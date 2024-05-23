@@ -4,7 +4,7 @@ const { checkRole } = require('../../middleware/checkRole');
  
 const getClassRouter = Router();
 
-getClassRouter.get('/', checkRole(null, 'ADMIN'), (req, res) => {
+getClassRouter.get('/', checkRole('list-class'), (req, res) => {
     const {user, schoolid, userType} = req.user;
     db.query('SELECT * from getAllSchoolClasses($1)', [schoolid], (err, queryRes) => {
         if (err) {

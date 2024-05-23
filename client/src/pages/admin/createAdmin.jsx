@@ -6,22 +6,22 @@ import { useTranslation } from 'react-i18next';
 import { useAxiosPrivate } from 'hooks/useAxiosPrivate';
 
 const formItemLayout = {
-  labelCol: {
-    xs: {
-      span: 24,
+    labelCol: {
+        xs: {
+            span: 24,
+        },
+        sm: {
+            span: 24,
+        },
     },
-    sm: {
-      span: 24,
+    wrapperCol: {
+        xs: {
+            span: 24,
+        },
+        sm: {
+            span: 24,
+        },
     },
-  },
-  wrapperCol: {
-    xs: {
-      span: 24,
-    },
-    sm: {
-      span: 24,
-    },
-  },
 };
 
 function CreateAdmin() {
@@ -64,68 +64,68 @@ function CreateAdmin() {
           <Input />
         </Form.Item>
 
-        <Form.Item
-          label={t('lastname')}
-          labelAlign='left'
-          name='lastname'
-          rules={[
-            {
-              required: true,
-              message: t('enterLastName'),
-            },
-          ]}
-        >
-          <Input />
-        </Form.Item>
+                <Form.Item
+                    label={t('lastname')}
+                    labelAlign='left'
+                    name='lastname'
+                    rules={[
+                        {
+                            required: true,
+                            message: t('enterLastName'),
+                        },
+                    ]}
+                >
+                    <Input />
+                </Form.Item>
 
-        <Form.Item
-          label={t('email')}
-          labelAlign='left'
-          name='email'
-          rules={[
-            {
-              required: true,
-              message: t('enterMail'),
-            },
-            {
-              type: 'email',
-              message: t('invalidEmail'),
-            },
-          ]}
-        >
-          <Input />
-        </Form.Item>
+                <Form.Item
+                    label={t('email')}
+                    labelAlign='left'
+                    name='email'
+                    rules={[
+                        {
+                            required: true,
+                            message: t('enterMail'),
+                        },
+                        {
+                            type: 'email',
+                            message: t('invalidEmail'),
+                        },
+                    ]}
+                >
+                    <Input />
+                </Form.Item>
 
-        <Form.Item
-          label={t('password')}
-          labelAlign='left'
-          name='password'
-          rules={[
-            {
-              required: true,
-              message: t('enterPass'),
-            },
-          ]}
-        >
-          <Password />
-        </Form.Item>
+                <Form.Item
+                    label={t('password')}
+                    labelAlign='left'
+                    name='password'
+                    rules={[
+                        {
+                            required: true,
+                            message: t('enterPass'),
+                        },
+                    ]}
+                >
+                    <Password />
+                </Form.Item>
 
-        <Form.Item
-          wrapperCol={{
-            offset: 0,
-            span: 24,
-          }}
-        >
-          <Button
-            type='primary'
-            htmlType='submit'
-            style={{ marginTop: '1.5em', height: '3em' }}
-          >
-            {t('create-admin')}
-          </Button>
-        </Form.Item>
-      </Form>
-    </div>
-  );
+                <Form.Item
+                    wrapperCol={{
+                        offset: 0,
+                        span: 24,
+                    }}
+                >
+                    <Button
+                        type='primary'
+                        htmlType='submit'
+                        style={{ marginTop: '1.5em', height: '3em' }}
+                    >
+                        {t('create-admin')}
+                    </Button>
+                </Form.Item>
+            </Form>
+        </div>
+    );
 }
 export default CreateAdmin;
