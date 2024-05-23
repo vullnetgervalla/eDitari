@@ -44,7 +44,7 @@ const iconMapping = {
   student: <UserOutlined />,
   notification: <NotificationOutlined />,
   material: <FileOutlined />,
-  roles: <PlusCircleOutlined />,
+  role: <PlusCircleOutlined />,
   parent: <UserOutlined />,
   schedule: <CalendarOutlined />,
   subject: <BookOutlined />,
@@ -61,6 +61,16 @@ export default function NavBar({ content }) {
   const [title, setTitle] = useState(sessionStorage.getItem('title') || 'home');
   const [selectedKey, setSelectedKey] = useState(sessionStorage.getItem('selectedKey') || '0');
   const [openKeys, setOpenKeys] = useState([]);
+  
+  useEffect(() => {
+    const path = location.pathname.endsWith('/') ? location.pathname.slice(0, -1) : location.pathname;
+    const key = Object.keys(keyToPath).find(key => `/${keyToPath[key]}` === path);
+    if (key) {
+      setSelectedKey(key);
+      setTitle(keyToPath[key]);
+    }
+  }, [location.pathname]);
+
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
@@ -95,6 +105,7 @@ export default function NavBar({ content }) {
     const groupedCapabilities = capabilities.reduce((groups, item) => {
       if (item?.category_name === 'default') {
         standaloneItems.push(getItem(t(item.capability_name), `${standaloneKey}`, iconMapping[item.capability_name]));
+        keyToPath[standaloneKey] = item.capability_name;
         standaloneKey += 1;
         return groups;
       }
@@ -164,13 +175,14 @@ export default function NavBar({ content }) {
           }}>
           <Menu
             theme='dark'
-            defaultSelectedKeys={[selectedKey]}
+            selectedKeys={[selectedKey]}
             mode='inline'
             openKeys={openKeys}
             onOpenChange={onOpenChange}
             items={items(t)}
             onClick={({ key }) => {
               const route = keyToPath[`${key}`];
+              console.log('route', route)
               if (route) {
                 setTitle(route);
                 setSelectedKey(key);

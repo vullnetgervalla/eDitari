@@ -18,7 +18,7 @@ getUserRouter.get('/', checkRole(null, "ADMIN"), (req, res) => {
       });
 });
 
-getUserRouter.get('/roles', checkRole("list-role"), (req, res) => {
+getUserRouter.get('/roles', checkRole("role"), (req, res) => {
     const { schoolid } = req.user;
     const { role } = req.query; 
     db.query('SELECT * from getAllUsersByRole($1, $2)', [schoolid, role], (err, queryRes) => {

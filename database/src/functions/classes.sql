@@ -70,3 +70,45 @@ $$
     GROUP BY class.classlevel
     ORDER BY class.classlevel ASC;
 $$;
+
+DROP FUNCTION IF EXISTS getYears();
+CREATE OR REPLACE FUNCTION getYears()
+RETURNS SETOF year LANGUAGE sql
+AS
+$$
+    SELECT * FROM year;
+$$;
+
+DROP FUNCTION IF EXISTS createYear();
+CREATE OR REPLACE FUNCTION createYear(
+    i_year VARCHAR,
+    i_startdate date,
+    i_enddate date,
+    i_isactive boolean
+)
+RETURNS SETOF year
+LANGUAGE SQL
+AS
+$$
+    INSERT INTO year (year, startdate, enddate, isactive)
+    VALUES (i_year, i_startdate, i_enddate, i_isactive)
+    RETURNING *;
+$$;
+
+DROP FUNCTION IF EXISTS createClass();
+CREATE OR REPLACE FUNCTION createClass(
+    i_classname VARCHAR,
+    i_classlevel INTEGER,
+    i_classroom INTEGER,
+    i_yearid INTEGER,
+    i_teacherid INTEGER,
+    i_schoolid INTEGER
+)
+RETURNS SETOF class
+LANGUAGE SQL
+AS
+$$
+    INSERT INTO class (classname, classlevel, classroom, yearid, teacherid, schoolid)
+    VALUES (i_classname, i_classlevel, i_classroom, i_yearid, i_teacherid, i_schoolid)
+    RETURNING *;
+$$;
