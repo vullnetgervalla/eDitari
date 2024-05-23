@@ -317,8 +317,7 @@ FROM
     JOIN class ON student.classid = class.id
 WHERE
     "U_Student".schoolid = input_schoolid
-    AND "U_Student".roleid = 3;
-
+    AND "U_Student".roleid = (SELECT id FROM role WHERE name = 'STUDENT');
 $$;
 
 DROP FUNCTION IF EXISTS getSchoolTeachers(integer);

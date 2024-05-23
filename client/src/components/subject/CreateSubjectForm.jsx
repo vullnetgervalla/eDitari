@@ -1,11 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import { Button, DatePicker, Form, Input, InputNumber, Select, message } from 'antd';
+import React, { useEffect, useState } from 'react';
+import { Button, Form, Input, Select, message } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { useAxiosPrivate } from 'hooks/useAxiosPrivate';
-import moment from 'moment';
-import { TeacherTable } from 'components/tables/TeacherTable';
 import { useNavigate } from 'react-router-dom';
 import { CreateYearModal } from 'components/modals/CreateYear';
+import { CreateSubjectModal } from 'components/modals/CreateSubject';
 
 const formItemLayout = {
     labelCol: {
@@ -26,13 +25,16 @@ const formItemLayout = {
     },
 };
 
-function CreateClass() {
+function CreateSubjectForm() {
     const { t } = useTranslation();
     const axios = useAxiosPrivate();
-    const [teachers, setTeachers] = useState([]);
     const [years, setYears] = useState([]);
-    const navigate = useNavigate();
+    const [subjectModalVisibility, setSubjectModalVisibility] = useState(false);
     const [yearModalVisibility, setYearModalVisibility] = useState(false);
+    const [teachers, setTeachers] = useState([]);
+    const [classes, setClasses] = useState([]);
+    const [subjects, setSubjects] = useState([]);
+    const navigate = useNavigate();
 
     const handleSubmit = async (values) => {
         for (const key in values) {
@@ -42,11 +44,10 @@ function CreateClass() {
         }
 
         try {
-            const res = await axios.post('/classes', values);
-            message.success(t('createdClass'));
-            console.log('values', res.data);
+            const res = await axios.post('/subjects/teacherSubject', values);
+            message.success(t('createdSubject'));
         } catch (e) {
-            message.error(t('notCreatedClass'));
+            message.error(t('notCreatedSubject'));
         }
     };
 
@@ -56,90 +57,57 @@ function CreateClass() {
             setTeachers(res.data);
         };
 
+        const getClasses = async () => {
+            const res = await axios.get('/classes');
+            setClasses(res.data);
+        };
+        
+        getClasses();
         getTeachers();
     }, []);
 
     useEffect(() => {
+        const getSubjects = async () => {
+            const res = await axios.get('/subjects');
+            setSubjects(res.data);
+        };
 
+        getSubjects();
+    }, [subjectModalVisibility]);
+
+    useEffect(() => {
         const getYears = async () => {
             const res = await axios.get('classes/years');
             setYears(res.data);
-            console.log('years', res.data); 
+            console.log('years', res.data);
         };
 
         getYears();
     }, [yearModalVisibility]);
 
-
     return (<>
-        <div style={{ textAlign: 'center', display: 'flex', alignItems: 'center', flexDirection: 'column' }}>
+        <div style={{ display: 'flex', justifyContent: 'center', gap: '10%', width: '100%' }}>
             <Form
                 {...formItemLayout}
                 variant='filled'
                 style={{
                     minWidth: 700,
+                    border: '1px solid #E5E7EB',
+                    boxShadow: '3px 3px 10px #eee',
                     borderRadius: 20,
                     padding: 30,
                     backgroundColor: '#fff',
-                    border: '1px solid #E5E7EB',
-                    boxShadow: '3px 3px 10px #eee',
                 }}
                 onFinish={handleSubmit}
             >
                 <Form.Item
-                    label={t('classname')}
+                    label={t('subject')}
                     labelAlign='left'
-                    name='classname'
+                    name='subjectid'
                     rules={[
                         {
                             required: true,
-                            message: t('enterName'),
-                        },
-                    ]}
-                >
-                    <Input />
-                </Form.Item>
-
-                <Form.Item
-                    label={t('classlevel')}
-                    labelAlign='left'
-                    name='classlevel'
-                    rules={[
-                        {
-                            required: true,
-                            message: t('enterClasslevel'),
-                        },
-                        {
-                            pattern: /^(1[0-2]|[1-9])$/,
-                            message: t('numbersOnly12range'),
-                        },
-                    ]}
-                >
-                    <Input />
-                </Form.Item>
-
-                <Form.Item
-                    label={t('classroom')}
-                    labelAlign='left'
-                    name='classroom'
-                    rules={[
-                        {
-                            pattern: /^[0-9]+$/,
-                            message: t('numbersOnly'),
-                        },
-                    ]}
-                >
-                    <Input />
-                </Form.Item>
-
-                <Form.Item
-                    label={t('headTeacher')}
-                    labelAlign='left'
-                    name='teacherid'
-                    rules={[
-                        {
-                            required: false,
-                            message: t('selectHeadTeacher'),
+                            message: t('selectSubject'),
                         },
                     ]}
                 >
@@ -148,7 +116,44 @@ function CreateClass() {
                         optionFilterProp='children'
                         allowClear
                         notFoundContent={
-                            <div onClick={() => {navigate('/create-teacher')}}
+                            <div onClick={() => {setSubjectModalVisibility(true)}}
+                                style={{ cursor: 'pointer', color: '#1677FF', height: '3rem', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.1rem' }}
+                            >
+                                {t('noSubjectFoundCreateNew')}
+                            </div>
+                        }
+
+                    >
+                        {subjects.map((item) => {
+                            return (
+                                <Select.Option
+                                    key={item.id}
+                                    value={item.id}
+                                >
+                                    {item.name}
+                                </Select.Option>
+                            );
+                        })}
+                    </Select>
+                </Form.Item>
+
+                <Form.Item
+                    label={t('teacher')}
+                    labelAlign='left'
+                    name='teacherid'
+                    rules={[
+                        {
+                            required: true,
+                            message: t('selectTeacher'),
+                        },
+                    ]}
+                >
+                    <Select
+                        showSearch
+                        optionFilterProp='children'
+                        allowClear
+                        notFoundContent={
+                            <div onClick={() => { navigate('/create-teacher') }}
                                 style={{ cursor: 'pointer', color: '#1677FF', height: '3rem', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.1rem' }}
                             >
                                 {t('noTeacherFoundCreateNew')}
@@ -162,7 +167,6 @@ function CreateClass() {
                         ))}
                     </Select>
                 </Form.Item>
-
                 <Form.Item
                     label={t('year')}
                     labelAlign='left'
@@ -179,7 +183,7 @@ function CreateClass() {
                         optionFilterProp='children'
                         allowClear
                         notFoundContent={
-                            <div onClick={() => {setYearModalVisibility(true)}}
+                            <div onClick={() => { setYearModalVisibility(true) }}
                                 style={{ cursor: 'pointer', color: '#1677FF', height: '3rem', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.1rem' }}
                             >
                                 {t('noYearFoundCreateNew')}
@@ -193,19 +197,36 @@ function CreateClass() {
                         ))}
                     </Select>
                 </Form.Item>
+                <Form.Item
+                    label={t('active')}
+                    labelAlign='left'
+                    name='isactive'
+                    initialValue={true}
+                    rules={[
+                        {
+                            required: true,
+                            message: t('required'),
+                        },
+                    ]}
+                >
+                    <Select>
+                        <Option value={true}>{t('yes')}</Option>
+                        <Option value={false}>{t('no')}</Option>
+                    </Select>
+                </Form.Item>
                 <Form.Item style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                     <Button
                         type='primary'
                         htmlType='submit'
                         style={{ marginTop: '1.5em', height: '3em' }}
                     >
-                        {t('create-teacher')}
+                        {t('create-subject')}
                     </Button>
                 </Form.Item>
             </Form>
         </div>
         {yearModalVisibility && <CreateYearModal open={yearModalVisibility} setOpen={setYearModalVisibility} />}
+        {subjectModalVisibility && <CreateSubjectModal open={subjectModalVisibility} setOpen={setSubjectModalVisibility} />}
     </>);
 }
-
-export default CreateClass;
+export default CreateSubjectForm;

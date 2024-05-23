@@ -1,33 +1,28 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { useTranslation } from 'react-i18next'
-import { SearchOutlined } from '@ant-design/icons';
-import { Card, Table, Input, Space, Button } from 'antd';
-import { useAxiosPrivate } from 'hooks/useAxiosPrivate';
-import { axiosPrivate } from 'api/axios';
+import React, { useRef, useState } from 'react';
+import { Link } from 'react-router-dom';
+import { SearchOutlined, UserOutlined, CloseCircleOutlined, PrinterFilled, BookOutlined } from '@ant-design/icons';
+import { Button, Input, Space, Table } from 'antd';
+import Highlighter from 'react-highlight-words';
+import { useTranslation } from 'react-i18next';
+import moment from 'moment';
 
+export const SubjectsTable = ({ data }) => {
+	const { t } = useTranslation();
+	const [searchText, setSearchText] = useState('');
+	const [searchedColumn, setSearchedColumn] = useState('');
+	const searchInput = useRef(null);
 
-const fetchTopStudents = async (axiosPrivate, setDataSource) => {
-    try {
-        console.log('fetching top students')
-        const response = await axiosPrivate.get('/users/topStudents', { params: { limit: 5 } });
-        setDataSource(response.data);
-        console.log(response.data)
-    } catch (error) {
-        console.error(error);
-    }
-}
+    const handleSearch = (selectedKeys, confirm, dataIndex) => {
+        confirm();
+        setSearchText(selectedKeys[0]);
+        setSearchedColumn(dataIndex);
+    };
 
-export default function BestStudents() {
-    const { t } = useTranslation();
-    const axios = useAxiosPrivate();
-    const [dataSource, setDataSource] = useState([]);
-    const [searchedColumn, setSearchedColumn] = useState('');
-    const searchInput = useRef(null);
-
-    useEffect(() => {
-        fetchTopStudents(axios, setDataSource);
-    }, [axiosPrivate])
-
+    const handleReset = (clearFilters, confirm) => {
+        clearFilters();
+        setSearchText('');
+        confirm();
+    };
 
     const getColumnSearchProps = (dataIndex, nestedPath) => ({
         filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters, close }) => (
@@ -85,37 +80,49 @@ export default function BestStudents() {
                 text
             ),
     });
-    const columns = [
-        {
-            title: t('firstname'),
-            dataIndex: 'firstname',
-            key: 'firstname',
-            ...getColumnSearchProps('firstname'),
-        }, {
-            title: t('lastname'),
-            dataIndex: 'lastname',
-            key: 'lastname',
-            ...getColumnSearchProps('lastname'),
-        }, {
-            title: t('classname'),
-            dataIndex: 'classname',
-            key: 'classname',
-            ...getColumnSearchProps('classname'),
-        }, {
-            title: t('average_grade'),
-            dataIndex: 'average_grade',
-            key: 'average_grade',
-            ...getColumnSearchProps('average_grade'),
-        }
-    ]
 
-    return (
-        <div>
-            <Card style={{ borderRadius: '20px' }}>
-                <h2>{t('bestStudents')}</h2>
-                <hr />
-                <Table dataSource={dataSource} columns={columns} />
-            </Card>
-        </div>
-    )
-}
+	const columns = [
+		{
+			title: t('subject'),
+			dataIndex: 'subject',
+			key: 'id',
+			...getColumnSearchProps('name', 'subject.name'),
+            render: (subject) => (
+                <span>{subject?.name ?? '-'}</span>
+            )
+		},
+		{
+			title: t('teacher'),
+			dataIndex: 'teacher',
+			key: 'id',
+			...getColumnSearchProps('fullname', 'teacher.fullname'),
+            render: (teacher) => (
+                <span>{teacher?.fullname ?? '-'}</span>
+            )
+		},
+		{
+			title: t('year'),
+			dataIndex: 'year',
+			key: 'id',
+			...getColumnSearchProps('year', 'year.year'),
+            render: (year) => (
+                <span>{year?.year ?? '-'}</span>
+            )
+		},
+		{
+			title: t('active'),
+			dataIndex: 'isactive',
+			key: 'isactive',
+            filters: [
+                { text: t('yes'), value: true },
+                { text: t('no'), value: false },
+            ],
+            onFilter: (value, record) => record.active === value,
+            render: (active) => (
+                <span>{active ? t('yes') : t('no')}</span>
+            )
+		}
+	];
+
+	return <Table bordered columns={columns} dataSource={data} scroll={{ x: 500 }} rowKey={'id'} />;
+};

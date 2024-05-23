@@ -13,6 +13,9 @@ import SeeNotifications from 'components/seeNotifications';
 import CreateMaterials from 'components/createMaterials';
 import ListClasses from 'components/class/ListClasses';
 import CreateClass from 'components/class/CreateClass';
+import CreateSubject from 'components/subject/CreateSubjectForm';
+import ListSubjects from 'components/subject/ListSubjects';
+import CreateSchedule from 'components/schedule/CreateSchedule';
 import SeeMaterials from 'components/materials/seeMaterials';
 
 export const AdminRoutes = [
@@ -68,10 +71,6 @@ export const AdminRoutes = [
     element: <SeeNotifications />
   },
   {
-    path: 'list-material',
-    element: <SeeMaterials />
-  },
-  {
     path: 'add-material',
     element: <CreateMaterials />
   },
@@ -82,5 +81,21 @@ export const AdminRoutes = [
   {
     path: 'create-class',
     element: <CreateClass />
+  },
+  {
+    path: 'create-subject',
+    element: <CreateSubject />
+  },
+  {
+    path: 'list-subject',
+    element: <ListSubjects />
+  },
+  {
+    path: 'list-schedule',
+    element: null
+  },
+  {
+    path: 'create-schedule',
+    element: <CreateSchedule />
   }
 ];

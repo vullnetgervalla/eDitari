@@ -1,7 +1,7 @@
 require('dotenv').config();
 const { Client } = require('pg');
 const fs = require('fs');
-const scriptPath = './sql/restartNumbering.sql';
+const scriptPath = 'src/scripts/sql/restartNumbering.sql';
 
 const host = process.env.DB_HOST;
 const port = process.env.DB_PORT;

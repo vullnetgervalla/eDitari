@@ -22,7 +22,6 @@ export default function ListStudents() {
 		getStudents()
 	}, []);
 	return (<>
-		<div style={{marginBottom: '3rem', marginLeft: '2rem'}}><h1>{t('list-student')}</h1></div>
 		<StudentTable
 			data={students}
 			side={false}
