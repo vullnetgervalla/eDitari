@@ -10,6 +10,7 @@ import MissingStudents from 'components/users/missingStudents';
 import { useAxiosPrivate } from 'hooks/useAxiosPrivate';
 import GraphStatistics from 'components/graphStatistics';
 import NumStatistics from 'components/numStatistics';
+import { StudentTable } from 'components/tables/StudentTable';
 
 const fetchNumOfStudentsPerClass = async (axiosPrivate, setStudentsPerClassLevel) => {
   try {

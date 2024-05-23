@@ -23,4 +23,29 @@ $$
     ) AS class_counts;
 $$;
 
-SELECT * FROM GetAverageStudentsPerClass();
+DROP FUNCTION IF EXISTS GetTopStudents(integer, integer);
+CREATE OR REPLACE FUNCTION GetTopStudents(i_schoolid integer, i_limit integer)
+RETURNS TABLE(student_id int, firstname varchar, lastname varchar, classname varchar, average_grade numeric) LANGUAGE sql
+AS
+$$
+    SELECT 
+        student.id, 
+        "User".firstname, 
+        "User".lastname, 
+        class.classname, 
+        ROUND(AVG(enum_to_int(grade.grade)),2) as average_grade
+    FROM 
+        student
+    JOIN 
+        grade ON student.id = grade.studentid
+    JOIN 
+        "User" ON student.id = "User".id
+    JOIN 
+        class ON student.classid = class.id
+	WHERE "User".schoolid = i_schoolid
+    GROUP BY 
+        student.id, "User".firstname, "User".lastname, class.classname
+    ORDER BY 
+        average_grade DESC
+    LIMIT i_limit;
+$$;
