@@ -1,12 +1,12 @@
 import React, { useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { SearchOutlined, UserOutlined, CloseCircleOutlined, PrinterFilled, BookOutlined } from '@ant-design/icons';
-import { Button, Input, Space, Table } from 'antd';
+import { Button, Input, Space, Table, Select } from 'antd';
 import Highlighter from 'react-highlight-words';
 import { useTranslation } from 'react-i18next';
 import moment from 'moment';
 
-export const SubjectsTable = ({ data }) => {
+export const ScheduleTable = ({ data }) => {
 	const { t } = useTranslation();
 	const [searchText, setSearchText] = useState('');
 	const [searchedColumn, setSearchedColumn] = useState('');
@@ -83,15 +83,6 @@ export const SubjectsTable = ({ data }) => {
 
 	const columns = [
 		{
-			title: t('subject'),
-			dataIndex: 'subject',
-			key: 'subjectid',
-			...getColumnSearchProps('name', 'subject.name'),
-            render: (subject) => (
-                <span>{subject?.name ?? '-'}</span>
-            )
-		},
-		{
 			title: t('teacher'),
 			dataIndex: 'teacher',
 			key: 'teacherid',
@@ -101,27 +92,47 @@ export const SubjectsTable = ({ data }) => {
             )
 		},
 		{
-			title: t('year'),
-			dataIndex: 'year',
-			key: 'yearid',
-			...getColumnSearchProps('year', 'year.year'),
-            render: (year) => (
-                <span>{year?.year ?? '-'}</span>
+			title: t('subject'),
+			dataIndex: 'subject',
+			key: 'subjectid',
+			...getColumnSearchProps('subject', 'subject.name'),
+            render: (subject) => (
+                <span>{subject?.name ?? '-'}</span>
             )
 		},
 		{
-			title: t('active'),
-			dataIndex: 'isactive',
-			key: 'isactive',
-            filters: [
-                { text: t('yes'), value: true },
-                { text: t('no'), value: false },
-            ],
-            onFilter: (value, record) => record.active === value,
-            render: (active) => (
-                <span>{active ? t('yes') : t('no')}</span>
+			title: t('class'),
+			dataIndex: 'class',
+			key: 'classid',
+			...getColumnSearchProps('class', 'class.classname'),
+            render: (_class) => (
+                <span>{_class?.classname ?? '-'}</span>
             )
-		}
+		},
+		{
+            title: t('day'),
+            dataIndex: 'day',
+            key: 'day',
+            filters: [
+                { text: t('monday'), value: 'monday' },
+                { text: t('tuesday'), value: 'tuesday' },
+                { text: t('wednesday'), value: 'wednesday' },
+                { text: t('thursday'), value: 'thursday' },
+                { text: t('friday'), value: 'friday' },
+                { text: t('saturday'), value: 'saturday' },
+                { text: t('sunday'), value: 'sunday' },
+            ],
+            onFilter: (value, record) => record.day.toLowerCase() === value,
+            render: (day) => (
+                <span>{day ? t(day.toLowerCase()) : '-'}</span>
+            )
+        },
+        {
+			title: t('period'),
+			dataIndex: 'period',
+			key: 'period',
+			...getColumnSearchProps('period'),
+		},
 	];
 
 	return <Table bordered columns={columns} dataSource={data} scroll={{ x: 500 }} rowKey={'id'} />;

@@ -116,7 +116,7 @@ export const StudentTable = ({ data, side }) => {
         {
             title: t('parent'),
             dataIndex: 'parent',
-            key: 'id',
+            key: 'parentid',
             ...getColumnSearchProps('fullname', 'parent.fullname'),
             render: (parent) => {
                 return <span>{parent?.fullname ? parent?.fullname : '-'}</span>;

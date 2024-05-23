@@ -17,6 +17,7 @@ import CreateSubject from 'components/subject/CreateSubjectForm';
 import ListSubjects from 'components/subject/ListSubjects';
 import CreateSchedule from 'components/schedule/CreateSchedule';
 import SeeMaterials from 'components/materials/seeMaterials';
+import ListSchedules from 'pages/users/listSchedule';
 
 export const AdminRoutes = [
   {
@@ -92,7 +93,7 @@ export const AdminRoutes = [
   },
   {
     path: 'list-schedule',
-    element: null
+    element: <ListSchedules />
   },
   {
     path: 'create-schedule',
