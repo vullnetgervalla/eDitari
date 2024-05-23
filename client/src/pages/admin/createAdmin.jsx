@@ -36,7 +36,7 @@ function CreateAdmin() {
     }
   };
   return (
-    <div style={{ textAlign: 'center', display: 'flex', alignItems: 'center', flexDirection: 'column' }}>
+    <div style={{ textAlign: 'center', display: 'flex', alignItems: 'center', flexDirection: 'column'}}>
       <Form
         {...formItemLayout}
         variant='filled'
