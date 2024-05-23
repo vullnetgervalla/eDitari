@@ -192,5 +192,21 @@
   "selectTeacher": "Izaberite nastavnika",
   "enterSubject": "Molimo unesite predmet",
   "numbersOnly12range": "Samo brojevi u opsegu 1-12",
-  "attendance_count":"Broj izostanaka"
+  "attendance_count":"Broj izostanaka",
+  "list-schedule": "Spisak rasporeda",
+  "create-schedule": "Registruj raspored",
+  "period": "Period",
+  "choosePeriod": "Izaberite period",
+  "monday": "Ponedeljak",
+  "tuesday": "Utorak",
+  "wednesday": "Sreda",
+  "thursday": "Četvrtak",
+  "friday": "Petak",
+  "day": "Dan",
+  "create-period": "Registruj period",
+  "scheduleExists": "Raspored postoji",
+  "required": "Obavezno",
+  "holiday": "Praznik",
+  "createdNotification": "Obaveštenje uspešno kreirano",
+  "notCreatedNotification": "Greška prilikom kreiranja obaveštenja"
 }

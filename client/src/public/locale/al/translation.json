@@ -191,5 +191,20 @@
   "selectTeacher": "Zgjidhni mësuesin",
   "enterSubject": "Ju lutem shtypni lëndën",
   "numbersOnly12range": "Vetëm numra prej 1-12",
-  "attendance_count":"Numri i mungesave"
+  "attendance_count":"Numri i mungesave",
+  "list-schedule": "Lista e orarit",
+  "create-schedule": "Shto orar",
+  "period": "Ora",
+  "choosePeriod": "Zgjidhni orën",
+  "monday": "E Hënë",
+  "tuesday": "E Martë",
+  "wednesday": "E Mërkurë",
+  "thursday": "E Enjte",
+  "friday": "E Premte",
+  "day": "Dita",
+  "create-period": "Shto orën",
+  "scheduleExists": "Ora ekziston",
+  "holiday": "Festë",
+  "createdNotification": "Njoftimi u krijua me sukses!",
+  "notCreatedNotification": "Gabim gjatë krijimit të njoftimit!"
 }

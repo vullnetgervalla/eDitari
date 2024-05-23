@@ -28,4 +28,16 @@ getSubjectRouter.get('/teacherSubjects', checkRole('list-subject'), (req, res) =
       });
 });
 
+getSubjectRouter.get('/tacherSubjectFormatted', checkRole('list-subject'), (req, res) => {
+    const {schoolid} = req.user;
+    db.query('SELECT * from getClientTeacherSubject($1)', [schoolid], (err, queryRes) => {
+        if (err) {
+          console.error('Error executing query', err);
+          res.sendStatus(500);
+          return;
+        }
+        res.send(queryRes.rows);
+      });
+});
+
 module.exports = { getSubjectRouter };

@@ -191,5 +191,20 @@
   "selectTeacher": "Select teacher",
   "enterSubject": "Please enter subject",
   "numbersOnly12range": "Numbers from 1-12 only",
-  "attendance_count":"Attendances number"
+  "attendance_count":"Attendances number",
+  "list-schedule": "List of schedules",
+  "create-schedule": "Create schedule",
+  "period": "Period",
+  "choosePeriod": "Choose period",
+  "monday": "Monday",
+  "tuesday": "Tuesday",
+  "wednesday": "Wednesday",
+  "thursday": "Thursday",
+  "friday": "Friday",
+  "day": "Day",
+  "create-period": "Create period",
+  "scheduleExists": "Period already exists",
+  "holiday": "Holiday",
+  "createdNotification": "Notification created successfully!",
+  "notCreatedNotification": "Error creating notification!"
 }
