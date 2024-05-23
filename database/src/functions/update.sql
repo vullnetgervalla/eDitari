@@ -1,37 +1,18 @@
-DROP FUNCTION IF EXISTS updateAdminUser(INT, TEXT, TEXT, TEXT, TEXT, TEXT);
+DROP FUNCTION IF EXISTS updateAdminUser(INT, TEXT, TEXT, TEXT);
 
 CREATE
 OR REPLACE FUNCTION updateAdminUser(
   input_id INT,
   input_firstName TEXT,
   input_lastName TEXT,
-  input_email TEXT,
-  input_role TEXT,
-  input_password TEXT
-) RETURNS VOID LANGUAGE sql AS $$ WITH role_id AS (
-  SELECT
-    id
-  FROM
-    Role
-  WHERE
-    name = input_role
-)
+  input_email TEXT
+) RETURNS VOID LANGUAGE sql AS $$
 UPDATE
   "User"
 SET
   firstname = COALESCE(input_firstName, firstname),
   lastname = COALESCE(input_lastName, lastname),
-  email = COALESCE(input_email, email),
-  roleid = COALESCE(
-    (
-      SELECT
-        id
-      FROM
-        role_id
-    ),
-    roleid
-  ),
-  password = COALESCE(input_password, password)
+  email = COALESCE(input_email, email)
 WHERE
   id = input_id;
 
@@ -39,7 +20,6 @@ $$;
 
 DROP FUNCTION IF EXISTS updateTeacherUser(
   INT,
-  TEXT,
   TEXT,
   TEXT,
   TEXT,
@@ -59,7 +39,6 @@ OR REPLACE FUNCTION updateTeacherUser(
   input_firstName TEXT,
   input_lastName TEXT,
   input_email TEXT,
-  input_role TEXT,
   input_gender TEXT,
   input_phonenumber TEXT,
   input_educationlevel TEXT,
@@ -68,29 +47,13 @@ OR REPLACE FUNCTION updateTeacherUser(
   input_personalnumber TEXT,
   input_birthday DATE,
   input_password TEXT
-) RETURNS VOID LANGUAGE sql AS $$ WITH role_id AS (
-  SELECT
-    id
-  FROM
-    Role
-  WHERE
-    name = input_role
-)
+) RETURNS VOID LANGUAGE sql AS $$
 UPDATE
   "User"
 SET
   firstname = COALESCE(input_firstName, firstname),
   lastname = COALESCE(input_lastName, lastname),
   email = COALESCE(input_email, email),
-  roleid = COALESCE(
-    (
-      SELECT
-        id
-      FROM
-        role_id
-    ),
-    roleid
-  ),
   password = COALESCE(input_password, password)
 WHERE
   id = input_id;
@@ -120,10 +83,10 @@ DROP FUNCTION IF EXISTS updateStudentUser(
   TEXT,
   TEXT,
   TEXT,
-  TEXT,
   INT,
   DATE,
   INT,
+  TEXT,
   TEXT
 );
 
@@ -132,32 +95,19 @@ CREATE OR REPLACE FUNCTION updateStudentUser(
   input_firstName TEXT,
   input_lastName TEXT,
   input_email TEXT,
-  input_role TEXT,
   input_gender TEXT,
   input_personalnumber TEXT,
-  input_class INT,
+  input_class TEXT,
   input_birthday DATE,
   input_parentid INT,
   input_password TEXT,
   input_address TEXT
 ) RETURNS VOID LANGUAGE sql AS $$ 
-WITH role_id AS (
-  SELECT id
-  FROM Role
-  WHERE name = input_role
-)
 UPDATE "User"
 SET
   firstname = COALESCE(input_firstName, firstname),
   lastname = COALESCE(input_lastName, lastname),
   email = COALESCE(input_email, email),
-  roleid = COALESCE(
-    (
-      SELECT id
-      FROM role_id
-    ),
-    roleid
-  ),
   password = COALESCE(input_password, password)
 WHERE
   id = input_id;
@@ -166,9 +116,9 @@ UPDATE student
 SET
   gender = COALESCE(input_gender :: gender, gender),
   personalNumber = COALESCE(input_personalnumber, personalNumber),
-  classid = COALESCE(input_class, classid),
   birthday = COALESCE(input_birthday, birthday),
-  parentid = COALESCE(input_parentid, parentid)
+  parentid = COALESCE(input_parentid, parentid),
+  classid = COALESCE((SELECT id FROM class WHERE classname = input_class), classid)
 WHERE
   id = input_id;
 
@@ -177,10 +127,9 @@ SET
   address = COALESCE(input_address, address)
 WHERE
   id = (SELECT parentid FROM student WHERE id = input_id);
-
 $$;
 
-DROP FUNCTION IF EXISTS updateParentUser(INT, TEXT, TEXT, TEXT, TEXT, TEXT, TEXT);
+DROP FUNCTION IF EXISTS updateParentUser(INT, TEXT, TEXT, TEXT, TEXT, TEXT);
 
 CREATE
 OR REPLACE FUNCTION updateParentUser(
@@ -188,33 +137,16 @@ OR REPLACE FUNCTION updateParentUser(
   input_firstName TEXT,
   input_lastName TEXT,
   input_email TEXT,
-  input_role TEXT,
   input_address TEXT,
   input_phoneNumber TEXT,
   input_password TEXT
-) RETURNS VOID LANGUAGE sql AS $$ WITH role_id AS (
-  SELECT
-    id
-  FROM
-    Role
-  WHERE
-    name = input_role
-)
+) RETURNS VOID LANGUAGE sql AS $$
 UPDATE
   "User"
 SET
   firstname = COALESCE(input_firstName, firstname),
   lastname = COALESCE(input_lastName, lastname),
   email = COALESCE(input_email, email),
-  roleid = COALESCE(
-    (
-      SELECT
-        id
-      FROM
-        role_id
-    ),
-    roleid
-  ),
   password = COALESCE(input_password, password)
 WHERE
   id = input_id;
@@ -223,8 +155,7 @@ UPDATE
   parent
 SET
   address = COALESCE(input_address, address),
-  phoneNumber = COALESCE(input_phoneNumber, phoneNumber)
+  phonenumber = COALESCE(input_phoneNumber, phonenumber)
 WHERE
   id = input_id;
-
 $$;

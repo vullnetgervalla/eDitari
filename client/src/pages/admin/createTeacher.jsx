@@ -108,7 +108,7 @@ function CreateTeacher() {
                     </Form.Item>
 
                     <Form.Item
-                        label={t('phoneNumber')}
+                        label={t('phonenumber')}
                         labelAlign='left'
                         name='phonenumber'
                         rules={[

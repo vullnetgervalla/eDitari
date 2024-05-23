@@ -17,8 +17,8 @@ VALUES
 ('create-student', 'student'),
 ('notifications', 'notification'),
 ('create-notification', 'notification'),
-('list-material', 'material'),
-('add-material', 'material'),
+('list-role', 'roles'),
+('create-role', 'roles'),
 ('list-subject', 'subject'),
 ('create-subject', 'subject'),
 ('list-class', 'class'),
@@ -34,19 +34,19 @@ INSERT INTO role_capabilities (role_id, capability_id)
 SELECT role.id, capabilities.id
 FROM role, capabilities
 WHERE role.name = 'TEACHER'
-AND capabilities.name IN ('home', 'schedule', 'list-student', 'create-student', 'notifications', 'create-notification', 'list-material', 'add-material', 'list-subject', 'class');
+AND capabilities.name IN ('home', 'schedule', 'list-student', 'create-student', 'notifications', 'create-notification', 'material', 'list-subject', 'class');
 
 INSERT INTO role_capabilities (role_id, capability_id)
 SELECT role.id, capabilities.id
 FROM role, capabilities
 WHERE role.name = 'STUDENT'
-AND capabilities.name IN ('home', 'schedule', 'subject', 'notification','material' );
+AND capabilities.name IN ('home', 'schedule', 'subject', 'notification' );
 
 INSERT INTO role_capabilities (role_id, capability_id)
 SELECT role.id, capabilities.id
 FROM role, capabilities
 WHERE role.name = 'PARENT'
-AND capabilities.name IN ('home', 'schedule', 'subject', 'notification', 'material' );
+AND capabilities.name IN ('home', 'schedule', 'subject', 'notification' );
 
 
 INSERT INTO year (year, startdate, enddate, isactive)

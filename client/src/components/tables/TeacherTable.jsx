@@ -107,7 +107,7 @@ export const TeacherTable = ({ data, side }) => {
             ...getColumnSearchProps('email'),
         },
         {
-            title: t('phoneNumber'),
+            title: t('phonenumber'),
             dataIndex: 'phonenumber',
             key: 'phonenumber',
             ...getColumnSearchProps('phonenumber'),
