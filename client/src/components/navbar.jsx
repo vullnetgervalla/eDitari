@@ -44,7 +44,7 @@ const iconMapping = {
   student: <UserOutlined />,
   notification: <NotificationOutlined />,
   material: <FileOutlined />,
-  roles: <PlusCircleOutlined />,
+  role: <PlusCircleOutlined />,
   parent: <UserOutlined />,
   schedule: <CalendarOutlined />,
   subject: <BookOutlined />,
