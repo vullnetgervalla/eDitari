@@ -22,13 +22,15 @@ VALUES
 ('list-subject', 'subject'),
 ('create-subject', 'subject'),
 ('list-class', 'class'),
-('create-class', 'class');
+('create-class', 'class')
+('list-schedule', 'schedule'),
+('create-schedule', 'schedule');
 
 INSERT INTO role_capabilities (role_id, capability_id)
 SELECT role.id, capabilities.id
 FROM role, capabilities
 WHERE role.name = 'ADMIN'
-AND capabilities.name IN ('home', 'list-admin', 'create-admin', 'list-teacher', 'create-teacher', 'list-student', 'create-student', 'notifications', 'create-notification', 'role', 'list-subject', 'create-subject', 'list-class', 'create-class');
+AND capabilities.name IN ('home', 'list-admin', 'create-admin', 'list-teacher', 'create-teacher', 'list-student', 'create-student', 'notifications', 'create-notification', 'role', 'list-subject', 'create-subject', 'list-class', 'create-class', 'list-schedule', 'create-schedule');
 
 INSERT INTO role_capabilities (role_id, capability_id)
 SELECT role.id, capabilities.id

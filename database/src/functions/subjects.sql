@@ -67,3 +67,24 @@ AS $$
         year ON teachersubject.yearid = year.id
     WHERE "Teacher".schoolid = i_schoolid;
 $$;
+
+DROP FUNCTION IF EXISTS getClientTeacherSubjects(integer);
+CREATE OR REPLACE FUNCTION getClientTeacherSubject(i_schoolid INTEGER)
+RETURNS TABLE (
+    id INTEGER,
+    fullname VARCHAR,
+    subject VARCHAR,
+    fullname_subject VARCHAR
+)
+LANGUAGE sql
+AS $$
+    SELECT
+        teachersubject.id,
+        "User".firstname || ' ' || "User".lastname AS fullname,
+        subject.name AS subject,
+        "User".firstname || ' ' || "User".lastname || ' - ' || subject.name AS fullname_subject
+    FROM teachersubject
+    JOIN "User" ON "User".id = teachersubject.teacherid
+    JOIN subject ON subject.id = teachersubject.subjectid
+    WHERE "User".schoolid = i_schoolid;
+$$;
