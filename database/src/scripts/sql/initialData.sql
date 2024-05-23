@@ -162,35 +162,28 @@ VALUES (
   (SELECT teacher.id FROM teacher JOIN "User" ON teacher.id="User".id WHERE firstname = 'Flora'), 
   (SELECT id FROM subject WHERE name = 'Literature'),
   1,
-  true,
-  1
-),
+  true),
 (
 	(SELECT teacher.id FROM teacher JOIN "User" ON teacher.id="User".id WHERE firstname = 'Elbana'), 
   (SELECT id FROM subject WHERE name = 'Physics'),
   1,
-  true,
-  1),
+  true),
   ((SELECT teacher.id FROM teacher JOIN "User" ON teacher.id="User".id WHERE firstname = 'Ardit'), 
   (SELECT id FROM subject WHERE name = 'Art'),
   1,
-  true,
-  1),
+  true),
   ((SELECT teacher.id FROM teacher JOIN "User" ON teacher.id="User".id WHERE firstname = 'Albion'), 
   (SELECT id FROM subject WHERE name = 'Physical Education'),
   1,
-  true,
-  1),
+  true),
   ((SELECT teacher.id FROM teacher JOIN "User" ON teacher.id="User".id WHERE firstname = 'Samir'), 
   (SELECT id FROM subject WHERE name = 'Biology'),
   1,
-  true,
-  1),
+  true),
    ((SELECT teacher.id FROM teacher JOIN "User" ON teacher.id="User".id WHERE firstname = 'Main'), 
   (SELECT id FROM subject WHERE name = 'Chemistry'),
   1,
-  true,
-  1);
+  true);
 
 
 insert into grade(studentid, teachersubjectid, date, grade) values

@@ -773,8 +773,7 @@ CREATE TABLE public.teachersubject (
     teacherid integer NOT NULL,
     subjectid integer NOT NULL,
     yearid integer NOT NULL,
-    isactive boolean,
-    classid integer NOT NULL
+    isactive boolean
 );
 
 
@@ -1453,14 +1452,6 @@ ALTER TABLE ONLY public.teachersubject
 
 ALTER TABLE ONLY public.teachersubject
     ADD CONSTRAINT teachersubject_yearid_fkey FOREIGN KEY (yearid) REFERENCES public.year(id);
-
-
---
--- Name: teachersubject teachersubject_classid_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.teachersubject
-    ADD CONSTRAINT teachersubject_classid_fkey FOREIGN KEY (classid) REFERENCES public.class(id);
 
 
 --
