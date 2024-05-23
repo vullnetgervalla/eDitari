@@ -8,26 +8,7 @@ export function CreateParentModal(props) {
     const [form] = Form.useForm();
     const { t } = useTranslation();
     const axios = useAxiosPrivate();
-    const { open, setOpen } = props;
-    const [form] = Form.useForm();
-    const { t } = useTranslation();
-    const axios = useAxiosPrivate();
 
-    const handleSubmit = async (values) => {
-        for (const key in values) {
-            if (values[key] === undefined) {
-                values[key] = null;
-            }
-        }
-        console.log(values);
-        try {
-            const res = await axios.post('/users/parent', values);
-            message.success(t('createdParent'));
-            setOpen(false);
-        } catch (e) {
-            message.error(t('notCreatedParent'));
-        }
-    };
     const handleSubmit = async (values) => {
         for (const key in values) {
             if (values[key] === undefined) {
@@ -47,22 +28,6 @@ export function CreateParentModal(props) {
     const handleCancel = () => {
         setOpen(false);
         form.resetFields();
-    };
-    const handleCancel = () => {
-        setOpen(false);
-        form.resetFields();
-    };
-
-    const handleOk = () => {
-        form
-            .validateFields()
-            .then(async (values) => {
-                form.resetFields();
-                await handleSubmit(values);
-            })
-            .catch(info => {
-                console.log('Validate Failed:', info);
-            });
     };
     const handleOk = () => {
         form
