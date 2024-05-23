@@ -108,7 +108,7 @@ VALUES
 ('albionkryeziu', '$2a$10$PP5o8/1esrQC2OAihgsL2Orvkpx4GFIRdV2WfQ7WHM/YONCbKS0ke', 'albionkryeziu@teacher.main.com', (SELECT id FROM role WHERE name = 'TEACHER'), 'Albion', 'Kryeziu', 1),
 ('samirbllacaku', '$2a$10$PP5o8/1esrQC2OAihgsL2Orvkpx4GFIRdV2WfQ7WHM/YONCbKS0ke', 'samirbllacaku@teacher.main.com', (SELECT id FROM role WHERE name = 'TEACHER'), 'Samir', 'Bllacaku', 1),
 ('gentinklaiqi', '$2a$10$PP5o8/1esrQC2OAihgsL2Orvkpx4GFIRdV2WfQ7WHM/YONCbKS0ke', 'gentinklaiqi@student.main.com', (SELECT id FROM role WHERE name = 'STUDENT'), 'Gentin', 'Klaiqi', 1),
-('donatgosalci', '$2a$10$PP5o8/1esrQC2OAihgsL2Orvkpx4GFIRdV2WfQ7WHM/YONCbKS0ke', 'donatgosalci@student.main.com', (SELECT id FROM role WHERE name = 'STUDENT'), 'Donat', 'Gosalci', 1)
+('donatgosalci', '$2a$10$PP5o8/1esrQC2OAihgsL2Orvkpx4GFIRdV2WfQ7WHM/YONCbKS0ke', 'donatgosalci@student.main.com', (SELECT id FROM role WHERE name = 'STUDENT'), 'Donat', 'Gosalci', 1);
 
 
 Insert into subject (name, schoolid)
@@ -157,32 +157,40 @@ VALUES
 ((SELECT id FROM "User" WHERE username = 'donatgosalci'),1, '2005-05-15', 'M', null, '2432532218');
 
 
-INSERT INTO teachersubject (teacherid, subjectid, yearid, isactive) 
+INSERT INTO teachersubject (teacherid, subjectid, yearid, isactive, classid) 
 VALUES (
   (SELECT teacher.id FROM teacher JOIN "User" ON teacher.id="User".id WHERE firstname = 'Flora'), 
-  (SELECT id FROM subject WHERE name = 'Literature'),1,true
+  (SELECT id FROM subject WHERE name = 'Literature'),
+  1,
+  true,
+  1
 ),
 (
 	(SELECT teacher.id FROM teacher JOIN "User" ON teacher.id="User".id WHERE firstname = 'Elbana'), 
   (SELECT id FROM subject WHERE name = 'Physics'),
   1,
-  true),
+  true,
+  1),
   ((SELECT teacher.id FROM teacher JOIN "User" ON teacher.id="User".id WHERE firstname = 'Ardit'), 
   (SELECT id FROM subject WHERE name = 'Art'),
   1,
-  true),
+  true,
+  1),
   ((SELECT teacher.id FROM teacher JOIN "User" ON teacher.id="User".id WHERE firstname = 'Albion'), 
   (SELECT id FROM subject WHERE name = 'Physical Education'),
   1,
-  true),
+  true,
+  1),
   ((SELECT teacher.id FROM teacher JOIN "User" ON teacher.id="User".id WHERE firstname = 'Samir'), 
   (SELECT id FROM subject WHERE name = 'Biology'),
   1,
-  true),
+  true,
+  1),
    ((SELECT teacher.id FROM teacher JOIN "User" ON teacher.id="User".id WHERE firstname = 'Main'), 
   (SELECT id FROM subject WHERE name = 'Chemistry'),
   1,
-  true);
+  true,
+  1);
 
 
 insert into grade(studentid, teachersubjectid, date, grade) values
@@ -212,7 +220,7 @@ where firstname = 'Flora' and subject.name = 'Literature' ),'2024-04-12','5'),
 join teacher on teachersubject.teacherid = teacher.id
 join "User" on teacher.id = "User".id
 join subject on subject.id = teachersubject.subjectid
-where firstname = 'Flora' and subject.name = 'Literature' ),'2024-04-12','5')
+where firstname = 'Flora' and subject.name = 'Literature' ),'2024-04-12','5'),
 
 ((select student.id from student join "User" on student.id = "User".id Where firstname = 'Teuta'
 ),(select teachersubject.id from teachersubject
@@ -297,22 +305,24 @@ join teacher on teachersubject.teacherid = teacher.id
 join "User" on teacher.id = "User".id
 join subject on subject.id = teachersubject.subjectid
 where firstname = 'Main' and subject.name = 'Chemistry' ),'2024-02-6','2'),
+
 ((select student.id from student join "User" on student.id = "User".id Where firstname = 'Astrit'
 ),(select teachersubject.id from teachersubject
 join teacher on teachersubject.teacherid = teacher.id
 join "User" on teacher.id = "User".id
 join subject on subject.id = teachersubject.subjectid
 where firstname = 'Main' and subject.name = 'Chemistry' ),'2024-02-6','2'),
+
 ((select student.id from student join "User" on student.id = "User".id Where firstname = 'Edona'
 ),(select teachersubject.id from teachersubject
 join teacher on teachersubject.teacherid = teacher.id
 join "User" on teacher.id = "User".id
 join subject on subject.id = teachersubject.subjectid
 where firstname = 'Main' and subject.name = 'Chemistry' ),'2024-02-6','3'),
+
 ((select student.id from student join "User" on student.id = "User".id Where firstname = 'Valon'
 ),(select teachersubject.id from teachersubject
 join teacher on teachersubject.teacherid = teacher.id
 join "User" on teacher.id = "User".id
 join subject on subject.id = teachersubject.subjectid
 where firstname = 'Main' and subject.name = 'Chemistry' ),'2024-02-6','5');
-

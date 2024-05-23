@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "create-db": "node src/scripts/createDb.js",
+    "create-db": "node src/scripts/createDB.js",
+    "delete-db": "node src/scripts/deleteDB.js",
     "initial-data": "node src/scripts/initialData.js",
     "generate-procedures": "node src/scripts/createProcedures.js",
     "restart-numbering": "node src/scripts/restartNumbering.js"
