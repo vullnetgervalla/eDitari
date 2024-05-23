@@ -9,7 +9,6 @@ VALUES
 ('material', 'default'),
 ('role', 'default'),
 ('class', 'default'),
-('create-role', 'default'),
 ('list-admin', 'admin'),
 ('create-admin', 'admin'),
 ('list-teacher', 'teacher'),
