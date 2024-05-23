@@ -66,7 +66,6 @@ export default function UserProfile() {
     const [formData, setFormData] = useState(null);
     const [parentFormData, setParentFormData] = useState(null);
     const [loading, setLoading] = useState(true);
-    const [messageApi, contextHolder] = message.useMessage();
     const userRole = originalUserData?.role;
     const [passwordReseted, setPasswordReseted] = useState(false);
     const tabList = [
@@ -165,6 +164,7 @@ export default function UserProfile() {
     };
     const cancelNewDataChange = () => {
         setFormData(originalUserData);
+        setParentFormData(originalParentData);
     };
     const updateNewData = () => {
         updateUsers(axiosPrivate, userRole, formData);
@@ -174,18 +174,6 @@ export default function UserProfile() {
         <UserProfileUI formItems={formItems} userRole={userRole} formData={formData} parentFormData={parentFormData} updateNewData={updateNewData} cancelNewDataChange={cancelNewDataChange} tabList={tabList} passwordReseted={passwordReseted} />
     );
 }
-
-const Background = () => (
-    <div style={{
-        position: 'absolute',
-        top: -30,
-        left: 0,
-        width: '100%',
-        height: '35%',
-        backgroundImage: 'url(/images/profile-background.jpg)',
-        backgroundSize: 'cover'
-    }} />
-);
 const withLargeStyle = (Component) => (props) => (
     <Component
         {...props}

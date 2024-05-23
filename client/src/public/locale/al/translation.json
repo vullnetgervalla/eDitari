@@ -202,5 +202,8 @@
   "friday": "E Premte",
   "day": "Dita",
   "create-period": "Shto orën",
-  "scheduleExists": "Ora ekziston"
+  "scheduleExists": "Ora ekziston",
+  "holiday": "Festë",
+  "createdNotification": "Njoftimi u krijua me sukses!",
+  "notCreatedNotification": "Gabim gjatë krijimit të njoftimit!"
 }

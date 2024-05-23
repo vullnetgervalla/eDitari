@@ -7,7 +7,6 @@ import CreateRole from 'components/createRole';
 import ListStudents from 'pages/users/listStudents';
 import ListTeachers from 'pages/users/listTeachers';
 import ListAdmins from 'pages/users/listAdmins';
-import ListRoles from 'pages/users/listRoles';
 import UserProfile from 'components/userProfile';
 import CreateNotification from 'pages/admin/createNotification';
 import SeeNotifications from 'components/seeNotifications';
@@ -17,6 +16,7 @@ import CreateClass from 'components/class/CreateClass';
 import CreateSubject from 'components/subject/CreateSubjectForm';
 import ListSubjects from 'components/subject/ListSubjects';
 import CreateSchedule from 'components/schedule/CreateSchedule';
+import SeeMaterials from 'components/materials/seeMaterials';
 
 export const AdminRoutes = [
   {

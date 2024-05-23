@@ -202,5 +202,8 @@
   "friday": "Friday",
   "day": "Day",
   "create-period": "Create period",
-  "scheduleExists": "Period already exists"
+  "scheduleExists": "Period already exists",
+  "holiday": "Holiday",
+  "createdNotification": "Notification created successfully!",
+  "notCreatedNotification": "Error creating notification!"
 }
