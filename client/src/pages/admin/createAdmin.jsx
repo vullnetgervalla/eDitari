@@ -25,44 +25,44 @@ const formItemLayout = {
 };
 
 function CreateAdmin() {
-    const { t } = useTranslation();
-    const axios = useAxiosPrivate();
-    const handleSubmit = async (values) => {
-        try {
-            const res = await axios.post('/users/admin', values);
-            message.success(t('createdAdmin'));
-        } catch (e) {
-            message.error(t('notCreatedAdmin'));
-        }
-    };
-    return (
-        <div style={{ textAlign: 'center', display: 'flex', alignItems: 'center', flexDirection: 'column' }}>
-            <Form
-                {...formItemLayout}
-                variant='filled'
-                style={{
-                    minWidth: 700,
-                    border: '1px solid #E5E7EB',
-                    boxShadow: '3px 3px 10px #eee',
-                    borderRadius: 20,
-                    padding: 30,
-                    backgroundColor: '#fff',
-                }}
-                onFinish={handleSubmit}
-            >
-                <Form.Item
-                    label={t('name')}
-                    labelAlign='left'
-                    name='firstname'
-                    rules={[
-                        {
-                            required: true,
-                            message: t('enterName'),
-                        },
-                    ]}
-                >
-                    <Input />
-                </Form.Item>
+  const { t } = useTranslation();
+  const axios = useAxiosPrivate();
+  const handleSubmit = async (values) => {
+    try {
+      const res = await axios.post('/users/admin', values);
+      message.success(t('createdAdmin'));
+    } catch (e) {
+      message.error(t('notCreatedAdmin'));
+    }
+  };
+  return (
+    <div style={{ textAlign: 'center', display: 'flex', alignItems: 'center', flexDirection: 'column'}}>
+      <Form
+        {...formItemLayout}
+        variant='filled'
+        style={{
+          minWidth: 700,
+          border: '1px solid #E5E7EB',
+          boxShadow: '3px 3px 10px #eee',
+          borderRadius: 20,
+          padding: 30,
+          backgroundColor: '#fff',
+        }}
+        onFinish={handleSubmit}
+      >
+        <Form.Item
+          label={t('name')}
+          labelAlign='left'
+          name='firstname'
+          rules={[
+            {
+              required: true,
+              message: t('enterName'),
+            },
+          ]}
+        >
+          <Input />
+        </Form.Item>
 
                 <Form.Item
                     label={t('lastname')}

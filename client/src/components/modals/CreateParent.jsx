@@ -29,7 +29,6 @@ export function CreateParentModal(props) {
         setOpen(false);
         form.resetFields();
     };
-
     const handleOk = () => {
         form
             .validateFields()
@@ -80,7 +79,7 @@ export function CreateParentModal(props) {
                     <Input />
                 </Form.Item>
                 <Form.Item
-                    label={t('phoneNumber')}
+                    label={t('phonenumber')}
                     labelAlign='left'
                     name='phonenumber'
                     rules={[
