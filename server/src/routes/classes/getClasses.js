@@ -17,6 +17,11 @@ getClassRouter.get('/', checkRole('list-class'), (req, res) => {
       });
 });
 
+getClassRouter.get('/numOfClasses'), checkRole(null, ['STUDENT']), (req, res) => {
+  const {schoolid} = req.user;
+  db.query('SELECT * ')
+}
+
 getClassRouter.get('/getTeacherCountByGender', checkRole(null, 'ADMIN'), (req, res) => {
   db.query('SELECT * FROM GetTeacherCountByGender()', (err, queryRes) => {
     if (err) {

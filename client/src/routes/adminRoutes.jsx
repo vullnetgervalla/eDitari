@@ -99,5 +99,7 @@ export const AdminRoutes = [
   {
     path: 'subject',
     element: <SubjectPage />
+  }, {
+    path: ''
   }
 ];
