@@ -14,6 +14,7 @@ import NumStatistics from 'components/numStatistics';
 const fetchNumOfStudentsPerClass = async (axiosPrivate, setStudentsPerClassLevel) => {
   try {
     const response = await axiosPrivate.get('/classes/numOfStudentsPerClass')
+    console.log(response.data)
     setStudentsPerClassLevel(response.data)
   } catch (error) {
     console.error(error)

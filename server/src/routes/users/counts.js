@@ -45,4 +45,18 @@ getCountsRouter.get('/topStudents', checkRole(null, "ADMIN"), (req, res) => {
       });
   });
 
+  getCountsRouter.get('/studentsAtttendances', checkRole(null, "ADMIN"), (req, res) => {
+    const {schoolid} = req.user;
+    const { limit } = req.query;
+    db.query('SELECT * from GetStudentsWithMostAttendances($1, $2)', [schoolid, limit], (err, queryRes) => {
+        if (err) {
+          console.error('Error executing query', err);
+          res.sendStatus(500);
+          return;
+        }
+  
+        res.send(queryRes.rows);
+      });
+  });
+
 module.exports = { getCountsRouter };

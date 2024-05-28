@@ -191,6 +191,7 @@
   "selectTeacher": "Zgjidhni mësuesin",
   "enterSubject": "Ju lutem shtypni lëndën",
   "numbersOnly12range": "Vetëm numra prej 1-12",
+  "attendance_count":"Numri i mungesave",
   "list-schedule": "Lista e orarit",
   "create-schedule": "Shto orar",
   "period": "Ora",

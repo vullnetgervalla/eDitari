@@ -192,6 +192,7 @@
   "selectTeacher": "Izaberite nastavnika",
   "enterSubject": "Molimo unesite predmet",
   "numbersOnly12range": "Samo brojevi u opsegu 1-12",
+  "attendance_count":"Broj izostanaka",
   "list-schedule": "Spisak rasporeda",
   "create-schedule": "Registruj raspored",
   "period": "Period",

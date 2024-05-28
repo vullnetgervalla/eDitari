@@ -7,9 +7,9 @@ const { roleMapping } = require('../../utils/roleMapping');
 const createUserRouter = Router();
 
 createUserRouter.post('/admin', checkRole("create-admin"), async (req, res) => {
-    const {email, password, firstname, lastname } = req.body;
+    const {email, password, firstname, lastname, role } = req.body;
     const {schoolid} = req.user;
-    const roleid = await roleMapping("ADMIN");
+    const roleid = role;
     const username = `${firstname}${lastname}`?.toLowerCase();
     const hashedPassword = await bcrypt.hash(password, 10);
 

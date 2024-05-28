@@ -1,15 +1,17 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next'
 import { SearchOutlined } from '@ant-design/icons';
-import { Card, Table, Input, Space, Button } from 'antd';
+import { Card, Table, Input, Space, Button, Flex } from 'antd';
 import { useAxiosPrivate } from 'hooks/useAxiosPrivate';
 import { axiosPrivate } from 'api/axios';
+import { TrophyOutlined } from '@ant-design/icons';
+
 
 
 const fetchTopStudents = async (axiosPrivate, setDataSource) => {
     try {
         console.log('fetching top students')
-        const response = await axiosPrivate.get('/users/topStudents', { params: { limit: 5 } });
+        const response = await axiosPrivate.get('/users/topStudents', { params: { limit: 5} });
         setDataSource(response.data);
         console.log(response.data)
     } catch (error) {
@@ -23,6 +25,18 @@ export default function BestStudents() {
     const [dataSource, setDataSource] = useState([]);
     const [searchedColumn, setSearchedColumn] = useState('');
     const searchInput = useRef(null);
+
+    const handleSearch = (selectedKeys, confirm, dataIndex) => {
+        confirm();
+        setSearchText(selectedKeys[0]);
+        setSearchedColumn(dataIndex);
+    };
+
+    const handleReset = (clearFilters, confirm) => {
+        clearFilters();
+        setSearchText('');
+        confirm();
+    };
 
     useEffect(() => {
         fetchTopStudents(axios, setDataSource);
@@ -91,21 +105,46 @@ export default function BestStudents() {
             dataIndex: 'firstname',
             key: 'firstname',
             ...getColumnSearchProps('firstname'),
+            render: (text) => {
+                return (<Flex gap='small' style={{ justifyContent: 'center', alignItems: 'center' }}>
+                    {text}
+                </Flex>)
+            }
         }, {
             title: t('lastname'),
             dataIndex: 'lastname',
             key: 'lastname',
             ...getColumnSearchProps('lastname'),
+            render: (text) => {
+                return (<Flex gap='small' style={{ justifyContent: 'center', alignItems: 'center' }}>
+                    {text}
+                </Flex>)
+            }
         }, {
             title: t('classname'),
             dataIndex: 'classname',
             key: 'classname',
             ...getColumnSearchProps('classname'),
+            render: (text) => {
+                return (<Flex gap='small' style={{ justifyContent: 'center', alignItems: 'center' }}>
+                    {text}
+                </Flex>)
+            }
         }, {
             title: t('average_grade'),
             dataIndex: 'average_grade',
             key: 'average_grade',
             ...getColumnSearchProps('average_grade'),
+            render: (text, record, index) => {
+                return index < 3 ?
+                    <Flex gap='small' style={{ justifyContent: 'center', alignItems: 'center' }}>
+                        <span>{text}</span>
+                        <TrophyOutlined />
+                    </Flex>
+                    : <Flex gap='small' style={{ justifyContent: 'center', alignItems: 'center' }}>
+                        {text}
+                    </Flex>;
+            }
         }
     ]
 
@@ -114,7 +153,10 @@ export default function BestStudents() {
             <Card style={{ borderRadius: '20px' }}>
                 <h2>{t('bestStudents')}</h2>
                 <hr />
-                <Table dataSource={dataSource} columns={columns} />
+                <div style={{ minHeight: '400px', overflow: 'auto' }}>
+                    <Table dataSource={dataSource} columns={columns} rowKey="id" pagination={{ pageSize: 5 }} />
+                    {/* <Pagination pageSize={5} total={dataSource.length} /> */}
+                </div>
             </Card>
         </div>
     )
