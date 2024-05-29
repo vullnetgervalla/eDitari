@@ -33,7 +33,7 @@ getUserRouter.get('/roles', checkRole("role"), (req, res) => {
 });
 
 getUserRouter.get('/parents', checkRole(null, ['ADMIN', 'TEACHER']), (req, res) => {
-  const { user, schoolid } = req.user;
+  const { userid, schoolid } = req.user;
   
     db.query('SELECT * from getAllParentUsers($1)', [schoolid], (err, queryRes) => {
       if (err) {
@@ -86,9 +86,9 @@ getUserRouter.get('/students', checkRole("list-student"), (req, res) => {
 });
 
 getUserRouter.get('/teacherSubjects', checkRole(null, "TEACHER"), (req, res) => {
-  const { user, schoolid } = req.user;
+  const { userid, schoolid } = req.user;
 
-  db.query('select subject.name, class.id, class.classname, class.classlevel, year.year from schedule join teachersubject on schedule.teachersubjectid = teachersubject.id join subject on teachersubject.subjectid = subject.id join class on schedule.classid = class.id join year on class.yearid = year.id where teachersubject.teacherid = $1 and class.schoolid = $2 group by subject.name, class.id, class.classname, class.classlevel, year.year;', [user, schoolid], (err, queryRes) => {
+  db.query('select * from getTeacherSubjectsSchedule($1, $2)', [userid, schoolid], (err, queryRes) => {
     if (err) {
       console.error('Error executing query', err);
       res.sendStatus(500);
