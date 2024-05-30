@@ -5,6 +5,7 @@ import NotificationCard from './cardNotification';
 import { useTranslation } from 'react-i18next';
 import { Button, Typography } from 'antd';
 import CreateNotification from 'pages/admin/createNotification';
+import { useAuth } from 'hooks/useAuth';
 
 const { Title } = Typography;
 
@@ -14,10 +15,22 @@ export default function SeeNotifications() {
   const axiosPrivate = useAxiosPrivate();
   const [newNotificationVisibility, setNewNotificationVisibility] = useState(false);
   const [newNotification, setNewNotification] = useState(false);
+  const {auth} = useAuth();
+  const [user, setUser] = useState({});
 
+  const fetchUser = async () => {
+    try {
+      const response = await axiosPrivate.get('/users/'+auth.userid);
+      setUser(response.data);
+      console.log(response.data);
+    }catch (error) {
+      console.error(error);
+    }
+  }
   const fetchNotificationsData = async () => {
     try {
       const response = await axiosPrivate.get('/notifications/');
+      console.log(response.data);
       setNotifications(response.data);
       setNewNotification(false)
     } catch (error) {
@@ -26,6 +39,7 @@ export default function SeeNotifications() {
   }
   useEffect(() => {
     fetchNotificationsData(axiosPrivate, setNotifications);
+    fetchUser();
     setNewNotification(false)
   }, [axiosPrivate, newNotification]);
   const createNotification = () => {
@@ -40,7 +54,7 @@ export default function SeeNotifications() {
         </Button>
         <div gap={'40px'} style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '25px', width: '100%', marginTop: '100px' }}>
           {notifications?.map((notification, index) => (
-            <NotificationCard key={index} date={notification.createdat} title={notification.title} description={notification.description} username={notification.username} role={notification.role} />
+            <NotificationCard key={index} date={notification.createdat} title={notification.title} description={notification.description} username={user?.firstname +' '+ user?.lastname} role={auth?.userType} />
           ))}
         </div>
       </div>
