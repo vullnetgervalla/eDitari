@@ -208,5 +208,11 @@
   "createdNotification": "Notification created successfully!",
   "notCreatedNotification": "Error creating notification!",
   "number.subjects": "Number of subjects",
-  "number.missing": "Number of missing students"
+  "number.missing": "Number of missing students",
+  "noDataFound": "No data found",
+  "classInfo": "Class information",
+  "unauthorized": "Unauthorized",
+  "redirecting": "Redirecting...",
+  "noClassFoundCreateNew": "No class found. Create new",
+  "notFound": "Not found"
 }

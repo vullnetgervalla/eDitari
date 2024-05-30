@@ -18,7 +18,10 @@ import ListSubjects from 'components/subject/ListSubjects';
 import CreateSchedule from 'components/schedule/CreateSchedule';
 import SeeMaterials from 'components/materials/seeMaterials';
 import ListSchedules from 'pages/users/listSchedule';
-import SubjectPage from 'pages/subject';
+import SubjectsPage from 'pages/subject';
+import { Subject } from 'pages/subject/Subject';
+import { NotFound } from 'components/auth/NotFound';
+import { Unauthorized } from 'components/auth/Unauthorized';
 
 export const AdminRoutes = [
   {
@@ -98,8 +101,18 @@ export const AdminRoutes = [
   },
   {
     path: 'subject',
-    element: <SubjectPage />
-  }, {
-    path: ''
+    element: <SubjectsPage />
+  },
+  {
+    path: 'subject/:id',
+    element: <Subject />
+  },
+  {
+    path: '404',
+    element: <NotFound />
+  },
+  {
+    path: '401',
+    element: <Unauthorized />
   }
 ];

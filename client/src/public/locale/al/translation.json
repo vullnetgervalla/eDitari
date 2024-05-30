@@ -163,7 +163,7 @@
   "average_grade":"Nota mesatare",
   "classname": "Emri i klasës",
   "classlevel": "Klasa",
-  "classroom": "Vendndodhja",
+  "classroom": "Nr i klasës",
   "year": "Viti",
   "active": "Aktive",
   "createdClass": "Klasa u krijua me sukses!",
@@ -208,5 +208,11 @@
   "createdNotification": "Njoftimi u krijua me sukses!",
   "notCreatedNotification": "Gabim gjatë krijimit të njoftimit!",
   "number.subjects": "Numri i lëndëve",
-  "number.missing": "Numri i mungesave"
+  "number.missing": "Numri i mungesave",
+  "noDataFound": "Nuk u gjet asnjë e dhënë",
+  "classInfo": "Informacioni i klasës",
+  "unauthorized": "Nuk keni autorizim",
+  "redirecting": "Duke u ridrejtuar...",
+  "noClassFoundCreateNew": "Nuk u gjet klasë. Krijo një të re.",
+  "notFound": "Nuk u gjet"
 }

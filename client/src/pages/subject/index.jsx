@@ -3,9 +3,8 @@ import { useAuth } from "hooks/useAuth";
 import { StudentSubjectPage } from "./StudentSubjectPage";
 import { TeacherSubjectPage } from "./TeacherSubjectPage";
 
-function SubjectPage() {
+function SubjectsPage() {
     const {auth} = useAuth()
-        console.log(auth)
     const { userType } = auth;
 
     const SubjectPage = () => {
@@ -26,4 +25,4 @@ function SubjectPage() {
     )
 } 
 
-export default SubjectPage;
+export default SubjectsPage;

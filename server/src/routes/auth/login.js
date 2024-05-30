@@ -28,7 +28,7 @@ loginRouter.post('/', (req, res) => {
             return;
         }
         const payload = {
-            user: user.id,
+            userid: user.id,
             schoolid: user.schoolid,
             userType: user.role
         };

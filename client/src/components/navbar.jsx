@@ -63,6 +63,10 @@ export default function NavBar({ content }) {
   const [openKeys, setOpenKeys] = useState([]);
   
   useEffect(() => {
+    if(location.pathname === '/') {
+      setSelectedKey('0');
+      setTitle('home');
+    }
     const path = location.pathname.endsWith('/') ? location.pathname.slice(0, -1) : location.pathname;
     const key = Object.keys(keyToPath).find(key => `/${keyToPath[key]}` === path);
     if (key) {
@@ -144,6 +148,7 @@ export default function NavBar({ content }) {
   if (!getPermissions()) return <Unauthorized />;
   const handleLogout = async () => {
     await logout();
+    sessionStorage.clear();
     navigate('/login');
   };
   return (
@@ -164,15 +169,15 @@ export default function NavBar({ content }) {
           float: 'left'
         }}
       >
-        <div className='demo-logo-vertical' >
-          {/* Logo here */}
+        <div style={{textAlign: 'center', color: '#f4f6fa', fontFamily: '"Libre Bodoni", serif', fontSize: collapsed ? '1.3rem' : '2rem'}} >
+          <span>eDitari</span>
         </div>
         <div
           style={{
             display: 'flex',
             flexDirection: 'column',
             justifyContent: 'space-between',
-            height: 'calc(100vh - 15px)',
+            height: 'calc(100vh - 50px)',
           }}>
           <Menu
             theme='dark'

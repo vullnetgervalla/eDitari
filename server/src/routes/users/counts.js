@@ -6,7 +6,7 @@ const { authenticateToken } = require('../../middleware/authenticateToken');
 const getCountsRouter = Router();
 
 getCountsRouter.get('/totalUsers', checkRole(null, "ADMIN"), (req, res) => {
-    const { user, schoolid } = req.user;
+    const { userid, schoolid } = req.user;
     let role = req.query.role;
     role = role.substring(1, role.length - 1).split(',').map(str => str === '1');
     db.query('SELECT * from getTotalNumberOfUsers($1, $2)', [schoolid, role], (err, queryRes) => {

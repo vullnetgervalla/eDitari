@@ -132,6 +132,13 @@ function CreateSchedule() {
                         showSearch
                         optionFilterProp='children'
                         allowClear
+                        notFoundContent={
+                            <div onClick={() => { navigate('/create-class') }}
+                                style={{ cursor: 'pointer', color: '#1677FF', height: '3rem', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.1rem' }}
+                            >
+                                {t('noClassFoundCreateNew')}
+                            </div>
+                        }
                     >
                         {classes.map((item) => {
                             return (

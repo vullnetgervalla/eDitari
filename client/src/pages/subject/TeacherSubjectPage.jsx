@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { useAxiosPrivate } from "hooks/useAxiosPrivate";
-import { Card } from 'antd';
-import { Typography } from 'antd';
-
-const { Title } = Typography;
+import { Card, Spin } from 'antd';
+import { useTranslation } from 'react-i18next';
+import { useNavigate } from "react-router-dom";
 
 export function TeacherSubjectPage() {
     const axios = useAxiosPrivate();
     const [subjects, setSubjects] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const { t } = useTranslation();
+    const navigate = useNavigate();
 
     useEffect(() => {
         const getSubjects = async () => {
@@ -18,30 +20,32 @@ export function TeacherSubjectPage() {
             catch (e) {
                 console.log(e)
             }
+            finally {
+                setLoading(false);
+            }
         }
         getSubjects()
     }, [])
 
+    if (loading) {
+        return <Card loading={loading}/>;
+    }
+
     return (
         <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-            {subjects.map((subject) => (
+            {subjects.length ? subjects.map((subject) => (
                 <Card
+                    title={<h2>{subject.name}</h2>}
                     key={subject.id}
-                    style={{
-                        borderRadius: '5px',
-                        boxShadow: '0 4px 8px 0 rgba(0,0,0,0.2)',
-                        transition: '0.3s',
-                        ':hover': {
-                            boxShadow: '0 8px 16px 0 rgba(0,0,0,0.2)',
-                        }
-                    }}
+                    hoverable
+                    onClick={() => {navigate(`/subject/${subject.id}`)}}
                 >
-                    <Title level={2}>{subject.name}</Title>
-                    <h3>Class: {subject.classname}</h3>
-                    <h4>Year: {subject.year}</h4>
-                    <div style={{backgroundColor: '#1890ff', height: '10px'}}></div>
+                    <h2>{t('classname')}: {subject.classname}</h2>
+                    <h4>{t('classlevel')}: {subject.classlevel}</h4>
+                    <h4>{t('year')}: {subject.year}</h4>
+                    <div style={{backgroundColor: '#1677ff', height: '10px'}}></div>
                 </Card>
-            ))}
+            )): <h1>{t('noSubjects')}</h1>}
         </div>
     )
 }
