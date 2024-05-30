@@ -215,5 +215,14 @@
   "unauthorized": "Nemate dozvolu za pristup ovoj stranici",
   "redirecting": "Preusmeravanje...",
   "noClassFoundCreateNew": "Nema odeljenja, kreirajte novo",
-  "notFound": "Nije pronađeno"
+  "notFound": "Nije pronađeno",
+  "numbersOnly1-5range": "Samo brojevi u opsegu 1-5",
+  "searcj": "Pretraga",
+  "date": "Datum",
+  "grade": "Ocena",
+  "actions": "Akcije",
+  "final": "Zaključna",
+  "finalGrade": "Zaključna ocena",
+  "addGrade": "Dodaj ocenu",
+  "confirmDelete": "Da li ste sigurni da želite da obrišete?"
 }

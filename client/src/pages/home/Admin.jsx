@@ -124,7 +124,7 @@ export function AdminPage() {
         </div>
       </Flex>
 
-      <div style={{ marginTop: '100px', cursor: 'pointer' }}>
+      <div style={{ marginTop: '100px', cursor: 'pointer', backgroundColor:'white',padding:'50px', borderRadius:"30px",border: '1px solid #e5e7eb',boxShadow: '0 4px 4px rgba(0, 0, 0, 0.25)' }}>
         <MyCalendar />
       </div>
     </div>

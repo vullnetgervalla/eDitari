@@ -239,7 +239,20 @@ SELECT
                         'fullname', "Parent".firstname || ' ' || "Parent".lastname
                     )
                     ELSE NULL
-                END
+                END,
+                'grades', (
+                    SELECT jsonb_agg(
+                        jsonb_build_object(
+                            'id', grade.id,
+                            'date', grade.date,
+                            'grade', grade.grade,
+                            'final', grade.final
+                        )
+                    )
+                    FROM grade
+                    WHERE grade.studentid = "U_Student".id
+                    AND grade.teachersubjectid = schedule.teachersubjectid
+                )
             )
         )
         FROM "User" AS "U_Student"
@@ -250,4 +263,44 @@ SELECT
 FROM schedule
 JOIN class ON schedule.classid = class.id
 WHERE schedule.id = i_scheduleid;
+$$;
+
+DROP FUNCTION IF EXISTS insertGrade(gradetype, INTEGER, INTEGER, BOOLEAN);
+CREATE OR REPLACE FUNCTION insertGrade(i_grade gradetype, i_studentid INTEGER, i_teachersubjectid INTEGER, i_final BOOLEAN)
+RETURNS SETOF grade
+LANGUAGE plpgsql
+AS $$
+BEGIN
+    RETURN QUERY
+    INSERT INTO grade (date, grade, studentid, teachersubjectid, final)
+    VALUES (NOW(), i_grade::gradetype, i_studentid, i_teachersubjectid, i_final)
+    RETURNING *;
+END;
+$$;
+
+DROP FUNCTION IF EXISTS deleteGrade(INTEGER);
+CREATE OR REPLACE FUNCTION deleteGrade(i_gradeid INTEGER)
+RETURNS SETOF grade
+LANGUAGE plpgsql
+AS $$
+BEGIN
+    RETURN QUERY
+    DELETE FROM grade
+    WHERE id = i_gradeid
+    RETURNING *;
+END;
+$$;
+
+DROP FUNCTION IF EXISTS updateGrade(INTEGER, gradetype, BOOLEAN);
+CREATE OR REPLACE FUNCTION updateGrade(i_gradeid INTEGER, i_grade gradetype, i_final BOOLEAN)
+RETURNS SETOF grade
+LANGUAGE plpgsql
+AS $$
+BEGIN
+    RETURN QUERY
+    UPDATE grade
+    SET grade = i_grade::gradetype, final = i_final
+    WHERE id = i_gradeid
+    RETURNING *;
+END;
 $$;

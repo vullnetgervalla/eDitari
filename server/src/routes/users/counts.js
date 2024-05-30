@@ -5,7 +5,7 @@ const { authenticateToken } = require('../../middleware/authenticateToken');
 
 const getCountsRouter = Router();
 
-getCountsRouter.get('/totalUsers', checkRole(null, "ADMIN"), (req, res) => {
+getCountsRouter.get('/totalUsers', checkRole(null, ["ADMIN", "TEACHER"]), (req, res) => {
     const { userid, schoolid } = req.user;
     let role = req.query.role;
     role = role.substring(1, role.length - 1).split(',').map(str => str === '1');
@@ -19,7 +19,7 @@ getCountsRouter.get('/totalUsers', checkRole(null, "ADMIN"), (req, res) => {
     });
 });
 
-getCountsRouter.get('/totalClasses', checkRole(null, "ADMIN"), (req, res) => {
+getCountsRouter.get('/totalClasses', checkRole(null, ["ADMIN","TEACHER"]), (req, res) => {
     const { schoolid } = req.user;
     db.query('SELECT * from getNumOfClasses($1)', [schoolid], (err, queryRes) => {
         if (err) {
@@ -31,7 +31,7 @@ getCountsRouter.get('/totalClasses', checkRole(null, "ADMIN"), (req, res) => {
     });
 });
 
-getCountsRouter.get('/topStudents', checkRole(null, "ADMIN"), (req, res) => {
+getCountsRouter.get('/topStudents', checkRole(null, ["ADMIN","TEACHER"]), (req, res) => {
     const {schoolid} = req.user;
     const { limit } = req.query;
     db.query('SELECT * from getTopStudents($1, $2)', [schoolid, limit], (err, queryRes) => {
@@ -45,7 +45,7 @@ getCountsRouter.get('/topStudents', checkRole(null, "ADMIN"), (req, res) => {
       });
   });
 
-  getCountsRouter.get('/studentsAtttendances', checkRole(null, "ADMIN"), (req, res) => {
+  getCountsRouter.get('/studentsAtttendances', checkRole(null, ["ADMIN","TEACHER"]), (req, res) => {
     const {schoolid} = req.user;
     const { limit } = req.query;
     db.query('SELECT * from GetStudentsWithMostAttendances($1, $2)', [schoolid, limit], (err, queryRes) => {

@@ -214,5 +214,14 @@
   "unauthorized": "Unauthorized",
   "redirecting": "Redirecting...",
   "noClassFoundCreateNew": "No class found. Create new",
-  "notFound": "Not found"
+  "notFound": "Not found",
+  "numbersOnly1-5range": "Numbers from 1-5 only",
+  "search": "Search",
+  "date": "Date",
+  "grade": "Grade",
+  "actions": "Actions",
+  "final": "Final",
+  "finalGrade": "Final grade",
+  "addGrade": "Add grade",
+  "confirmDelete": "Are you sure you want to delete this?"
 }

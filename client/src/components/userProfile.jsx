@@ -18,7 +18,7 @@ const fetchData = async (axiosPrivate, userId, setOriginalData, setFormData, set
         setLoading(false);
     } catch (error) {
         if(error?.response?.status === 400) {
-            navigate('/401');
+            navigate('/unauthorized');
         }
         else {
             console.error(error);

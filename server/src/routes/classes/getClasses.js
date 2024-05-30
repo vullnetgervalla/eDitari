@@ -22,7 +22,7 @@ getClassRouter.get('/numOfClasses'), checkRole(null, ['STUDENT']), (req, res) =>
   db.query('SELECT * ')
 }
 
-getClassRouter.get('/getTeacherCountByGender', checkRole(null, 'ADMIN'), (req, res) => {
+getClassRouter.get('/getTeacherCountByGender', checkRole(null, ["ADMIN","TEACHER"]), (req, res) => {
   db.query('SELECT * FROM GetTeacherCountByGender()', (err, queryRes) => {
     if (err) {
       console.error('Error executing query', err);
@@ -33,7 +33,7 @@ getClassRouter.get('/getTeacherCountByGender', checkRole(null, 'ADMIN'), (req, r
   })
 })
 
-getClassRouter.get('/numOfStudentsPerClass', checkRole(null, 'ADMIN'), (req, res) => {
+getClassRouter.get('/numOfStudentsPerClass', checkRole(null, ["ADMIN","TEACHER"]), (req, res) => {
     db.query('SELECT * FROM getNumOfStudentsPerClass()', (err, queryRes) => {
       if (err) {
         console.error('Error executing query', err);
