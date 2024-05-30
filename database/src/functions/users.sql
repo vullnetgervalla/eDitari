@@ -370,7 +370,7 @@ FROM "User" AS "U_Student"
     JOIN student ON "U_Student".id = student.id
     LEFT JOIN "User" AS "Parent" ON student.parentid = "Parent".id
     JOIN class ON student.classid = class.id
-WHERE "U_Student".id = id;
+WHERE "U_Student".id = input_id;
 $$;
 
 
