@@ -1,7 +1,7 @@
 import { PlusCircleOutlined } from '@ant-design/icons'
 import React, { useState, useEffect } from 'react';
 import { useAxiosPrivate } from 'hooks/useAxiosPrivate';
-import NotificationCard from './cardNotification';
+import NotificationCard from '../cardNotification';
 import { useTranslation } from 'react-i18next';
 import { Button, Typography } from 'antd';
 import CreateNotification from 'pages/admin/createNotification';
@@ -9,7 +9,7 @@ import { useAuth } from 'hooks/useAuth';
 
 const { Title } = Typography;
 
-export default function SeeNotifications() {
+export default function Notifications() {
   const { t } = useTranslation();
   const [notifications, setNotifications] = useState([]);
   const axiosPrivate = useAxiosPrivate();

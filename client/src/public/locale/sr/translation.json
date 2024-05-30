@@ -224,5 +224,9 @@
   "final": "Zaključna",
   "finalGrade": "Zaključna ocena",
   "addGrade": "Dodaj ocenu",
-  "confirmDelete": "Da li ste sigurni da želite da obrišete?"
+  "confirmDelete": "Da li ste sigurni da želite da obrišete?",
+  "nr": "Br",
+  "firstSemester": "Prvo polugodište",
+  "secondSemester": "Drugo polugodište",
+  "transcript": "Transkript"
 }

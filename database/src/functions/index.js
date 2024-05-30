@@ -8,6 +8,7 @@ const functions = [
     'src/functions/notifications.sql',
     'src/functions/subjects.sql',
     'src/functions/schedule.sql',
+    'src/functions/students.sql'
 ]
 
 module.exports = functions;

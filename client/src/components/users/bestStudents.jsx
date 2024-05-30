@@ -10,7 +10,6 @@ import { TrophyOutlined } from '@ant-design/icons';
 
 const fetchTopStudents = async (axiosPrivate, setDataSource) => {
     try {
-        console.log('fetching top students')
         const response = await axiosPrivate.get('/users/topStudents', { params: { limit: 5} });
         setDataSource(response.data);
         console.log(response.data)

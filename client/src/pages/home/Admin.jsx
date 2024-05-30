@@ -28,7 +28,7 @@ const fetchGenderTeachers = async (axiosPrivate, setGenderTeachers) => {
     console.error(error);
   }
 }
-const fetchStudentCount = async (axiosPrivate, setStudentCount, setTeacherCount, setClassCount, setParentCount, setLoading) => {
+const fetchUsersCount = async (axiosPrivate, setStudentCount, setTeacherCount, setClassCount, setParentCount, setLoading) => {
   try {
     const users = await axiosPrivate.get('/users/totalUsers?role=[0,1,1,1]');
     const classes = await axiosPrivate.get('/users/totalClasses');
@@ -92,7 +92,7 @@ export function AdminPage() {
   useEffect(() => {
     fetchNumOfStudentsPerClass(axiosPrivate, setStudentsPerClassLevel);
     fetchGenderTeachers(axiosPrivate, setGenderTeachers);
-    fetchStudentCount(axiosPrivate, setStudentCount, setTeacherCount, setClassCount, setParentCount, setLoading);
+    fetchUsersCount(axiosPrivate, setStudentCount, setTeacherCount, setClassCount, setParentCount, setLoading);
   }, [axiosPrivate]);
   if(loading){
     return <Spin className='fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2' size='large' />;

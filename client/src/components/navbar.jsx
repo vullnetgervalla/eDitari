@@ -50,6 +50,7 @@ const iconMapping = {
   schedule: <CalendarOutlined />,
   subject: <BookOutlined />,
   class: <FundProjectionScreenOutlined />,
+  transcript: <BookOutlined />
 };
 export default function NavBar({ content }) {
   const axiosPrivate = useAxiosPrivate();
