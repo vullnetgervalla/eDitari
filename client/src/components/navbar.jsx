@@ -16,12 +16,13 @@ import {
 } from '@ant-design/icons';
 import { Button, Layout, Menu, theme, Typography, Tooltip } from 'antd';
 import { useTranslation } from 'react-i18next';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation, useMatch } from 'react-router-dom';
 import { useLogout } from 'hooks/useLogout';
 import { useAxiosPrivate } from 'hooks/useAxiosPrivate';
 import { useCapabilities } from 'hooks/useCapabilities';
 import { Spin } from 'antd';
 import { Unauthorized } from './auth/Unauthorized';
+import { useAuth } from 'hooks/useAuth';
 
 const { Header, Content, Sider } = Layout;
 const { Title } = Typography;
@@ -61,7 +62,12 @@ export default function NavBar({ content }) {
   const [title, setTitle] = useState(sessionStorage.getItem('title') || 'home');
   const [selectedKey, setSelectedKey] = useState(sessionStorage.getItem('selectedKey') || '0');
   const [openKeys, setOpenKeys] = useState([]);
+  const { auth } = useAuth();
   
+  const matchAdmin = useMatch('/list-admin/:id');
+  const matchTeacher = useMatch('/list-teacher/:id');
+  const matchStudent = useMatch('/list-student/:id');
+
   useEffect(() => {
     if(location.pathname === '/') {
       setSelectedKey('0');
@@ -86,10 +92,21 @@ export default function NavBar({ content }) {
     position: 'relative',
     backgroundColor: '#f4f6fa'
   };
+
+  const checkPathAndId = (userid) => {
+    const match = matchAdmin || matchTeacher || matchStudent;
+    console.log(match, userid)
+    if (match && match.params.id == userid) {
+      return true;
+    }
+    return false;
+  };
+
   const getPermissions = () => {
     if (location.pathname == '/') return true;
     const path = location.pathname.endsWith('/') ? location.pathname.slice(0, -1) : location.pathname;
     const permissions = capabilities.findIndex((item) => path.startsWith(`/${item.capability_name}`));
+    if(checkPathAndId(auth.userid)) return true;
     if (permissions === -1) return false;
     return true;
   };

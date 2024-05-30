@@ -12,15 +12,30 @@ import './App.css';
 import UsersPage from 'pages/users/index';
 import { AdminRoutes } from './routes/adminRoutes';
 import LanguageSwitcher from 'components/language/LanguageSwitcher';
+import { UserOutlined } from '@ant-design/icons'
+import { useNavigate } from 'react-router-dom';
 
 function App() {
 	const { auth } = useAuth();
-	const { user, userType } = auth;
-
+	const { userid , userType } = auth;
+	const navigate = useNavigate();
+	const profilePath = 
+		userType === 'ADMIN' 
+			? 'list-admin'
+			: userType === 'TEACHER'
+				? 'list-teacher'
+				: userType === 'STUDENT' || userType === 'PARENT'
+					? 'list-student'
+					: null; 
 	return (
 		<>
-			<div className="fixed top-4 right-4 z-50">
+			<div className="fixed top-4 right-4 z-50 flex gap-5">
 				<LanguageSwitcher />
+				{userid && <span
+					onClick={() => navigate(profilePath ? `/${profilePath}/${userid}` : '/')} 
+					style={{border: 'black solid 1px', borderRadius: '50%', width: '30px', height: '30px', display: 'flex', justifyContent: 'center', cursor: 'pointer', backgroundColor: 'white'}}>
+					<UserOutlined />
+				</span>}
 			</div>
 			<Routes>
 				<Route path='/login' element={<Login />} />

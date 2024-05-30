@@ -112,7 +112,7 @@ export const AdminRoutes = [
     element: <NotFound />
   },
   {
-    path: '401',
+    path: 'unauthorized',
     element: <Unauthorized />
   }
 ];
