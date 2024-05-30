@@ -19,6 +19,7 @@ import SubjectsPage from 'pages/subject';
 import { Subject } from 'pages/subject/Subject';
 import { NotFound } from 'components/auth/NotFound';
 import { Unauthorized } from 'components/auth/Unauthorized';
+import { Lecture } from 'pages/teacher/Lecture';
 import Transcript from 'components/student/transcript';
 import NoificationsPage from 'components/notifications/index'
 import StudentSubjectInfo from 'pages/subject/studentSubjectInfo'
@@ -118,6 +119,10 @@ export const AdminRoutes = [
   {
     path: 'unauthorized',
     element: <Unauthorized />
+  },
+  {
+    path: 'class',
+    element: <Lecture />
   },
   {
     path: 'transcript',
