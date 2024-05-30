@@ -6,32 +6,39 @@ import { StudentTable } from "components/tables/StudentTable";
 import { Content, Header } from "antd/es/layout/layout";
 import { useTranslation } from "react-i18next";
 import { Unauthorized } from "components/auth/Unauthorized";
+import { GradeModal } from "components/modals/GradeModal";
 
 export function Subject() {
     const axios = useAxiosPrivate();
     const [loading, setLoading] = useState(true);
     const [data, setData] = useState([]);
+    const [isModalVisible, setIsModalVisible] = useState(false);
     const param = useParams();
     const { t } = useTranslation();
-    console.log(data)
 
     useEffect(() => {
         const getData = async () => {
             try {
-                const res = await axios.get(`/subjects/${param.id}`)
-                setData(res.data)
-            }
-            catch (e) {
-                console.log(e)
-            }
-            finally {
+                const res = await axios.get(`/subjects/${param.id}`);
+                setData(res.data);
+            } catch (e) {
+                console.log(e);
+            } finally {
                 setLoading(false);
             }
-        }
+        };
 
-        getData()
-    }, [])
+        getData();
+    }, [param.id, axios]);
 
+   
+
+    const { class: classInfo, students } = data;
+
+    const showGradesModal = () => {
+        setIsModalVisible(true);
+    };
+    
     if (loading) {
         return <Card style={{ height: '50%' }} loading={loading} />;
     }
@@ -40,7 +47,6 @@ export function Subject() {
         return <Unauthorized />;
     }
 
-    const { class: classInfo, students } = data;
 
     return (
         <Layout style={{ background: 'white', borderRadius: '20px' }}>
@@ -59,16 +65,17 @@ export function Subject() {
                     </Col>
                     <Col span={16}>
                         <Card title={
-                            <div style={{display: 'flex', justifyContent: 'space-between'}}>
+                            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                                 <span>{t('student')}</span>
-                                <Button type="primary" children={t('grades')} />
+                                <Button type="primary" onClick={() => showGradesModal()}>{t('grades')}</Button>
                             </div>
                         } >
-                            <StudentTable tableProps={{pagination: { pageSize: 6 }}} data={students.map(s => ({...s, class: classInfo}))} teacher={true}/>
+                            <StudentTable tableProps={{ pagination: { pageSize: 6 }}} data={students.map(s => ({ ...s, class: classInfo }))} teacher={true} />
                         </Card>
                     </Col>
                 </Row>
             </Content>
+            <GradeModal isModalVisible={isModalVisible} setIsModalVisible={setIsModalVisible} students={students} />
         </Layout>
     );
 }

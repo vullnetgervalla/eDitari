@@ -239,7 +239,20 @@ SELECT
                         'fullname', "Parent".firstname || ' ' || "Parent".lastname
                     )
                     ELSE NULL
-                END
+                END,
+                'grades', (
+                    SELECT jsonb_agg(
+                        jsonb_build_object(
+                            'id', grade.id,
+                            'date', grade.date,
+                            'grade', grade.grade,
+                            'final', grade.final
+                        )
+                    )
+                    FROM grade
+                    WHERE grade.studentid = "U_Student".id
+                    AND grade.teachersubjectid = schedule.teachersubjectid
+                )
             )
         )
         FROM "User" AS "U_Student"
@@ -250,4 +263,17 @@ SELECT
 FROM schedule
 JOIN class ON schedule.classid = class.id
 WHERE schedule.id = i_scheduleid;
+$$;
+
+DROP FUNCTION IF EXISTS insertGrade(gradetype, INTEGER, INTEGER, BOOLEAN);
+CREATE OR REPLACE FUNCTION insertGrade(i_grade gradetype, i_studentid INTEGER, i_teachersubjectid INTEGER, i_final BOOLEAN)
+RETURNS SETOF grade
+LANGUAGE plpgsql
+AS $$
+BEGIN
+    RETURN QUERY
+    INSERT INTO grade (date, grade, studentid, teachersubjectid, final)
+    VALUES (NOW(), i_grade, i_studentid, i_teachersubjectid, i_final)
+    RETURNING *;
+END;
 $$;
