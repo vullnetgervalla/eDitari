@@ -95,7 +95,6 @@ export default function NavBar({ content }) {
 
   const checkPathAndId = (userid) => {
     const match = matchAdmin || matchTeacher || matchStudent;
-    console.log(match, userid)
     if (match && match.params.id == userid) {
       return true;
     }

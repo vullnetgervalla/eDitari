@@ -273,7 +273,34 @@ AS $$
 BEGIN
     RETURN QUERY
     INSERT INTO grade (date, grade, studentid, teachersubjectid, final)
-    VALUES (NOW(), i_grade, i_studentid, i_teachersubjectid, i_final)
+    VALUES (NOW(), i_grade::gradetype, i_studentid, i_teachersubjectid, i_final)
+    RETURNING *;
+END;
+$$;
+
+DROP FUNCTION IF EXISTS deleteGrade(INTEGER);
+CREATE OR REPLACE FUNCTION deleteGrade(i_gradeid INTEGER)
+RETURNS SETOF grade
+LANGUAGE plpgsql
+AS $$
+BEGIN
+    RETURN QUERY
+    DELETE FROM grade
+    WHERE id = i_gradeid
+    RETURNING *;
+END;
+$$;
+
+DROP FUNCTION IF EXISTS updateGrade(INTEGER, gradetype, BOOLEAN);
+CREATE OR REPLACE FUNCTION updateGrade(i_gradeid INTEGER, i_grade gradetype, i_final BOOLEAN)
+RETURNS SETOF grade
+LANGUAGE plpgsql
+AS $$
+BEGIN
+    RETURN QUERY
+    UPDATE grade
+    SET grade = i_grade::gradetype, final = i_final
+    WHERE id = i_gradeid
     RETURNING *;
 END;
 $$;

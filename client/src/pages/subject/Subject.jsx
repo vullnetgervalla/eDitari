@@ -12,6 +12,7 @@ export function Subject() {
     const axios = useAxiosPrivate();
     const [loading, setLoading] = useState(true);
     const [data, setData] = useState([]);
+    const [incerment, setIncrement] = useState(0);
     const [isModalVisible, setIsModalVisible] = useState(false);
     const param = useParams();
     const { t } = useTranslation();
@@ -29,11 +30,13 @@ export function Subject() {
         };
 
         getData();
-    }, [param.id, axios]);
-
-   
+    }, [param.id, axios, incerment]);
 
     const { class: classInfo, students } = data;
+
+    const updateData = (newData) => {
+        setData(newData);
+    }
 
     const showGradesModal = () => {
         setIsModalVisible(true);
@@ -75,7 +78,7 @@ export function Subject() {
                     </Col>
                 </Row>
             </Content>
-            <GradeModal isModalVisible={isModalVisible} setIsModalVisible={setIsModalVisible} students={students} />
+            <GradeModal isModalVisible={isModalVisible} setIsModalVisible={setIsModalVisible} data={data} updateData={setIncrement} />
         </Layout>
     );
 }

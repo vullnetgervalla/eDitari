@@ -212,5 +212,14 @@
   "unauthorized": "Nuk keni autorizim",
   "redirecting": "Duke u ridrejtuar...",
   "noClassFoundCreateNew": "Nuk u gjet klasë. Krijo një të re.",
-  "notFound": "Nuk u gjet"
+  "notFound": "Nuk u gjet",
+  "numbersOnly1-5range": "Vetëm numra prej 1-5",
+  "search": "Kërko",
+  "date": "Data",
+  "grade": "Nota",
+  "actions": "Veprimet",
+  "final": "Përfundimtare",
+  "finalGrade": "Nota përfundimtare",
+  "addGrade": "Shto notë",
+  "confirmDelete": "A jeni i sigurt që dëshironi të fshini?"
 }
