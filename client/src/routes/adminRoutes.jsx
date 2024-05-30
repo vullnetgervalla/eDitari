@@ -22,6 +22,7 @@ import SubjectsPage from 'pages/subject';
 import { Subject } from 'pages/subject/Subject';
 import { NotFound } from 'components/auth/NotFound';
 import { Unauthorized } from 'components/auth/Unauthorized';
+import { Lecture } from 'pages/teacher/Lecture';
 
 export const AdminRoutes = [
   {
@@ -114,5 +115,9 @@ export const AdminRoutes = [
   {
     path: 'unauthorized',
     element: <Unauthorized />
+  },
+  {
+    path: 'class',
+    element: <Lecture />
   }
 ];

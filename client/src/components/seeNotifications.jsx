@@ -54,7 +54,7 @@ export default function SeeNotifications() {
         </Button>
         <div gap={'40px'} style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '25px', width: '100%', marginTop: '100px' }}>
           {notifications?.map((notification, index) => (
-            <NotificationCard key={index} date={notification.createdat} title={notification.title} description={notification.description} username={user?.firstname +' '+ user?.lastname} role={auth?.userType} />
+            <NotificationCard key={index} date={notification.createdat} title={notification.title} description={notification.description} username={notification?.username} role={auth?.userType} />
           ))}
         </div>
       </div>

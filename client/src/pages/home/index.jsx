@@ -18,6 +18,7 @@ export default function HomePage(props) {
             case 'PARENT':
                 return <ParentPage />
             case 'STUDENT':
+                // return <StudentPage />
                 return <StudentPage />
             default:
                 return <Spin className='fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2' size='large'/>
