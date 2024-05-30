@@ -206,5 +206,11 @@
   "scheduleExists": "Period already exists",
   "holiday": "Holiday",
   "createdNotification": "Notification created successfully!",
-  "notCreatedNotification": "Error creating notification!"
+  "notCreatedNotification": "Error creating notification!",
+  "noDataFound": "No data found",
+  "classInfo": "Class information",
+  "unauthorized": "Unauthorized",
+  "redirecting": "Redirecting...",
+  "noClassFoundCreateNew": "No class found. Create new",
+  "notFound": "Not found"
 }

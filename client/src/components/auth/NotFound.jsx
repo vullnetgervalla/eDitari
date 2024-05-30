@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 
-export const Unauthorized = () => {
+export const NotFound = () => {
     const { t } = useTranslation();
     const navigate = useNavigate();
 
@@ -11,6 +11,7 @@ export const Unauthorized = () => {
             if (document.referrer && new URL(document.referrer).hostname === window.location.hostname) {
                 navigate(-1);
             } else {
+                console.log('here')
                 navigate('/');
             }
         }, 2000);
@@ -21,8 +22,8 @@ export const Unauthorized = () => {
     return (
         <div className="flex h-screen bg-gray-200">
             <div className="m-auto text-center">
-                <h1 className="text-6xl font-bold">401</h1>
-                <h2 className="text-2xl">{t('unauthorized')}</h2>
+                <h1 className="text-6xl font-bold">404</h1>
+                <h2 className="text-2xl">{t('notFound')}</h2>
                 <h3>{t('redirecting')}</h3>
             </div>
         </div>

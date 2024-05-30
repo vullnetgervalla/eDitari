@@ -6,7 +6,7 @@ import Highlighter from 'react-highlight-words';
 import { useTranslation } from 'react-i18next';
 import moment from 'moment';
 
-export const StudentTable = ({ data, side }) => {
+export const StudentTable = ({ data, side, teacher, tableProps }) => {
     const { t } = useTranslation();
     const [searchText, setSearchText] = useState('');
     const [searchedColumn, setSearchedColumn] = useState('');
@@ -142,7 +142,7 @@ export const StudentTable = ({ data, side }) => {
             render: (birthday) => <span>{birthday ? moment(birthday).format('DD/MM/YYYY') : '-'}</span>
         },
         ...(!side ? [
-            {
+            ...(!teacher ? [{
                 title: t('account'),
                 dataIndex: 'account',
                 key: 'account',
@@ -151,7 +151,7 @@ export const StudentTable = ({ data, side }) => {
                         <UserOutlined style={{ fontSize: '18px' }} />
                     </Link>
                 ),
-            },
+            }] : []),
             {
                 title: t('absences'),
                 dataIndex: 'absences',
@@ -162,28 +162,28 @@ export const StudentTable = ({ data, side }) => {
                     </Link>
                 ),
             },
-            {
-                title: t('attestation'),
-                dataIndex: 'attestation',
-                key: 'attestation',
-                render: () => (
-                    <Link to={'/'} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%', color: 'black' }}>
-                        <PrinterFilled style={{ fontSize: '18px' }} />
-                    </Link>
-                ),
-            },
-            {
-                title: t('grades'),
-                dataIndex: 'grades',
-                key: 'grades',
-                render: () => (
-                    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
-                        <BookOutlined style={{ fontSize: '18px' }} />
-                    </div>
-                ),
-            },
+            // {
+            //     title: t('attestation'),
+            //     dataIndex: 'attestation',
+            //     key: 'attestation',
+            //     render: () => (
+            //         <Link to={'/'} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%', color: 'black' }}>
+            //             <PrinterFilled style={{ fontSize: '18px' }} />
+            //         </Link>
+            //     ),
+            // },
+            // {
+            //     title: t('grades'),
+            //     dataIndex: 'grades',
+            //     key: 'grades',
+            //     render: () => (
+            //         <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
+            //             <BookOutlined style={{ fontSize: '18px' }} />
+            //         </div>
+            //     ),
+            // },
         ] : []),
     ];
 
-    return <Table bordered columns={columns} dataSource={data} scroll={{ x: 500 }} rowKey={'id'} />;
+    return <Table {...tableProps} bordered columns={columns} dataSource={data} scroll={{ x: 500 }} rowKey={'id'} />;
 };

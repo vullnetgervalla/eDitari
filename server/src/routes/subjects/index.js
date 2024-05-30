@@ -5,7 +5,7 @@ const { createSubjectRouter } = require('./createSubject');
 
 const subjectRouter = Router();
 
-subjectRouter.use('/', getSubjectRouter);
 subjectRouter.use('/', createSubjectRouter);
+subjectRouter.use('/', getSubjectRouter);
 
 module.exports = { subjectRouter };

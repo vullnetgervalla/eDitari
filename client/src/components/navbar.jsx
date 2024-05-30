@@ -144,6 +144,7 @@ export default function NavBar({ content }) {
   if (!getPermissions()) return <Unauthorized />;
   const handleLogout = async () => {
     await logout();
+    sessionStorage.clear();
     navigate('/login');
   };
   return (
@@ -164,15 +165,15 @@ export default function NavBar({ content }) {
           float: 'left'
         }}
       >
-        <div className='demo-logo-vertical' >
-          {/* Logo here */}
+        <div style={{textAlign: 'center', color: '#f4f6fa', fontFamily: '"Libre Bodoni", serif', fontSize: collapsed ? '1.3rem' : '2rem'}} >
+          <span>eDitari</span>
         </div>
         <div
           style={{
             display: 'flex',
             flexDirection: 'column',
             justifyContent: 'space-between',
-            height: 'calc(100vh - 15px)',
+            height: 'calc(100vh - 50px)',
           }}>
           <Menu
             theme='dark'

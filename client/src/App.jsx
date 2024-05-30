@@ -7,7 +7,7 @@ import PersistLogin from 'components/auth/PersistLogin';
 import { Unauthorized } from 'components/auth/Unauthorized';
 import NavBar from 'components/navbar';
 import { useAuth } from 'hooks/useAuth';
-import { NotFound } from 'components/NotFound';
+import { NotFound } from 'components/auth/NotFound';
 import './App.css';
 import UsersPage from 'pages/users/index';
 import { AdminRoutes } from './routes/adminRoutes';
@@ -19,7 +19,7 @@ function App() {
 
 	return (
 		<>
-			<div className="absolute top-4 right-4">
+			<div className="fixed top-4 right-4 z-50">
 				<LanguageSwitcher />
 			</div>
 			<Routes>

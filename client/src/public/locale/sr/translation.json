@@ -205,8 +205,13 @@
   "day": "Dan",
   "create-period": "Registruj period",
   "scheduleExists": "Raspored postoji",
-  "required": "Obavezno",
   "holiday": "Praznik",
   "createdNotification": "Obaveštenje uspešno kreirano",
-  "notCreatedNotification": "Greška prilikom kreiranja obaveštenja"
+  "notCreatedNotification": "Greška prilikom kreiranja obaveštenja",
+  "noDataFound": "Nema podataka",
+  "classinfo": "Informacije o odeljenju",
+  "unauthorized": "Nemate dozvolu za pristup ovoj stranici",
+  "redirecting": "Preusmeravanje...",
+  "noClassFoundCreateNew": "Nema odeljenja, kreirajte novo",
+  "notFound": "Nije pronađeno"
 }

@@ -102,6 +102,10 @@ getUserRouter.get('/teacherSubjects', checkRole(null, "TEACHER"), (req, res) => 
 // This needs to be the last route
 getUserRouter.get('/:id', authenticateToken, (req, res) => {
   const id = req.params.id;
+  if (typeof id !== 'number') {
+    res.status(400).send('Invalid id');
+    return;
+  }
     db.query('SELECT * from getUser($1)', [id], (err, queryRes) => {
         if (err) {
           console.error('Error executing query', err);

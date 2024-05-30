@@ -8,9 +8,9 @@ import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 dayjs.extend(customParseFormat);
 import UserProfileUI from './ui/userProfileUI';
+import { useNavigate } from 'react-router-dom';
 
-const { Title } = Typography;
-const fetchData = async (axiosPrivate, userId, setOriginalData, setFormData, setLoading) => {
+const fetchData = async (axiosPrivate, userId, setOriginalData, setFormData, setLoading, navigate) => {
     try {
         const response = await axiosPrivate.get(`/users/${userId}`);
         setOriginalData(response.data);
@@ -19,6 +19,9 @@ const fetchData = async (axiosPrivate, userId, setOriginalData, setFormData, set
     } catch (error) {
         console.error('There was an error!', error);
         message.error('There was an error fetching user data!');
+        if(error.response.status === 400) {
+            navigate('/401');
+        }
     }
 };
 const allGender = [{
@@ -68,6 +71,7 @@ export default function UserProfile() {
     const [loading, setLoading] = useState(true);
     const userRole = originalUserData?.role;
     const [passwordReseted, setPasswordReseted] = useState(false);
+    const navigate = useNavigate();
     const tabList = [
         {
             key: t('profile-data'),
@@ -76,12 +80,12 @@ export default function UserProfile() {
     ];
     const userId = location.pathname.split('/').pop();
     useEffect(() => {
-        fetchData(axiosPrivate, userId, setOriginalUserData, setFormData, setLoading);
+        fetchData(axiosPrivate, userId, setOriginalUserData, setFormData, setLoading, navigate);
     }, [axiosPrivate, userId]
     );
     useEffect(() => {
         if (formData?.parentid)
-            fetchData(axiosPrivate, formData?.parentid, setOriginalParentData, setParentFormData, setLoading);
+            fetchData(axiosPrivate, formData?.parentid, setOriginalParentData, setParentFormData, setLoading, navigate);
     }, [formData?.parentid, axiosPrivate]);
     if (loading) {
         return (
