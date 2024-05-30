@@ -320,7 +320,8 @@ CREATE TABLE public.grade (
     studentid integer NOT NULL,
     teachersubjectid integer NOT NULL,
     date date,
-    grade public.gradetype
+    grade public.gradetype,
+    final boolean
 );
 
 
