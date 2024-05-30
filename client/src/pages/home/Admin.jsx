@@ -1,16 +1,15 @@
 
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Line, Column, Area } from '@ant-design/plots';
+import { Line, Column } from '@ant-design/plots';
 import { useState, useEffect } from 'react';
-import { Card, Button, Input, Flex, Upload, notification, Spin } from 'antd';
+import { Card, Flex, Spin } from 'antd';
 import BestStudents from 'components/users/bestStudents';
 import MyCalendar from 'components/calendar';
 import MissingStudents from 'components/users/missingStudents';
 import { useAxiosPrivate } from 'hooks/useAxiosPrivate';
 import GraphStatistics from 'components/graphStatistics';
 import NumStatistics from 'components/numStatistics';
-import { StudentTable } from 'components/tables/StudentTable';
 
 const fetchNumOfStudentsPerClass = async (axiosPrivate, setStudentsPerClassLevel) => {
   try {
@@ -29,7 +28,7 @@ const fetchGenderTeachers = async (axiosPrivate, setGenderTeachers) => {
     console.error(error);
   }
 }
-const fetchStudentCount = async (axiosPrivate, setStudentCount, setTeacherCount, setClassCount, setParentCount, setLoading) => {
+const fetchUsersCount = async (axiosPrivate, setStudentCount, setTeacherCount, setClassCount, setParentCount, setLoading) => {
   try {
     const users = await axiosPrivate.get('/users/totalUsers?role=[0,1,1,1]');
     const classes = await axiosPrivate.get('/users/totalClasses');
@@ -93,7 +92,7 @@ export function AdminPage() {
   useEffect(() => {
     fetchNumOfStudentsPerClass(axiosPrivate, setStudentsPerClassLevel);
     fetchGenderTeachers(axiosPrivate, setGenderTeachers);
-    fetchStudentCount(axiosPrivate, setStudentCount, setTeacherCount, setClassCount, setParentCount, setLoading);
+    fetchUsersCount(axiosPrivate, setStudentCount, setTeacherCount, setClassCount, setParentCount, setLoading);
   }, [axiosPrivate]);
   if(loading){
     return <Spin className='fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2' size='large' />;

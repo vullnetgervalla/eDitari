@@ -135,28 +135,6 @@ const ShowData = ({ userType, data }) => {
           </Link>);
       },
     },
-    // {
-    //   title: t('absences'),
-    //   dataIndex: 'absences',
-    //   key: 'absences',
-    //   width: '5%',
-    //   render: () => (
-    //     <Link to={'/'} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%', color: 'black' }}>
-    //       <CloseCircleOutlined style={{ fontSize: '18px' }} />
-    //     </Link>
-    //   ),
-    // },
-    // {
-    //   title: t('attestation'),
-    //   dataIndex: 'attestation',
-    //   key: 'attestation',
-    //   width: '5%',
-    //   render: () => (
-    //     <Link to={'/'} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%', color: 'black' }}>
-    //       <PrinterFilled style={{ fontSize: '18px' }} />
-    //     </Link>
-    //   ),
-    // },
     ...(userType === 'STUDENT'
       ? [
         {

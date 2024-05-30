@@ -6,9 +6,11 @@ const { classRouter } = require('./classes');
 const { subjectRouter } = require('./subjects');
 const { notificationsRouter } = require('./notifications');
 const { scheduleRouter } = require('./schedule');
+const { studentRouter } = require('./students');
 
 const apiRouter = Router();
 
+apiRouter.use('/students', studentRouter);
 apiRouter.use('/users', userRouter);
 apiRouter.use('/auth', authRouter);
 apiRouter.use('/classes', classRouter);

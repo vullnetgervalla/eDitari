@@ -208,6 +208,8 @@
   "holiday": "Praznik",
   "createdNotification": "Obaveštenje uspešno kreirano",
   "notCreatedNotification": "Greška prilikom kreiranja obaveštenja",
+  "number.subjects": "Broj predmeta",
+  "number.missing": "Broj izostanaka",
   "noDataFound": "Nema podataka",
   "classinfo": "Informacije o odeljenju",
   "unauthorized": "Nemate dozvolu za pristup ovoj stranici",
@@ -222,5 +224,9 @@
   "final": "Zaključna",
   "finalGrade": "Zaključna ocena",
   "addGrade": "Dodaj ocenu",
-  "confirmDelete": "Da li ste sigurni da želite da obrišete?"
+  "confirmDelete": "Da li ste sigurni da želite da obrišete?",
+  "nr": "Br",
+  "firstSemester": "Prvo polugodište",
+  "secondSemester": "Drugo polugodište",
+  "transcript": "Transkript"
 }

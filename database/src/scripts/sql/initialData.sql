@@ -20,7 +20,8 @@ VALUES
 ('list-class', 'class'),
 ('create-class', 'class'),
 ('list-schedule', 'schedule'),
-('create-schedule', 'schedule');
+('create-schedule', 'schedule'),
+('transcript', 'default');
 
 INSERT INTO role_capabilities (role_id, capability_id)
 SELECT role.id, capabilities.id
@@ -38,7 +39,7 @@ INSERT INTO role_capabilities (role_id, capability_id)
 SELECT role.id, capabilities.id
 FROM role, capabilities
 WHERE role.name = 'STUDENT'
-AND capabilities.name IN ('home', 'schedule', 'subject', 'notification' );
+AND capabilities.name IN ('home', 'schedule', 'subject', 'notification', 'transcript');
 
 INSERT INTO role_capabilities (role_id, capability_id)
 SELECT role.id, capabilities.id
@@ -81,10 +82,6 @@ VALUES
 (null, '8-2', 16, 8, 1, 1),
 (null, '9-1', 17, 9, 1, 1),
 (null, '9-2', 18, 9, 1, 1);
-
-
-
-
 
 INSERT INTO "User" (username, password, email, roleid, firstname, lastname, schoolid)
 VALUES

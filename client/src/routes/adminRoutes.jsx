@@ -8,21 +8,21 @@ import ListStudents from 'pages/users/listStudents';
 import ListTeachers from 'pages/users/listTeachers';
 import ListAdmins from 'pages/users/listAdmins';
 import UserProfile from 'components/userProfile';
-import CreateNotification from 'pages/admin/createNotification';
-import SeeNotifications from 'components/seeNotifications';
 import CreateMaterials from 'components/createMaterials';
 import ListClasses from 'components/class/ListClasses';
 import CreateClass from 'components/class/CreateClass';
 import CreateSubject from 'components/subject/CreateSubjectForm';
 import ListSubjects from 'components/subject/ListSubjects';
 import CreateSchedule from 'components/schedule/CreateSchedule';
-import SeeMaterials from 'components/materials/seeMaterials';
 import ListSchedules from 'pages/users/listSchedule';
 import SubjectsPage from 'pages/subject';
 import { Subject } from 'pages/subject/Subject';
 import { NotFound } from 'components/auth/NotFound';
 import { Unauthorized } from 'components/auth/Unauthorized';
 import { Lecture } from 'pages/teacher/Lecture';
+import Transcript from 'components/student/transcript';
+import NoificationsPage from 'components/notifications/index'
+import StudentSubjectInfo from 'pages/subject/studentSubjectInfo'
 
 export const AdminRoutes = [
   {
@@ -70,7 +70,7 @@ export const AdminRoutes = [
   },
   {
     path: 'notification',
-    element: <SeeNotifications />
+    element: <NoificationsPage/>
   },
   {
     path: 'add-material',
@@ -109,6 +109,10 @@ export const AdminRoutes = [
     element: <Subject />
   },
   {
+    path: 'subject-info/:id',
+    element: <StudentSubjectInfo/>
+  },
+  {
     path: '404',
     element: <NotFound />
   },
@@ -119,5 +123,9 @@ export const AdminRoutes = [
   {
     path: 'class',
     element: <Lecture />
+  },
+  {
+    path: 'transcript',
+    element: <Transcript/>
   }
 ];

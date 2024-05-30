@@ -24,6 +24,7 @@ getSubjectRouter.get('/teacherSubjects', checkRole('list-subject'), (req, res) =
             res.sendStatus(500);
             return;
         }
+        console.log(queryRes.rows);
         res.send(queryRes.rows);
     });
 });
@@ -39,6 +40,18 @@ getSubjectRouter.get('/tacherSubjectFormatted', checkRole('list-subject'), (req,
         res.send(queryRes.rows);
     });
 });
+
+getSubjectRouter.get('/number', checkRole(null, 'STUDENT'), (req, res) => {
+  const { userid } = req.user;
+  db.query('SELECT * from getNumberOfStudentSubjects($1)', [userid], (err, queryRes) => {
+    if(err) {
+        console.error('Error executing query', err);
+        res.sendStatus(500);
+        return;
+    }
+    res.send(queryRes.rows);
+  })
+})
 
 getSubjectRouter.get('/:id', checkRole('subject'), (req, res) => {
     const { id } = req.params;

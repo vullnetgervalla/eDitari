@@ -5,7 +5,7 @@ import { ParentPage } from 'pages/home/Parent'
 import { StudentPage } from 'pages/home/Student'
 import { Spin } from 'antd'
 
-export default function HomePage(props) {
+export default function HomePage() {
 
     const { user, userType } = useOutletContext();
 

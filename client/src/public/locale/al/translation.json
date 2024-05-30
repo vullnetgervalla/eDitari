@@ -207,6 +207,8 @@
   "holiday": "Festë",
   "createdNotification": "Njoftimi u krijua me sukses!",
   "notCreatedNotification": "Gabim gjatë krijimit të njoftimit!",
+  "number.subjects": "Numri i lëndëve",
+  "number.missing": "Numri i mungesave",
   "noDataFound": "Nuk u gjet asnjë e dhënë",
   "classInfo": "Informacioni i klasës",
   "unauthorized": "Nuk keni autorizim",
@@ -221,5 +223,10 @@
   "final": "Përfundimtare",
   "finalGrade": "Nota përfundimtare",
   "addGrade": "Shto notë",
-  "confirmDelete": "A jeni i sigurt që dëshironi të fshini?"
+  "confirmDelete": "A jeni i sigurt që dëshironi të fshini?",
+  "nr": "Nr",
+  "firstSemester": "Semestri i parë",
+  "secondSemester": "Semestri i dytë",
+  "transcript": "Transkripta",
+  "typeOfGrade": "Lloji i notës"
 }
