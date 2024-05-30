@@ -227,5 +227,6 @@
   "nr": "Nr",
   "firstSemester": "First Semester",
   "secondSemester": "Second Semester", 
-  "transcript": "Transcript"
+  "transcript": "Transcript",
+  "typeOfGrade": "Type of grade"
 }

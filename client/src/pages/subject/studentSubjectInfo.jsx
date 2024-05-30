@@ -2,10 +2,11 @@ import { useEffect, useState, useRef } from "react";
 import { useParams } from "react-router-dom";
 import { useAxiosPrivate } from "hooks/useAxiosPrivate";
 import { SearchOutlined } from '@ant-design/icons';
-import { Card, Col, Layout, Row, Table, Input, Space, Button } from "antd";
+import { Card, Col, Layout, Row, Table, Input, Space, Button, Flex } from "antd";
 import { Content, Header } from "antd/es/layout/layout";
 import { useTranslation } from "react-i18next";
 import { Unauthorized } from "components/auth/Unauthorized";
+import moment from 'moment'
 
 const getData = async (axios, setData, setLoading, param, setSubjectGrades) => {
     getSubjectGrades(axios, setSubjectGrades, param.id)
@@ -21,11 +22,17 @@ const getData = async (axios, setData, setLoading, param, setSubjectGrades) => {
     }
 }
 
-const getSubjectGrades = async (axios, setSubjectGrades,param) => {
+const getSubjectGrades = async (axios, setSubjectGrades, param) => {
+    console.log(param)
     try {
-        const res = await axios.get(`/students/subject-grades/${param.id}`)
-        console.log(res)
-        setSubjectGrades(res.data)
+        const res = await axios.get(`/students/subject-grades?id=${param}`)
+        console.log(res.data)
+        setSubjectGrades(res.data.map((item, index) => ({
+            index: index + 1,
+            ...item,
+            date: moment(item.date).format('YYYY-MM-DD'),
+            typeofgrade: item.typeofgrade === null ? 'Jo perfundimtare' : "Perfundimtare"
+        })))
     }
     catch (e) {
         console.log(e)
@@ -40,7 +47,6 @@ export default function StudentSubjectInfo() {
     const param = useParams();
     const { t } = useTranslation();
     const searchInput = useRef(null);
-    console.log(data)
 
     useEffect(() => {
         getData(axios, setData, setLoading, param, setSubjectGrades);
@@ -57,7 +63,6 @@ export default function StudentSubjectInfo() {
         setSearchText('');
         confirm();
     };
-
 
     if (loading) {
         return <Card style={{ height: '50%' }} loading={loading} />;
@@ -127,9 +132,9 @@ export default function StudentSubjectInfo() {
     const columns = [
         {
             title: t('nr'),
-            dataIndex: 'nr',
-            key: 'nr',
-            ...getColumnSearchProps('nr'),
+            dataIndex: 'index',
+            key: 'index',
+            ...getColumnSearchProps('index'),
             render: (text) => {
                 return (<Flex gap='small' style={{ justifyContent: 'center', alignItems: 'center' }}>
                     {text}
@@ -159,9 +164,9 @@ export default function StudentSubjectInfo() {
             }
         },{
             title: t('typeOfGrade'),
-            dataIndex: 'typeOfGrade',
-            key: 'typeOfGrade',
-            ...getColumnSearchProps('typeOfGrade'),
+            dataIndex: 'typeofgrade',
+            key: 'typeofgrade',
+            ...getColumnSearchProps('typeofgrade'),
             render: (text) => {
                 return (<Flex gap='small' style={{ justifyContent: 'center', alignItems: 'center' }}>
                     {text}
@@ -192,7 +197,7 @@ export default function StudentSubjectInfo() {
                                 <span>{t('grades')}</span>
                             </div>
                         } >
-                            <Table columns={columns}/>
+                            <Table dataSource={subjectGrades} columns={columns}/>
                         </Card>
                     </Col>
                 </Row>

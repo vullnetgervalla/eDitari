@@ -227,5 +227,6 @@
   "nr": "Nr",
   "firstSemester": "Semestri i parë",
   "secondSemester": "Semestri i dytë",
-  "transcript": "Transkripta"
+  "transcript": "Transkripta",
+  "typeOfGrade": "Lloji i notës"
 }

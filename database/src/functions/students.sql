@@ -119,12 +119,13 @@ WHERE schedule.id = i_scheduleid;
 $$;
 
 DROP FUNCTION IF EXISTS getStudentSubjectGrades(int, int);
-CREATE OR REPLACE FUNCTION getStudentSubjectGrades(student_id int, subject_id int)
-RETURNS TABLE(subject varchar, teacher varchar, grade gradetype, final boolean, date date) AS $$
+CREATE OR REPLACE FUNCTION getStudentSubjectGrades(student_id int, schedule_id int)
+RETURNS TABLE(subject varchar, teacher varchar, grade gradetype, typeOfGrade boolean, date date) AS $$
     SELECT subject.name, "User".firstname || ' ' || "User".lastname, grade.grade, grade.final, grade.date
     FROM grade 
     JOIN teachersubject ts ON grade.teachersubjectid = ts.id
     JOIN subject ON ts.subjectid = subject.id
     JOIN "User" ON "User".id = ts.teacherid
-    WHERE grade.studentid = student_id AND subject.id = subject_id;
+    JOIN schedule ON ts.id = schedule.teachersubjectid
+    WHERE grade.studentid = student_id AND schedule.id = schedule_id;
 $$ LANGUAGE sql;
