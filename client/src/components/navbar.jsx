@@ -63,6 +63,10 @@ export default function NavBar({ content }) {
   const [openKeys, setOpenKeys] = useState([]);
   
   useEffect(() => {
+    if(location.pathname === '/') {
+      setSelectedKey('0');
+      setTitle('home');
+    }
     const path = location.pathname.endsWith('/') ? location.pathname.slice(0, -1) : location.pathname;
     const key = Object.keys(keyToPath).find(key => `/${keyToPath[key]}` === path);
     if (key) {

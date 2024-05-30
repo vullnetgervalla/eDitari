@@ -8,14 +8,12 @@ export const Unauthorized = () => {
 
     useEffect(() => {
         const timer = setTimeout(() => {
-            if (document.referrer && new URL(document.referrer).hostname === window.location.hostname) {
-                navigate(-1);
-            } else {
-                navigate('/');
-            }
-        }, 2000);
+            navigate('/');
+        }, 1000);
 
-        return () => clearTimeout(timer);
+        return () => {
+            clearTimeout(timer);
+        };
     }, [navigate]);
 
     return (

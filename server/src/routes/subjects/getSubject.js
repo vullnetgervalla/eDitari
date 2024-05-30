@@ -42,6 +42,12 @@ getSubjectRouter.get('/tacherSubjectFormatted', checkRole('list-subject'), (req,
 
 getSubjectRouter.get('/:id', checkRole('subject'), (req, res) => {
     const { id } = req.params;
+
+    if (!/^\d+$/.test(id)) {
+        res.status(400).send('Invalid id');
+        return;
+    }
+
     const user = req.user;
     
     const handleQueryResult = (err, queryRes) => {
