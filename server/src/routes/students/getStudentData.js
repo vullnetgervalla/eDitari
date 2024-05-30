@@ -64,6 +64,21 @@ getStudentDataRouter.get('/subjects', checkRole(null, 'STUDENT'), (req, res) => 
     })
 });
 
+getStudentDataRouter.get('/subject-grades/:id', checkRole(null, 'STUDENT'), (req, res) => {
+    const { userid } = req.user;
+    const {id} = req.params;
+    console.log(id);
+    console.log('test')
+    db.query('SELECT * FROM getStudentSubjectGrades($1, $2)', [userid, id], (err, queryRes) => {
+        if (err) {
+            console.error('Error executing query', err);
+            res.sendStatus(500);
+            return;
+        }
+        res.send(queryRes.rows);
+    })
+})
+
 getStudentDataRouter.get('/:id', checkRole('subject'), (req, res) => {
     const { id } = req.params;
     db.query('SELECT * from getStudentSubjectInfo($1)', [id], (err, queryRes) => {

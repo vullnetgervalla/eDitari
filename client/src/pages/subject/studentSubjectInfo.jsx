@@ -1,16 +1,16 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useParams } from "react-router-dom";
 import { useAxiosPrivate } from "hooks/useAxiosPrivate";
-import { Card, Col, Layout, Row } from "antd";
+import { SearchOutlined } from '@ant-design/icons';
+import { Card, Col, Layout, Row, Table, Input, Space, Button } from "antd";
 import { Content, Header } from "antd/es/layout/layout";
 import { useTranslation } from "react-i18next";
 import { Unauthorized } from "components/auth/Unauthorized";
 
-const getData = async (axios, setData, setLoading, param) => {
-    console.log(param.id)
+const getData = async (axios, setData, setLoading, param, setSubjectGrades) => {
+    getSubjectGrades(axios, setSubjectGrades, param.id)
     try {
         const res = await axios.get(`/students/${param.id}`)
-        console.log(res.data)
         setData(res.data)
     }
     catch (e) {
@@ -21,17 +21,43 @@ const getData = async (axios, setData, setLoading, param) => {
     }
 }
 
+const getSubjectGrades = async (axios, setSubjectGrades,param) => {
+    try {
+        const res = await axios.get(`/students/subject-grades/${param.id}`)
+        console.log(res)
+        setSubjectGrades(res.data)
+    }
+    catch (e) {
+        console.log(e)
+    }
+}
+
 export default function StudentSubjectInfo() {
     const axios = useAxiosPrivate();
     const [loading, setLoading] = useState(true);
     const [data, setData] = useState([]);
+    const [subjectGrades, setSubjectGrades] = useState([])
     const param = useParams();
     const { t } = useTranslation();
+    const searchInput = useRef(null);
     console.log(data)
 
     useEffect(() => {
-        getData(axios, setData, setLoading, param)
+        getData(axios, setData, setLoading, param, setSubjectGrades);
     }, [])
+
+    const handleSearch = (selectedKeys, confirm, dataIndex) => {
+        confirm();
+        setSearchText(selectedKeys[0]);
+        setSearchedColumn(dataIndex);
+    };
+
+    const handleReset = (clearFilters, confirm) => {
+        clearFilters();
+        setSearchText('');
+        confirm();
+    };
+
 
     if (loading) {
         return <Card style={{ height: '50%' }} loading={loading} />;
@@ -42,6 +68,107 @@ export default function StudentSubjectInfo() {
     }
 
     const { class: classInfo, subject, teacher } = data;
+    const getColumnSearchProps = (dataIndex, nestedPath) => ({
+        filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters, close }) => (
+            <div style={{ padding: 8 }} onKeyDown={(e) => e.stopPropagation()}>
+                <Input
+                    ref={searchInput}
+                    placeholder={`Search ${dataIndex}`}
+                    value={selectedKeys[0]}
+                    onChange={(e) => setSelectedKeys(e.target.value ? [e.target.value] : [])}
+                    onPressEnter={() => handleSearch(selectedKeys, confirm, dataIndex)}
+                    style={{ marginBottom: 8, display: 'block' }}
+                />
+                <Space>
+                    <Button
+                        type="primary"
+                        onClick={() => handleSearch(selectedKeys, confirm, dataIndex)}
+                        icon={<SearchOutlined />}
+                        size="small"
+                        style={{ width: 90 }}
+                    >
+                        Search
+                    </Button>
+                    <Button
+                        onClick={() => clearFilters && handleReset(clearFilters, confirm)}
+                        size="small"
+                        style={{ width: 90 }}
+                    >
+                        Reset
+                    </Button>
+                </Space>
+            </div>
+        ),
+        filterIcon: (filtered) => <SearchOutlined style={{ color: filtered ? '#1677ff' : undefined }} />,
+        onFilter: (value, record) => {
+            if (nestedPath) {
+                const nestedValue = nestedPath.split('.').reduce((acc, part) => acc && acc[part], record);
+                return nestedValue?.toString().toLowerCase().includes(value.toLowerCase());
+            }
+            return record[dataIndex]?.toString().toLowerCase().includes(value.toLowerCase());
+        },
+        onFilterDropdownOpenChange: (visible) => {
+            if (visible) {
+                setTimeout(() => searchInput.current?.select(), 100);
+            }
+        },
+        render: (text) =>
+            searchedColumn === dataIndex ? (
+                <Highlighter
+                    highlightStyle={{ backgroundColor: '#ffc069', padding: 0 }}
+                    searchWords={[searchText]}
+                    autoEscape
+                    textToHighlight={text ? text?.toString() : ''}
+                />
+            ) : (
+                text
+            ),
+    });
+    const columns = [
+        {
+            title: t('nr'),
+            dataIndex: 'nr',
+            key: 'nr',
+            ...getColumnSearchProps('nr'),
+            render: (text) => {
+                return (<Flex gap='small' style={{ justifyContent: 'center', alignItems: 'center' }}>
+                    {text}
+                </Flex>)
+            }
+        },
+        {
+            title: t('grade'),
+            dataIndex: 'grade',
+            key: 'grade',
+            ...getColumnSearchProps('grade'),
+            render: (text) => {
+                return (<Flex gap='small' style={{ justifyContent: 'center', alignItems: 'center' }}>
+                    {text}
+                </Flex>)
+            }
+        },
+        {
+            title: t('date'),
+            dataIndex: 'date',
+            key: 'date',
+            ...getColumnSearchProps('date'),
+            render: (text) => {
+                return (<Flex gap='small' style={{ justifyContent: 'center', alignItems: 'center' }}>
+                    {text}
+                </Flex>)
+            }
+        },{
+            title: t('typeOfGrade'),
+            dataIndex: 'typeOfGrade',
+            key: 'typeOfGrade',
+            ...getColumnSearchProps('typeOfGrade'),
+            render: (text) => {
+                return (<Flex gap='small' style={{ justifyContent: 'center', alignItems: 'center' }}>
+                    {text}
+                </Flex>)
+            }
+        },
+    ]
 
     return (
         <Layout style={{ background: 'white', borderRadius: '20px' }}>
@@ -65,11 +192,7 @@ export default function StudentSubjectInfo() {
                                 <span>{t('grades')}</span>
                             </div>
                         } >
-                            <div>
-                                <Row>
-                                    <Col>{t('firstSemester')}</Col>
-                                    <Col></Col></Row>
-                                <Row></Row></div>
+                            <Table columns={columns}/>
                         </Card>
                     </Col>
                 </Row>
