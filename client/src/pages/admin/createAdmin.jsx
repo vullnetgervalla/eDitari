@@ -135,7 +135,7 @@ function CreateAdmin() {
                     }}
                 >
                     <Collapse>
-                        <Panel header="Advanced" key="1">
+                        <Panel header="Të Avancuara" key="1">
                             <Form.Item
                                 label={t('role')}
                                 labelAlign='left'
