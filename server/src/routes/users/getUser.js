@@ -102,7 +102,8 @@ getUserRouter.get('/teacherSubjects', checkRole(null, "TEACHER"), (req, res) => 
 // This needs to be the last route
 getUserRouter.get('/:id', authenticateToken, (req, res) => {
   const id = req.params.id;
-  if (typeof id !== 'number') {
+
+  if (!/^\d+$/.test(id)) {
     res.status(400).send('Invalid id');
     return;
   }

@@ -17,10 +17,12 @@ const fetchData = async (axiosPrivate, userId, setOriginalData, setFormData, set
         setFormData(response.data);
         setLoading(false);
     } catch (error) {
-        console.error('There was an error!', error);
-        message.error('There was an error fetching user data!');
-        if(error.response.status === 400) {
+        if(error?.response?.status === 400) {
             navigate('/401');
+        }
+        else {
+            console.error(error);
+            message.error('There was an error fetching user data!');
         }
     }
 };

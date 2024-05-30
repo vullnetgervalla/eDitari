@@ -66,17 +66,10 @@ getSubjectRouter.get('/:id', checkRole('subject'), (req, res) => {
     }
 
     if(user.userType === 'STUDENT') {
-        db.query(`select * from schedule
-        join class on schedule.classid = class.id
-        join student on class.id = student.classid
-        where schedule.id = $1
-        and student.id = $2;`, [id, user.userid], handleQueryResult);
+        db.query(`select * from studentScheduleAccess($1, $2)`, [id, user.userid], handleQueryResult);
     }
     else if (user.userType === 'TEACHER') {
-        db.query(`select * from schedule
-        join teachersubject on schedule.teachersubjectid = teachersubject.id
-        where schedule.id = $1
-        and teacherid = $2;`, [id, user.userid], handleQueryResult);
+        db.query(`select * from teacherScheduleAccess($1, $2)`, [id, user.userid], handleQueryResult);
     }
 });
 
